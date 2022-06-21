@@ -16,9 +16,9 @@ class CreateOffersTable extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('price');
-            $table->string('url');
-            $table->text('description');
+            $table->double('price');
+            $table->longText('url');
+            $table->longText('description');
             $table->boolean('is_active');
             $table->timestamps();
         });

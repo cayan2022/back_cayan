@@ -19,10 +19,10 @@ class CreateBranchesTable extends Migration
             $table->string('city');
             $table->string('address');
             $table->string('phone');
-            $table->string('whatsup_phone');
+            $table->string('whatsapp_phone');
             $table->string('map_link');
             $table->string('short_description');
-            $table->text('description');
+            $table->longText('description');
             $table->boolean('is_active');
             $table->timestamps();
         });

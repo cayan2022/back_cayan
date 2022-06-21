@@ -15,19 +15,14 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('user_name');
-            $table->string('phone');
+            $table->string('patient_name');
+            $table->string('patient_phone');
 
             $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->foreignId('source_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
-            $table->foreignId('status_id')->constrained('status')->cascadeOnUpdate()->cascadeOnDelete();
-
-
-
-
-            //$table->string('status')->default('new');
+            $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -40,6 +35,7 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('orders');
     }
 }

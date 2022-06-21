@@ -10,7 +10,12 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
+    const ADMIN='admin';
+    const MODERATOR='moderator';
+    const TYPES=[
+        self::ADMIN,
+        self::MODERATOR,
+    ];
     /**
      * The attributes that are mass assignable.
      *
