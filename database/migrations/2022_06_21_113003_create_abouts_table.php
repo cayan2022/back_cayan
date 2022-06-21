@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubStatusTable extends Migration
+class CreateAboutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSubStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_status', function (Blueprint $table) {
+        Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('status_id')->constrained('status')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('title');
+            $table->longText('description');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSubStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_status');
+        Schema::dropIfExists('abouts');
     }
 }
