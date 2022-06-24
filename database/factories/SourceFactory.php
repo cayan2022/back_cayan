@@ -15,12 +15,9 @@ class SourceFactory extends Factory
      */
     public function definition()
     {
-        $identifier=$this->faker->slug;
-        $link=config('app.url')."/?_source=$identifier";
         return [
-            'name'=>$this->faker->word(),
-            'identifier'=>$identifier,
-            'link'=>$link,
+            'name'=>$this->faker->unique()->name,
+            'identifier'=>$this->faker->slug,
             'short_description'=>$this->faker->sentence,
             'description'=>$this->faker->text,
             'is_active'=>$this->faker->boolean,

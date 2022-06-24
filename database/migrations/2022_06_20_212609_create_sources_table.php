@@ -15,9 +15,8 @@ class CreateSourcesTable extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('identifier');
-            $table->longText('link');
             $table->string('short_description');
             $table->string('description');
             $table->boolean('is_active');
