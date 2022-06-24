@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -27,10 +28,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name'     => 'required|string|max:255',
-            'gender'   => ['required', 'string', Rule::in(['male', 'female'])],
+            'gender'   => ['required', 'string', Rule::in(User::GENDERS)],
             'email'    => 'required|email:rfc,dns|unique:users,email',
             'phone'    => 'required|string|max:255|unique:users,phone',
-            'password' => ['required', 'confirmed','string', Password::min(8)->letters()->symbols()->numbers()],
+            'password' => ['required', 'confirmed','string', Password::defaults()],
         ];
     }
 }

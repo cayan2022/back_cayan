@@ -18,7 +18,7 @@ class ServiceFactory extends Factory
     {
         return [
             'category_id'=>Category::factory()->create(),
-            'name'=>$this->faker->name,
+            'name'=>$this->faker->unique()->name,
             'short_description'=>$this->faker->sentence,
             'description'=>$this->faker->text,
             'is_active'=>$this->faker->boolean,

@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Dashboard\AuthController;
+use Illuminate\Support\Str;
+use App\Models;
+use App\Http\Resources;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,5 +20,16 @@ Route::prefix('auth')->as('auth.')->group(function () {
 
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('register', [AuthController::class, 'register'])->name('register');
-//    Route::as('password.')->post('password/forget', [AuthController::class, 'forgetPassword'])->name('forget');
+
+
 });
+//until we put permissions Mr. hesham basha tarek ;)
+$pages=['category','service','offer','doctor','source','branch'];
+foreach ($pages as $page){
+    $model="\App\Models\\".Str::ucfirst($page);
+    $resourcClasse="\App\Http\Resources\\".Str::ucfirst($page)."Resource";
+    $resource=$model::paginate();
+    Route::get($page,function () use ($resource, $resourcClasse) {
+        return $resourcClasse::collection($resource);
+    });
+}

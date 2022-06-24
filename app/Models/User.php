@@ -95,4 +95,9 @@ class User extends Authenticatable
         return $this->createToken($device)->plainTextToken;
     }
 
+    public function orderHistories()
+    {
+        return $this->hasMany(OrderHistory::class);
+    }
+
 }

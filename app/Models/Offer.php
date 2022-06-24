@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Offer extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'price',
+        'url',
+        'description',
+        'is_active'
+    ];
+    protected $casts=[
+        'is_active' => 'boolean',
+        'price'=>'double',
+    ];
 }

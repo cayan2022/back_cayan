@@ -16,7 +16,7 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
-           'name'=>$this->faker->title,
+           'name'=>$this->faker->unique()->name,
            'city'=>$this->faker->city,
            'address'=>$this->faker->address,
            'phone'=>$this->faker->phoneNumber,
