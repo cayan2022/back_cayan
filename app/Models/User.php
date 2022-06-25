@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -10,27 +11,50 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Http\Resources\UserResource;
  use Illuminate\Support\Facades\Hash;
 
+/**
+ * User Class
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
-    const ADMIN = 'admin';
+    /**
+     *
+     */
+    public const ADMIN = 'admin';
 
-    const MODERATOR = 'moderator';
+    /**
+     *
+     */
+    public const MODERATOR = 'moderator';
 
-    const MALE = 'male';
+    /**
+     *
+     */
+    public const MALE = 'male';
 
-    const FEMALE = 'female';
+    /**
+     *
+     */
+    public const FEMALE = 'female';
 
-    const TYPES = [
+    /**
+     *
+     */
+    public const TYPES = [
         self::ADMIN,
         self::MODERATOR,
     ];
 
-    const GENDERS = [
+    /**
+     *
+     */
+    public const GENDERS = [
         self::MALE,
         self::FEMALE,
     ];
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -71,22 +95,31 @@ class User extends Authenticatable
         });
     }
 
+    /*Mutators*/
+    /**
+     * @param $value
+     * @return void
+     */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function getResource()
+    /*Helpers*/
+    /**
+     * @return UserResource
+     */
+    public function getResource(): UserResource
     {
         return new UserResource($this);
     }
     /**
      * Get the access token currently associated with the user. Create a new.
      *
-     * @param string|null $device
+     * @param  string|null  $device
      * @return string
      */
-    public function createTokenForDevice($device = null)
+    public function createTokenForDevice(string $device = null): string
     {
         $device = $device ?: 'Unknown Device';
 
@@ -95,7 +128,21 @@ class User extends Authenticatable
         return $this->createToken($device)->plainTextToken;
     }
 
-    public function orderHistories()
+    public function isAdmin(): bool
+    {
+        return $this->type===self::ADMIN;
+    }
+
+    public function isModerator(): bool
+    {
+        return $this->type===self::MODERATOR;
+    }
+    /*Relations*/
+
+    /**
+     * @return HasMany
+     */
+    public function orderHistories(): HasMany
     {
         return $this->hasMany(OrderHistory::class);
     }

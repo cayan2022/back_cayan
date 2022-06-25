@@ -9,7 +9,6 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -46,7 +45,7 @@ class AuthController extends Controller
 
             return $this->getAuthUserResponse($user->fresh());
         }
-        return response()->json(['error' => 'phone or password is not incorrect!'], 403);
+        return response()->json(['error' => 'credentials are incorrect!'], 403);
     }
 
 
