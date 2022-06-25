@@ -24,12 +24,12 @@ Route::prefix('auth')->as('auth.')->group(function () {
 
 });
 //until we put permissions Mr. hesham basha tarek ;)
-$pages=['category','service','offer','doctor','source','branch'];
-foreach ($pages as $page){
-    $model="\App\Models\\".Str::ucfirst($page);
-    $resourcClasse="\App\Http\Resources\\".Str::ucfirst($page)."Resource";
-    $resource=$model::paginate();
-    Route::get($page,function () use ($resource, $resourcClasse) {
-        return $resourcClasse::collection($resource);
-    });
-}
+//$pages=['category','service','offer','doctor','source','branch'];
+//foreach ($pages as $page){
+//    $model="\App\Models\\".Str::ucfirst($page);
+//    $resourcClasse="\App\Http\Resources\\".Str::ucfirst($page)."Resource";
+//    $resource=$model::paginate();
+//    Route::get($page,function () use ($resource, $resourcClasse) {
+//        return $resourcClasse::collection($resource);
+//    });
+//}

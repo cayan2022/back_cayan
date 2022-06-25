@@ -50,5 +50,7 @@ class DatabaseSeeder extends Seeder
                                   'user_id' => $users->first()->id
                               ])->count($counter)->create();
         Testimonial::factory()->count($counter)->create();
+
+        $this->call(RolesAndPermissionsSeeder::class);
     }
 }
