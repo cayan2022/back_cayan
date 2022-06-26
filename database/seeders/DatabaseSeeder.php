@@ -17,6 +17,8 @@ use App\Models\SubStatus;
 use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role as Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -52,5 +54,11 @@ class DatabaseSeeder extends Seeder
         Testimonial::factory()->count($counter)->create();
 
         $this->call(RolesAndPermissionsSeeder::class);
+
+        //create roles
+        $adminRole =  Role::firstOrCreate(['name'=>'super-admin','guard_name'=>'api']);
+        $adminRole->givePermissionTo(Permission::all());
+        $admin = User::findOrFail(1);
+        $admin->assignRole($adminRole);
     }
 }

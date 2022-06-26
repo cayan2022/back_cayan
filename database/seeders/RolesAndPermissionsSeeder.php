@@ -24,61 +24,61 @@ class RolesAndPermissionsSeeder extends Seeder
         $data = [
 
             // Admin
-            ['name' => 'Admins create', 'type' => 'Admins', 'guard_name' => 'web'],
-            ['name' => 'Admins update', 'type' => 'Admins', 'guard_name' => 'web'],
-            ['name' => 'Admins list', 'type' => 'Admins', 'guard_name' => 'web'],
-            ['name' => 'Admins show', 'type' => 'Admins', 'guard_name' => 'web'],
-            ['name' => 'Admins delete', 'type' => 'Admins', 'guard_name' => 'web'],
+            ['name' => 'Admins create', 'type' => 'Admins', 'guard_name' => 'api'],
+            ['name' => 'Admins update', 'type' => 'Admins', 'guard_name' => 'api'],
+            ['name' => 'Admins list', 'type' => 'Admins', 'guard_name' => 'api'],
+            ['name' => 'Admins show', 'type' => 'Admins', 'guard_name' => 'api'],
+            ['name' => 'Admins delete', 'type' => 'Admins', 'guard_name' => 'api'],
 
             // Customers
-            ['name' => 'Customers create', 'type' => 'Customers', 'guard_name' => 'web'],
-            ['name' => 'Customers update', 'type' => 'Customers', 'guard_name' => 'web'],
-            ['name' => 'Customers list', 'type' => 'Customers', 'guard_name' => 'web'],
-            ['name' => 'Customers show', 'type' => 'Customers', 'guard_name' => 'web'],
-            ['name' => 'Customers delete', 'type' => 'Customers', 'guard_name' => 'web'],
+            ['name' => 'Customers create', 'type' => 'Customers', 'guard_name' => 'api'],
+            ['name' => 'Customers update', 'type' => 'Customers', 'guard_name' => 'api'],
+            ['name' => 'Customers list', 'type' => 'Customers', 'guard_name' => 'api'],
+            ['name' => 'Customers show', 'type' => 'Customers', 'guard_name' => 'api'],
+            ['name' => 'Customers delete', 'type' => 'Customers', 'guard_name' => 'api'],
 
 
             // Pages
-            ['name' => 'Pages create', 'type' => 'Pages', 'guard_name' => 'web'],
-            ['name' => 'Pages update', 'type' => 'Pages', 'guard_name' => 'web'],
-            ['name' => 'Pages list', 'type' => 'Pages', 'guard_name' => 'web'],
-            ['name' => 'Pages show', 'type' => 'Pages', 'guard_name' => 'web'],
-            ['name' => 'Pages delete', 'type' => 'Pages', 'guard_name' => 'web'],
+            ['name' => 'Pages create', 'type' => 'Pages', 'guard_name' => 'api'],
+            ['name' => 'Pages update', 'type' => 'Pages', 'guard_name' => 'api'],
+            ['name' => 'Pages list', 'type' => 'Pages', 'guard_name' => 'api'],
+            ['name' => 'Pages show', 'type' => 'Pages', 'guard_name' => 'api'],
+            ['name' => 'Pages delete', 'type' => 'Pages', 'guard_name' => 'api'],
 
             // Categories
-            ['name' => 'Categories create', 'type' => 'Categories', 'guard_name' => 'web'],
-            ['name' => 'Categories update', 'type' => 'Categories', 'guard_name' => 'web'],
-            ['name' => 'Categories list', 'type' => 'Categories', 'guard_name' => 'web'],
-            ['name' => 'Categories show', 'type' => 'Categories', 'guard_name' => 'web'],
-            ['name' => 'Categories delete', 'type' => 'Categories', 'guard_name' => 'web'],
+            ['name' => 'Categories create', 'type' => 'Categories', 'guard_name' => 'api'],
+            ['name' => 'Categories update', 'type' => 'Categories', 'guard_name' => 'api'],
+            ['name' => 'Categories list', 'type' => 'Categories', 'guard_name' => 'api'],
+            ['name' => 'Categories show', 'type' => 'Categories', 'guard_name' => 'api'],
+            ['name' => 'Categories delete', 'type' => 'Categories', 'guard_name' => 'api'],
 
             // Sliders
-            ['name' => 'Sliders create', 'type' => 'Sliders', 'guard_name' => 'web'],
-            ['name' => 'Sliders update', 'type' => 'Sliders', 'guard_name' => 'web'],
-            ['name' => 'Sliders list', 'type' => 'Sliders', 'guard_name' => 'web'],
-            ['name' => 'Sliders show', 'type' => 'Sliders', 'guard_name' => 'web'],
-            ['name' => 'Sliders delete', 'type' => 'Sliders', 'guard_name' => 'web'],
+            ['name' => 'Sliders create', 'type' => 'Sliders', 'guard_name' => 'api'],
+            ['name' => 'Sliders update', 'type' => 'Sliders', 'guard_name' => 'api'],
+            ['name' => 'Sliders list', 'type' => 'Sliders', 'guard_name' => 'api'],
+            ['name' => 'Sliders show', 'type' => 'Sliders', 'guard_name' => 'api'],
+            ['name' => 'Sliders delete', 'type' => 'Sliders', 'guard_name' => 'api'],
 
             // Servcies
-            ['name' => 'Servcies create', 'type' => 'Servcies', 'guard_name' => 'web'],
-            ['name' => 'Servcies update', 'type' => 'Servcies', 'guard_name' => 'web'],
-            ['name' => 'Servcies list', 'type' => 'Servcies', 'guard_name' => 'web'],
-            ['name' => 'Servcies show', 'type' => 'Servcies', 'guard_name' => 'web'],
-            ['name' => 'Servcies delete', 'type' => 'Servcies', 'guard_name' => 'web'],
+            ['name' => 'Servcies create', 'type' => 'Servcies', 'guard_name' => 'api'],
+            ['name' => 'Servcies update', 'type' => 'Servcies', 'guard_name' => 'api'],
+            ['name' => 'Servcies list', 'type' => 'Servcies', 'guard_name' => 'api'],
+            ['name' => 'Servcies show', 'type' => 'Servcies', 'guard_name' => 'api'],
+            ['name' => 'Servcies delete', 'type' => 'Servcies', 'guard_name' => 'api'],
 
             // Orders
-            ['name' => 'Orders create', 'type' => 'Orders', 'guard_name' => 'web'],
-            ['name' => 'Orders update', 'type' => 'Orders', 'guard_name' => 'web'],
-            ['name' => 'Orders list', 'type' => 'Orders', 'guard_name' => 'web'],
-            ['name' => 'Orders show', 'type' => 'Orders', 'guard_name' => 'web'],
-            ['name' => 'Orders delete', 'type' => 'Orders', 'guard_name' => 'web'],
+            ['name' => 'Orders create', 'type' => 'Orders', 'guard_name' => 'api'],
+            ['name' => 'Orders update', 'type' => 'Orders', 'guard_name' => 'api'],
+            ['name' => 'Orders list', 'type' => 'Orders', 'guard_name' => 'api'],
+            ['name' => 'Orders show', 'type' => 'Orders', 'guard_name' => 'api'],
+            ['name' => 'Orders delete', 'type' => 'Orders', 'guard_name' => 'api'],
 
 
             // Orders
-            ['name' => 'OrdersFollow create', 'type' => 'OrdersFollow', 'guard_name' => 'web'],
-            ['name' => 'OrdersFollow update', 'type' => 'OrdersFollow', 'guard_name' => 'web'],
-            ['name' => 'OrdersFollow list', 'type' => 'OrdersFollow', 'guard_name' => 'web'],
-            ['name' => 'OrdersFollow show', 'type' => 'OrdersFollow', 'guard_name' => 'web'],
+            ['name' => 'OrdersFollow create', 'type' => 'OrdersFollow', 'guard_name' => 'api'],
+            ['name' => 'OrdersFollow update', 'type' => 'OrdersFollow', 'guard_name' => 'api'],
+            ['name' => 'OrdersFollow list', 'type' => 'OrdersFollow', 'guard_name' => 'api'],
+            ['name' => 'OrdersFollow show', 'type' => 'OrdersFollow', 'guard_name' => 'api'],
 
 
         ];
@@ -99,8 +99,6 @@ class RolesAndPermissionsSeeder extends Seeder
         AppTables::firstOrCreate(['title' => 'Servcies','title_ar'=>'الخدمات ادارة', 'is_active' => 1]);
         AppTables::firstOrCreate(['title' => 'Orders','title_ar'=>'ادارةالطلبات ', 'is_active' => 1]);
         AppTables::firstOrCreate(['title' => 'Orders','title_ar'=>'ادارة متابعة الطلبات ', 'is_active' => 1]);
-
-
 
     }
 }
