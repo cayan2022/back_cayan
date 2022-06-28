@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
+    protected $fillable=['name'];
+    protected $with=['subStatuses'];
+
+    public function subStatuses()
+    {
+        return $this->hasMany(SubStatus::class);
+    }
 }

@@ -30,10 +30,10 @@ class RolesController extends Controller
         $permissions = Permission::all();
         $tables = AppTables::whereIsActive(1)->pluck('title')->toArray();
         $title_pre = [];
-        for ($i = 0; $i < sizeof($tables); $i++) {
+        foreach ($tables as $iValue) {
             foreach ($permissions as $permission) {
-                if ($tables[$i] == $permission->type) {
-                    $title_pre[$tables[$i]][] = $permission->name;
+                if ($iValue == $permission->type) {
+                    $title_pre[$iValue][] = $permission->name;
                 }
             }
         }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class SubStatus extends Model
 {
     use HasFactory;
+    protected $fillable=['name','status_id'];
     public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class);

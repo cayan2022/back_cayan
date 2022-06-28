@@ -15,6 +15,7 @@ class SourceResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'name'=>$this->name,
             'link'=>$this->link,
             'short_description'=>$this->short_description,

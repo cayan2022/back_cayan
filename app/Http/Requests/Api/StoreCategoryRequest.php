@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,7 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','unique:roles','string', 'max:255'],
-            'requested_permissions'=>['required','array'],
-            'requested_permissions.*'=>'required|numeric|exists:permissions,id'
+            //
         ];
     }
 }
