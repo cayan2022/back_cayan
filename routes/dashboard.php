@@ -14,12 +14,20 @@ use App\Http\Controllers\Api\Dashboard\{
     SettingController,
     TestimonialController,
     AboutController,
+    ProfileController
 };
 
 Route::as('dashboard.')
     ->middleware('auth:sanctum')
     ->prefix('dashboard')
     ->group(function () {
+
+        //profile
+
+        Route::get('profile', [ProfileController::class, 'show'])->name('api.profile.show');
+        Route::post('profile', [ProfileController::class, 'update'])->name('api.profile.update');
+        Route::post('logout', [ProfileController::class, 'logout'])->name('logout');
+
         //Roles & Permissions Crud
         Route::as('roles.')
             ->prefix('roles')->group(function () {
