@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -61,7 +62,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'type', 'phone' , 'gender', 'password', 'is_active',
+        'name', 'email', 'type', 'phone' , 'gender', 'password', 'is_active','country_id'
     ];
 
     /**
@@ -137,14 +138,19 @@ class User extends Authenticatable
     {
         return $this->type===self::MODERATOR;
     }
-    /*Relations*/
 
+    /*Relations*/
     /**
      * @return HasMany
      */
     public function orderHistories(): HasMany
     {
         return $this->hasMany(OrderHistory::class);
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
     }
 
 }
