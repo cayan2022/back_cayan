@@ -11,13 +11,15 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Http\Resources\UserResource;
  use Illuminate\Support\Facades\Hash;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * User Class
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, HasApiTokens, HasRoles;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles , InteractsWithMedia;
 
     /**
      *
@@ -151,6 +153,17 @@ class User extends Authenticatable
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);
+    }
+
+
+    /**
+     * The user profile image url.
+     *
+     * @return bool
+     */
+    public function getAvatar()
+    {
+        return $this->getFirstMediaUrl('images');
     }
 
 }
