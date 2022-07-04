@@ -5,6 +5,7 @@ namespace App\Http\Requests\Api;
 use App\Models\User;
 use App\Rules\PasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
@@ -17,7 +18,7 @@ class ProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -30,8 +31,9 @@ class ProfileRequest extends FormRequest
         return [
             'name'     => 'required|string|max:255',
             'gender'   => ['required', 'string', Rule::in(User::GENDERS)],
-            'email'    => 'required|email:rfc,dns|unique:users,email,' . auth()->id(),
-            'phone'    => 'required|string|max:255|unique:users,phone,'. auth()->id(),
+            'email'    => ['required','email:rfc,dns',Rule::unique('users','email')->ignore(auth()->id())],
+            'country_id'    => 'required|numeric|exists:countries,id',
+            'phone'    => ['required','string','max:255',Rule::unique('users','phone')->ignore( auth()->id())],
             'password' => ['required', 'confirmed','string', Password::defaults()],
         ];
     }

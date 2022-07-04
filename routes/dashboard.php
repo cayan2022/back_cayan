@@ -23,10 +23,13 @@ Route::as('dashboard.')
     ->group(function () {
 
         //profile
+        Route::as('profile.')
+            ->prefix('profile')->group(function () {
+            Route::get('me', [ProfileController::class, 'show'])->name('show');
+            Route::patch('update', [ProfileController::class, 'update'])->name('update');
+            Route::post('logout', [ProfileController::class, 'logout'])->name('logout');
+        });
 
-        Route::get('profile', [ProfileController::class, 'show'])->name('api.profile.show');
-        Route::post('profile', [ProfileController::class, 'update'])->name('api.profile.update');
-        Route::post('logout', [ProfileController::class, 'logout'])->name('logout');
 
         //Roles & Permissions Crud
         Route::as('roles.')
