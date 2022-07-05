@@ -12,6 +12,7 @@ it('can view profile if authenticated', function () {
         ->assertSuccessful()
         ->assertJson(['data' => $user->getResource()->jsonSerialize()]);
 });
+
 it('is unauthenticated', function () {
     $this->postJson(route('dashboard.profile.logout'))->assertUnauthorized();
 
@@ -20,11 +21,13 @@ it('is unauthenticated', function () {
         ->assertSuccessful()
         ->assertJson(['message' => __('auth.logged_out')]);
 });
+
 it('can\'t update profile', function () {
     $this->patchJson(route('dashboard.profile.update'))->assertUnauthorized();
 });
+
 it('can update profile', function () {
-    $oldUserData = ['name'=>'test','gender'=>User::MALE,'email'=>'test@test.com'];
+    $oldUserData = ['name' => 'test', 'gender' => User::MALE, 'email' => 'test@test.com'];
     $user = User::factory()->create($oldUserData);
     actingAs($user)
         ->patchJson(route('dashboard.profile.update'), [
