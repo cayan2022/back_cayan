@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->enum('gender', User::GENDERS);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_block')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

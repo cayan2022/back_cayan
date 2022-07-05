@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'password', // it will be set to hash password from user model mutators
             'remember_token' => Str::random(10),
-            'is_active'=>$this->faker->boolean
+            'is_block'=>$this->faker->boolean
         ];
     }
 }

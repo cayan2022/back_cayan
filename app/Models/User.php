@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasActivation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,7 +20,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, HasApiTokens, HasRoles , InteractsWithMedia;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles , InteractsWithMedia, HasActivation;
 
     /**
      *
@@ -64,7 +65,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'type', 'phone' , 'gender', 'password', 'is_active','country_id'
+        'name', 'email', 'type', 'phone' , 'gender', 'password', 'is_block','country_id'
     ];
 
     /**
@@ -83,6 +84,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_block'=>'boolean'
     ];
 
     /**
@@ -94,7 +96,7 @@ class User extends Authenticatable implements HasMedia
     {
         static::creating(function ($user) {
             $user->type = self::MODERATOR;
-            $user->is_active = true;
+            $user->is_block = false;
         });
     }
 
@@ -140,6 +142,15 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->type===self::MODERATOR;
     }
+    /**
+     * The user profile image url.
+     *
+     * @return bool
+     */
+    public function getAvatar(): bool
+    {
+        return $this->getFirstMediaUrl('images');
+    }
 
     /*Relations*/
     /**
@@ -154,16 +165,4 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Country::class);
     }
-
-
-    /**
-     * The user profile image url.
-     *
-     * @return bool
-     */
-    public function getAvatar()
-    {
-        return $this->getFirstMediaUrl('images');
-    }
-
 }

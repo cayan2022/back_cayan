@@ -3,54 +3,85 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Dashboard\ProfileRequest;
+use App\Http\Requests\Api\Dashboard\StoreProfileRequest;
+use App\Http\Requests\Api\Dashboard\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 
+/**
+ *
+ */
 class ProfileController extends Controller
 {
 
-    public function getEmployees()
+    /**
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function index()
     {
-        $users = User::whereType(User::MODERATOR)->get();
+        $users = User::whereType(User::MODERATOR)->paginate();
 
         return UserResource::collection($users);
     }
+
     /**
-     * Display the authenticated user resource.
+     * @param  StoreProfileRequest  $request
+     * @return mixed
+     */
+    public function store(StoreProfileRequest $request)
+    {
+        $user = User::create($request->validated());
+
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $user->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+        return $user->getResource()->additional(['token' => $user->createTokenForDevice($request->header('user-agent'))]);
+    }
+    /**
+     * Display the user resource.
      *
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
-    public function show(Request $request)
+    public function show(User $user)
     {
-        return $request->user()->getResource();
+        return $user->getResource();
     }
 
     /**
-     * Update the authenticated user profile.
-     *
-     * @param  \App\Http\Requests\Accounts\Api\ProfileRequest  $request
+     * Update the user profile.
+     * @param UpdateProfileRequest $request
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
-    public function update(ProfileRequest $request)
+    public function update(UpdateProfileRequest $request,User $user)
     {
-        $user = $request->user();
-
         $user->update($request->validated());
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $user->clearMediaCollection('images'); // clear old images
+            $user->clearMediaCollection('images');
             $user->addMediaFromRequest('image')->toMediaCollection('images');
         }
 
         return $user->getResource();
     }
 
-    public function logout(Request $request)
+    /**
+     * @param  User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(User $user)
     {
-        $request->user()->tokens()->delete();
+        $user->tokens()->delete();
 
         return response()->json(['message' => __('auth.logged_out')]);
+    }
+
+    /**
+     * @param  User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleActivation(User $user)
+    {
+        $user->toggleActivation();
+        return response()->json(['message'=>__('auth.success_operation')]);
     }
 }
