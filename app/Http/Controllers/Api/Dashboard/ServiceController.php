@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreServiceRequest;
-use App\Http\Requests\Api\UpdateServiceRequest;
+use App\Http\Requests\Api\Dashboard\StoreServiceRequest;
+use App\Http\Requests\Api\Dashboard\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreServiceRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreServiceRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreServiceRequest $request)
@@ -46,7 +46,7 @@ class ServiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateServiceRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateServiceRequest  $request
      * @param  Service  $service
      * @return \Illuminate\Http\Response
      */

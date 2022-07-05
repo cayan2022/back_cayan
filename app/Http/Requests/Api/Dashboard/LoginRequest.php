@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTestimonialRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateTestimonialRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateTestimonialRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'username' => 'required|string',
+            'password'=>'required|string'
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreStatusRequest extends FormRequest
+class UpdateSubStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

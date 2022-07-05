@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSourceRequest extends FormRequest
+class PermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreSourceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreSourceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required','unique:permissions','string', 'max:255'],
+            'type' => ['required','string', 'max:255'],
         ];
     }
 }

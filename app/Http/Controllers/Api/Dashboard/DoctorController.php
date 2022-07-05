@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreDoctorRequest;
-use App\Http\Requests\Api\UpdateDoctorRequest;
+use App\Http\Requests\Api\Dashboard\StoreDoctorRequest;
+use App\Http\Requests\Api\Dashboard\UpdateDoctorRequest;
 use App\Http\Resources\DoctorResource;
 use App\Models\Doctor;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class DoctorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreDoctorRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreDoctorRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreDoctorRequest $request)
@@ -46,7 +46,7 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateDoctorRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateDoctorRequest  $request
      * @param  Doctor  $doctor
      * @return \Illuminate\Http\Response
      */

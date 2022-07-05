@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreTestimonialRequest;
-use App\Http\Requests\Api\UpdateTestimonialRequest;
+use App\Http\Requests\Api\Dashboard\StoreTestimonialRequest;
+use App\Http\Requests\Api\Dashboard\UpdateTestimonialRequest;
 use App\Http\Resources\TestimonialResource;
 use App\Models\Testimonial;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class TestimonialController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreTestimonialRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreTestimonialRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreTestimonialRequest $request)
@@ -46,7 +46,7 @@ class TestimonialController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateTestimonialRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateTestimonialRequest  $request
      * @param  Testimonial  $testimonial
      * @return \Illuminate\Http\Response
      */

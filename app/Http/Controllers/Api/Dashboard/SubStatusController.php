@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreSubStatusRequest;
-use App\Http\Requests\Api\UpdateSubStatusRequest;
+use App\Http\Requests\Api\Dashboard\StoreSubStatusRequest;
+use App\Http\Requests\Api\Dashboard\UpdateSubStatusRequest;
 use App\Http\Resources\SubStatusResource;
 use App\Models\SubStatus;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class SubStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreSubStatusRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreSubStatusRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreSubStatusRequest $request)
@@ -46,7 +46,7 @@ class SubStatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateSubStatusRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateSubStatusRequest  $request
      * @param  SubStatus  $subStatus
      * @return \Illuminate\Http\Response
      */

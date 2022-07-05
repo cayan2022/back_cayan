@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreAboutRequest;
-use App\Http\Requests\Api\UpdateAboutRequest;
+use App\Http\Requests\Api\Dashboard\StoreAboutRequest;
+use App\Http\Requests\Api\Dashboard\UpdateAboutRequest;
 use App\Http\Resources\AboutResource;
 use App\Models\About;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class AboutController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreAboutRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreAboutRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAboutRequest $request)
@@ -46,7 +46,7 @@ class AboutController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateAboutRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateAboutRequest  $request
      * @param  About  $about
      * @return \Illuminate\Http\Response
      */

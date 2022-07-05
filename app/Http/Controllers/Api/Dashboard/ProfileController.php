@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\ProfileRequest;
-use Illuminate\Http\Request;
-use App\Models\User;
+use App\Http\Requests\Api\Dashboard\ProfileRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {

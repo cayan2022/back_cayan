@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\LoginRequest;
-use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Requests\Api\Dashboard\LoginRequest;
+use App\Http\Requests\Api\Dashboard\RegisterRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -33,7 +33,7 @@ class AuthController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  LoginRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\LoginRequest  $request
      * @return UserResource|JsonResponse
      */
     public function login(LoginRequest $request)

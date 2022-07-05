@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreSettingRequest;
-use App\Http\Requests\Api\UpdateSettingRequest;
+use App\Http\Requests\Api\Dashboard\StoreSettingRequest;
+use App\Http\Requests\Api\Dashboard\UpdateSettingRequest;
 use App\Http\Resources\SettingResource;
 use App\Models\Setting;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreSettingRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreSettingRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreSettingRequest $request)
@@ -46,7 +46,7 @@ class SettingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateSettingRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateSettingRequest  $request
      * @param  Setting  $setting
      * @return \Illuminate\Http\Response
      */

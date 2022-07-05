@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreSourceRequest;
-use App\Http\Requests\Api\UpdateSourceRequest;
+use App\Http\Requests\Api\Dashboard\StoreSourceRequest;
+use App\Http\Requests\Api\Dashboard\UpdateSourceRequest;
 use App\Http\Resources\SourceResource;
 use App\Models\Source;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class SourceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreSourceRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreSourceRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreSourceRequest $request)
@@ -46,7 +46,7 @@ class SourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateSourceRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateSourceRequest  $request
      * @param  Source  $source
      * @return \Illuminate\Http\Response
      */

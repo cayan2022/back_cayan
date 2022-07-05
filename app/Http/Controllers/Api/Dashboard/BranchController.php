@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreBranchRequest;
-use App\Http\Requests\Api\UpdateBranchRequest;
+use App\Http\Requests\Api\Dashboard\StoreBranchRequest;
+use App\Http\Requests\Api\Dashboard\UpdateBranchRequest;
 use App\Http\Resources\BranchResource;
 use App\Models\Branch;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class BranchController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreBranchRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreBranchRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreBranchRequest $request)
@@ -46,7 +46,7 @@ class BranchController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateBranchRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateBranchRequest  $request
      * @param  Branch  $branch
      * @return \Illuminate\Http\Response
      */

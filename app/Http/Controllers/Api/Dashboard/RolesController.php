@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\AssignRoleToUserRequest;
-use App\Http\Requests\Api\RoleRequest;
-use App\Http\Requests\Api\PermissionRequest;
+use App\Http\Requests\Api\Dashboard\AssignRoleToUserRequest;
+use App\Http\Requests\Api\Dashboard\PermissionRequest;
+use App\Http\Requests\Api\Dashboard\RoleRequest;
 use App\Models\AppTables;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;

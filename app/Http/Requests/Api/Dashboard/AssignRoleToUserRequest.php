@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTestimonialRequest extends FormRequest
+class AssignRoleToUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreTestimonialRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreTestimonialRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'role_id' => ['required', 'numeric','exists:roles,id', 'max:255'],
+            'user_id'=>['required','numeric','exists:users,id']
         ];
     }
 }

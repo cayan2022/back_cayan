@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreCategoryRequest;
-use App\Http\Requests\Api\UpdateCategoryRequest;
+use App\Http\Requests\Api\Dashboard\StoreCategoryRequest;
+use App\Http\Requests\Api\Dashboard\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreCategoryRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCategoryRequest $request)
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateCategoryRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateCategoryRequest  $request
      * @param  Category  $category
      * @return \Illuminate\Http\Response
      */

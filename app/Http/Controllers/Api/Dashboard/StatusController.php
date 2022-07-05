@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreStatusRequest;
-use App\Http\Requests\Api\UpdateStatusRequest;
+use App\Http\Requests\Api\Dashboard\StoreStatusRequest;
+use App\Http\Requests\Api\Dashboard\UpdateStatusRequest;
 use App\Http\Resources\StatusResource;
 use App\Models\Status;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class StatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreStatusRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreStatusRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreStatusRequest $request)
@@ -46,7 +46,7 @@ class StatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateStatusRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateStatusRequest  $request
      * @param  Status  $status
      * @return \Illuminate\Http\Response
      */

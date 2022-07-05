@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\StoreOfferRequest;
-use App\Http\Requests\Api\UpdateOfferRequest;
+use App\Http\Requests\Api\Dashboard\StoreOfferRequest;
+use App\Http\Requests\Api\Dashboard\UpdateOfferRequest;
 use App\Http\Resources\OfferResource;
 use App\Models\Offer;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -24,7 +24,7 @@ class OfferController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\StoreOfferRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StoreOfferRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreOfferRequest $request)
@@ -46,7 +46,7 @@ class OfferController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\UpdateOfferRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateOfferRequest  $request
      * @param  Offer  $offer
      * @return \Illuminate\Http\Response
      */
