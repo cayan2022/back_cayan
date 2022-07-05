@@ -3,6 +3,7 @@
 use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Testing\File;
+use Illuminate\Support\Arr;
 
 it('can view profile if authenticated', function () {
     $this->getJson(route('dashboard.profile.show'))->assertUnauthorized();
@@ -53,4 +54,25 @@ it('can update profile', function () {
         ->and($oldUserData['email'])
         ->not
         ->toEqual($user->email);
+});
+test('image validation during updating profile', function () {
+    $user = User::factory()->create();
+    $updatedData=[
+        'name' => $user->name,
+        'gender' => $user->gender,
+        'email' => 'ss@ss.com',
+        'country_id' => Country::inRandomOrder()->take(1)->first()->id,
+        'phone' => '999999999',
+        'password' => '123456789',
+        'password_confirmation' => '123456789',
+        'image'=>'text'
+    ];
+    actingAs($user)
+        ->postJson(route('dashboard.profile.update'),$updatedData )
+        ->assertJsonValidationErrorFor('image');
+
+    actingAs($user)
+        ->postJson(route('dashboard.profile.update'),Arr::set($updatedData, 'image', null))
+        ->assertSuccessful()
+        ->assertJsonMissingValidationErrors('image');
 });
