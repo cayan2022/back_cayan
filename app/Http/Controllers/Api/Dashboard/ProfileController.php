@@ -4,19 +4,13 @@ namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\ProfileRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
 
-    public function getEmployees()
-    {
-        $users = User::whereType(User::MODERATOR)->get();
 
-        return UserResource::collection($users);
-    }
     /**
      * Display the authenticated user resource.
      *

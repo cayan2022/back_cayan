@@ -15,5 +15,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'logged_out'=>'user has logged out'
+    'logged_out'=>'user has logged out',
+    'change_password' => 'User Change Password Successfully',
+    'ban' => 'User Ban Successfully'
 ];

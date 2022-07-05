@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\LoginRequest;
-use App\Http\Requests\Api\Dashboard\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -12,23 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Handle a register request to the application using firebase.
-     *
-     * @param  RegisterRequest  $request
-     * @return UserResource
-     */
-
-    public function register(RegisterRequest $request)
-    {
-        $user = User::create($request->validated());
-
-        if($request->hasFile('image') && $request->file('image')->isValid()){
-            $user->addMediaFromRequest('image')->toMediaCollection('images');
-        }
-
-        return $this->getAuthUserResponse($user->fresh());
-    }
 
     /**
      * Handle a login request to the application.
@@ -46,6 +28,9 @@ class AuthController extends Controller
             $user = User::whereEmail($request->username)
                 ->orWhere('phone', $request->username)
                 ->orWhere('name', $request->username)->firstOrFail();
+            if($user->is_active == false){
+                return response()->json(['error' => 'Your account has been banned'], 403);
+            }
 
             return $this->getAuthUserResponse($user->fresh());
         }
