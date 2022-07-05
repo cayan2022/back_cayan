@@ -12,8 +12,8 @@
 */
 
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\File;
 use Tests\CreatesApplication;
-use Tests\TestCase;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -24,6 +24,19 @@ uses(
     RefreshDatabase::class
 )->beforeEach(function () {
     $this->seed(DatabaseSeeder::class);
+    config()->set('filesystems.disks.public', [
+        'driver' => 'local',
+        'root' => config('media-library.test_folder'),
+    ]);
+})->afterEach(function () {
+    config()->set('filesystems.disks.public', [
+        'driver' => 'local',
+        'root' => storage_path('app/public'),
+    ]);
+    $directory = config('media-library.test_folder');
+    if (File::isDirectory($directory)) {
+        File::deleteDirectory($directory);
+    }
 })->in('Feature');
 /*
 |--------------------------------------------------------------------------

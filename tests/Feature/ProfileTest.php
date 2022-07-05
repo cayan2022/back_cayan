@@ -2,6 +2,7 @@
 
 use App\Models\Country;
 use App\Models\User;
+use Illuminate\Http\Testing\File;
 
 it('can view profile if authenticated', function () {
     $this->getJson(route('dashboard.profile.show'))->assertUnauthorized();
@@ -23,14 +24,15 @@ it('is unauthenticated', function () {
 });
 
 it('can\'t update profile', function () {
-    $this->patchJson(route('dashboard.profile.update'))->assertUnauthorized();
+    $this->postJson(route('dashboard.profile.update'))->assertUnauthorized();
 });
 
 it('can update profile', function () {
     $oldUserData = ['name' => 'test', 'gender' => User::MALE, 'email' => 'test@test.com'];
     $user = User::factory()->create($oldUserData);
+
     actingAs($user)
-        ->patchJson(route('dashboard.profile.update'), [
+        ->postJson(route('dashboard.profile.update'), [
             'name' => $user->name,
             'gender' => $user->gender,
             'email' => 'ss@ss.com',
@@ -38,11 +40,16 @@ it('can update profile', function () {
             'phone' => '999999999',
             'password' => '123456789',
             'password_confirmation' => '123456789',
+            'image' => File::image('test.jpg'),
         ])->assertSuccessful()
         ->assertJson(['data' => $user->getResource()->jsonSerialize()]);
+    $this->assertFileExists($user->getFirstMedia('images')->getPath());
+
     expect([$oldUserData['name'], $oldUserData['gender']])
         ->toMatchArray([$user->name, $user->gender])
         ->toBeTruthy()
+        ->and($user->getResource()->jsonSerialize()['image'])
+        ->toEqual($user->getAvatar())
         ->and($oldUserData['email'])
         ->not
         ->toEqual($user->email);
