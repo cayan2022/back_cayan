@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Dashboard\{
+    CountryController,
     RolesController,
     CategoryController,
     ServiceController,
@@ -57,7 +58,8 @@ Route::as('dashboard.')
                 'substatuses' => SubStatusController::class,
                 'settings' => SettingController::class,
                 'testimonials' => TestimonialController::class,
-                'abouts' => AboutController::class
+                'abouts' => AboutController::class,
+                'countries' => CountryController::class
             ]);
         });
     });

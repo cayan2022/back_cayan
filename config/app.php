@@ -118,7 +118,10 @@ return [
     */
 
     'faker_locale' => 'en_US',
-
+    'available_faker_locales' => [
+        'en_US',
+        'ar_SA',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Encryption Key
