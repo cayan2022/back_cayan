@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'gender'=>$this->faker->randomElement(User::GENDERS),
             'country_id'=>Country::inRandomOrder()->take(1)->first()->id,
             'phone'=>$this->faker->phoneNumber,
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => $this->faker->unique()->freeEmail,
             'email_verified_at' => now(),
             'password' => 'password', // it will be set to hash password from user model mutators
             'remember_token' => Str::random(10),
