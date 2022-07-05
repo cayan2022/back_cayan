@@ -35,6 +35,8 @@ class ProfileRequest extends FormRequest
             'country_id'    => 'required|numeric|exists:countries,id',
             'phone'    => ['required','string','max:255',Rule::unique('users','phone')->ignore( auth()->id())],
             'password' => ['required', 'confirmed','string', Password::defaults()],
+            'image' => 'nullable|image'
+
         ];
     }
 }

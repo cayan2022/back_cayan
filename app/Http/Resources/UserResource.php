@@ -23,8 +23,10 @@ class UserResource extends JsonResource
             'type' => $this->type,
             'gender' => $this->gender,
             'is_active' => $this->is_active,
+            'image' =>  $this->getAvatar() ,
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'created_at_formatted' =>  $this->created_at ? $this->created_at->diffForHumans() : null,
         ];
     }
 }
+

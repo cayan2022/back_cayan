@@ -33,6 +33,7 @@ class RegisterRequest extends FormRequest
             'country_id'     => 'required|numeric|exists:countries,id',
             'phone'    => 'required|string|max:255|unique:users,phone',
             'password' => ['required', 'confirmed','string', Password::defaults()],
+            'image' => 'nullable|image'
         ];
     }
 }

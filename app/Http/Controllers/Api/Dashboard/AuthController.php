@@ -23,6 +23,10 @@ class AuthController extends Controller
     {
         $user = User::create($request->validated());
 
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $user->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
         return $this->getAuthUserResponse($user->fresh());
     }
 

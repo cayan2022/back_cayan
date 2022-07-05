@@ -22,11 +22,13 @@ Route::as('dashboard.')
     ->prefix('dashboard')
     ->group(function () {
 
+
         //profile
         Route::as('profile.')
             ->prefix('profile')->group(function () {
+            Route::get('getEmployees', [ProfileController::class, 'getEmployees'])->name('getEmployees');
             Route::get('me', [ProfileController::class, 'show'])->name('show');
-            Route::patch('update', [ProfileController::class, 'update'])->name('update');
+            Route::post('update', [ProfileController::class, 'update'])->name('update');
             Route::post('logout', [ProfileController::class, 'logout'])->name('logout');
         });
 
