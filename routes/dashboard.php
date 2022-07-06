@@ -38,8 +38,6 @@ Route::as('dashboard.')
                 Route::post('active/{user}', [ProfileController::class, 'active'])->name('active');
             });
 
-
-
         //Roles & Permissions Crud
         Route::as('roles.')
             ->prefix('roles')->group(function () {
@@ -50,6 +48,7 @@ Route::as('dashboard.')
                 Route::post('add-role', [RolesController::class, 'addRole'])->name('role');
                 Route::post('assignRoleToUser', [RolesController::class, 'assignRoleToUser']);
             });
+
         //pages
         Route::as('pages.')
             ->prefix('pages')->group(function () {

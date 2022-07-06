@@ -14,7 +14,6 @@ use App\Models\User;
 class ProfileController extends Controller
 {
 
-
     /**
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
