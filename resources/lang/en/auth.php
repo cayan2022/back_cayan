@@ -12,12 +12,11 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     'failed' => 'These credentials do not match our records.',
+    'password' => 'Wrong Password',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
     'change_password' => 'User Change Password Successfully',
-    'ban' => 'User Ban Successfully',
+    'block' => 'User Block Successfully',
     'logged_out'=>'User Has Logged Out',
     'success_operation'=>'Success Operation',
     'errors'=>[
