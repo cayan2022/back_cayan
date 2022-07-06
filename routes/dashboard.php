@@ -16,8 +16,7 @@ use App\Http\Controllers\Api\Dashboard\{
     TestimonialController,
     AboutController,
     ProfileController,
-    ChangePasswordController,
-    EmolpyeeController
+    ChangePasswordController
 
 };
 
@@ -25,16 +24,6 @@ Route::as('dashboard.')
     ->middleware('auth:sanctum')
     ->prefix('dashboard')
     ->group(function () {
-        //profile
-        Route::as('profile.')
-            ->prefix('profile')->group(function () {
-                Route::get('me', [ProfileController::class, 'show'])->name('show');
-                Route::post('update', [ProfileController::class, 'update'])->name('update');
-                Route::post('logout', [ProfileController::class, 'logout'])->name('logout');
-            });
-
-        //changePassword
-        Route::post('changePassword', [ChangePasswordController::class, 'changePassword'])->name('changePassword');
 
         //profile
         Route::as('profile.')
@@ -43,7 +32,10 @@ Route::as('dashboard.')
                 Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
                 Route::post('store', [ProfileController::class, 'store'])->name('store')->withoutMiddleware('auth:sanctum');
                 Route::post('update/{user}', [ProfileController::class, 'update'])->name('update');
+                Route::post('change-password', ChangePasswordController::class)->name('change.password');
                 Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout');
+                Route::post('block/{user}', [ProfileController::class, 'block'])->name('block');
+                Route::post('active/{user}', [ProfileController::class, 'active'])->name('active');
             });
 
 
