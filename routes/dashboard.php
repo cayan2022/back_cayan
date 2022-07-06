@@ -25,13 +25,6 @@ Route::as('dashboard.')
     ->middleware('auth:sanctum')
     ->prefix('dashboard')
     ->group(function () {
-        //profile
-        Route::as('profile.')
-            ->prefix('profile')->group(function () {
-                Route::get('me', [ProfileController::class, 'show'])->name('show');
-                Route::post('update', [ProfileController::class, 'update'])->name('update');
-                Route::post('logout', [ProfileController::class, 'logout'])->name('logout');
-            });
 
         //changePassword
         Route::post('changePassword', [ChangePasswordController::class, 'changePassword'])->name('changePassword');
