@@ -2,10 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -33,11 +30,7 @@ class StoreProfileTest extends TestCase
 
     function test_store_profile()
     {
-
-
-        Storage::fake('avatars');
         $response = $this->postJson(route('dashboard.profile.store'), [
-
             'name' => 'User Test',
             'email' => 'user@demo.com',
             'country_id' => '1',
@@ -51,5 +44,6 @@ class StoreProfileTest extends TestCase
 
         $response->assertSuccessful()
             ->assertJsonStructure(['token']);
+        $this->assertFileExists(User::find($response['data']['id'])->getFirstMedia('images')->getPath());
     }
 }
