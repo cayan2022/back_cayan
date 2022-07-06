@@ -14,7 +14,6 @@ use App\Models\User;
 class ProfileController extends Controller
 {
 
-
     /**
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
@@ -80,9 +79,18 @@ class ProfileController extends Controller
      * @param  User  $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function toggleActivation(User $user)
+    public function block(User $user)
     {
-        $user->toggleActivation();
+        $user->block();
+        return response()->json(['message'=>__('auth.success_operation')]);
+    }
+    /**
+     * @param  User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function active(User $user)
+    {
+        $user->active();
         return response()->json(['message'=>__('auth.success_operation')]);
     }
 }

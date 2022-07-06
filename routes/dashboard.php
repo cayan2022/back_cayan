@@ -16,8 +16,7 @@ use App\Http\Controllers\Api\Dashboard\{
     TestimonialController,
     AboutController,
     ProfileController,
-    ChangePasswordController,
-    EmolpyeeController
+    ChangePasswordController
 
 };
 
@@ -25,6 +24,7 @@ Route::as('dashboard.')
     ->middleware('auth:sanctum')
     ->prefix('dashboard')
     ->group(function () {
+
 
         //changePassword
         Route::post('changePassword', [ChangePasswordController::class, 'changePassword'])->name('changePassword');
@@ -36,10 +36,11 @@ Route::as('dashboard.')
                 Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
                 Route::post('store', [ProfileController::class, 'store'])->name('store')->withoutMiddleware('auth:sanctum');
                 Route::post('update/{user}', [ProfileController::class, 'update'])->name('update');
+                Route::post('change-password', ChangePasswordController::class)->name('change.password');
                 Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout');
+                Route::post('block/{user}', [ProfileController::class, 'block'])->name('block');
+                Route::post('active/{user}', [ProfileController::class, 'active'])->name('active');
             });
-
-
 
         //Roles & Permissions Crud
         Route::as('roles.')
@@ -51,6 +52,7 @@ Route::as('dashboard.')
                 Route::post('add-role', [RolesController::class, 'addRole'])->name('role');
                 Route::post('assignRoleToUser', [RolesController::class, 'assignRoleToUser']);
             });
+
         //pages
         Route::as('pages.')
             ->prefix('pages')->group(function () {

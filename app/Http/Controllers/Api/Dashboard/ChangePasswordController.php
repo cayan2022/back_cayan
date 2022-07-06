@@ -14,7 +14,7 @@ class ChangePasswordController extends Controller
         $this->middleware(['role:super-admin']);
     }
 
-    public function changePassword(ChangePasswordRequest $request)
+    public function __invoke(ChangePasswordRequest $request)
     {
         $user = User::whereId($request->user_id)->firstOrFail();
 

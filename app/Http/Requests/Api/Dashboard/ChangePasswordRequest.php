@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
 class ChangePasswordRequest extends FormRequest
@@ -14,7 +15,7 @@ class ChangePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -27,7 +28,6 @@ class ChangePasswordRequest extends FormRequest
         return [
             'user_id' => 'required|numeric|exists:users,id',
             'password' => ['required', 'confirmed','string', Password::defaults()],
-
         ];
     }
 }
