@@ -17,13 +17,12 @@ class LoginTest extends TestCase
         $this->postJson(route('auth.login'), [
             'username' => 'ssssN',
             'password' => 'password',
-        ])
-            ->assertStatus(403);
+        ])->assertJsonValidationErrorFor('username');
     }
 
     public function test_sanctum_login()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['email'=>'test@gmail.com']);
 
         $response = $this->postJson(route('auth.login'), [
             'username' => $user->email,

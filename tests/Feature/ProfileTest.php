@@ -5,37 +5,38 @@ use App\Models\User;
 use Illuminate\Http\Testing\File;
 use Illuminate\Support\Arr;
 
-it('can view profile if authenticated', function () {
-    $this->getJson(route('dashboard.profile.show'))->assertUnauthorized();
+beforeEach(fn () => $this->user=User::factory()->create());
 
-    $user = User::factory()->create();
-    actingAs($user)
-        ->getJson(route('dashboard.profile.show'))
+it('can view profile if authenticated', function () {
+    $this->getJson(route('dashboard.profile.show',$this->user))->assertUnauthorized();
+
+    actingAs($this->user)
+        ->getJson(route('dashboard.profile.show',$this->user))
         ->assertSuccessful()
-        ->assertJson(['data' => $user->getResource()->jsonSerialize()]);
+        ->assertJson(['data' => $this->user->getResource()->jsonSerialize()]);
 });
 
 it('is unauthenticated', function () {
-    $this->postJson(route('dashboard.profile.logout'))->assertUnauthorized();
+    $this->postJson(route('dashboard.profile.logout',$this->user))->assertUnauthorized();
 
-    actingAs(User::factory()->create())
-        ->postJson(route('dashboard.profile.logout'))
+    actingAs($this->user)
+        ->postJson(route('dashboard.profile.logout',$this->user))
         ->assertSuccessful()
         ->assertJson(['message' => __('auth.logged_out')]);
 });
 
 it('can\'t update profile', function () {
-    $this->postJson(route('dashboard.profile.update'))->assertUnauthorized();
+    $this->putJson(route('dashboard.profile.update',$this->user))->assertUnauthorized();
 });
 
 it('can update profile', function () {
     $oldUserData = ['name' => 'test', 'gender' => User::MALE, 'email' => 'test@test.com'];
-    $user = User::factory()->create($oldUserData);
+    $this->user = User::factory()->create($oldUserData);
 
-    actingAs($user)
-        ->postJson(route('dashboard.profile.update'), [
-            'name' => $user->name,
-            'gender' => $user->gender,
+    actingAs($this->user)
+        ->putJson(route('dashboard.profile.update',$this->user), [
+            'name' => $this->user->name,
+            'gender' => $this->user->gender,
             'email' => 'ss@ss.com',
             'country_id' => Country::inRandomOrder()->take(1)->first()->id,
             'phone' => '999999999',
@@ -43,23 +44,22 @@ it('can update profile', function () {
             'password_confirmation' => '123456789',
             'image' => File::image('test.jpg'),
         ])->assertSuccessful()
-        ->assertJson(['data' => $user->getResource()->jsonSerialize()]);
-    $this->assertFileExists($user->getFirstMedia('images')->getPath());
+        ->assertExactJson(['data' => $this->user->fresh()->getResource()->jsonSerialize()]);
+    $this->assertFileExists($this->user->getFirstMedia('images')->getPath());
 
     expect([$oldUserData['name'], $oldUserData['gender']])
-        ->toMatchArray([$user->name, $user->gender])
+        ->toMatchArray([$this->user->name, $this->user->gender])
         ->toBeTruthy()
-        ->and($user->getResource()->jsonSerialize()['image'])
-        ->toEqual($user->getAvatar())
+        ->and($this->user->fresh()->getResource()->jsonSerialize()['image'])
+        ->toEqual($this->user->getAvatar())
         ->and($oldUserData['email'])
         ->not
-        ->toEqual($user->email);
+        ->toEqual($this->user->fresh()->email);
 });
 test('image validation during updating profile', function () {
-    $user = User::factory()->create();
     $updatedData=[
-        'name' => $user->name,
-        'gender' => $user->gender,
+        'name' => $this->user->name,
+        'gender' => $this->user->gender,
         'email' => 'ss@ss.com',
         'country_id' => Country::inRandomOrder()->take(1)->first()->id,
         'phone' => '999999999',
@@ -67,12 +67,12 @@ test('image validation during updating profile', function () {
         'password_confirmation' => '123456789',
         'image'=>'text'
     ];
-    actingAs($user)
-        ->postJson(route('dashboard.profile.update'),$updatedData )
+    actingAs($this->user)
+        ->putJson(route('dashboard.profile.update',$this->user),$updatedData )
         ->assertJsonValidationErrorFor('image');
 
-    actingAs($user)
-        ->postJson(route('dashboard.profile.update'),Arr::set($updatedData, 'image', null))
+    actingAs($this->user)
+        ->putJson(route('dashboard.profile.update',$this->user),Arr::set($updatedData, 'image', null))
         ->assertSuccessful()
         ->assertJsonMissingValidationErrors('image');
 });

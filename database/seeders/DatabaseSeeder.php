@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $counter = 5;
+        $counter = config('database.seeder_count');
         Country::factory()->count($counter)->create();
         $users = User::factory()->count($counter)->create();
         About::factory()->count(3)->create();

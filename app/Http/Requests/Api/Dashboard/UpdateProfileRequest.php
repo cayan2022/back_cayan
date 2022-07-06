@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class ProfileRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +33,7 @@ class ProfileRequest extends FormRequest
             'email'    => ['required','email:rfc,dns',Rule::unique('users','email')->ignore(auth()->id())],
             'country_id'    => 'required|numeric|exists:countries,id',
             'phone'    => ['required','string','max:255',Rule::unique('users','phone')->ignore( auth()->id())],
-            'password' => ['required', 'confirmed','string', Password::defaults()],
+            'password' => ['sometimes','required', 'confirmed','string', Password::defaults()],
             'image' => 'nullable|image'
 
         ];

@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'type' => $this->type,
             'gender' => $this->gender,
-            'is_active' => $this->is_active,
+            'is_block' => $this->is_block,
             'image' =>  $this->getAvatar() ,
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'created_at_formatted' =>  $this->created_at ? $this->created_at->diffForHumans() : null,

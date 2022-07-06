@@ -10,15 +10,15 @@ use Tests\TestCase;
 use App\Models\User;
 
 
-class RegisterTest extends TestCase
+class StoreProfileTest extends TestCase
 {
 
-    public function test_employee_register_validation()
+    public function test_store_profile_validation()
     {
-        $this->postJson(route('auth.register'), [])
+        $this->postJson(route('dashboard.profile.store'), [])
             ->assertJsonValidationErrors(['name', 'email','country_id', 'phone', 'password']);
 
-        $this->postJson(route('auth.register'), [
+        $this->postJson(route('dashboard.profile.store'), [
             'name' => 'User',
             'email' => 'user.demo.com5',
             'country_id' => '1',
@@ -31,11 +31,13 @@ class RegisterTest extends TestCase
             ->assertJsonValidationErrors(['email', 'password','image']);
     }
 
-    function test_employee_register()
+    function test_store_profile()
     {
 
+
         Storage::fake('avatars');
-        $response = $this->postJson(route('auth.register'), [
+        $response = $this->postJson(route('dashboard.profile.store'), [
+
             'name' => 'User Test',
             'email' => 'user@demo.com',
             'country_id' => '1',

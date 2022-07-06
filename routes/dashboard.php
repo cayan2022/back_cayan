@@ -25,19 +25,6 @@ Route::as('dashboard.')
     ->middleware('auth:sanctum')
     ->prefix('dashboard')
     ->group(function () {
-
-        //employees mangement
-        Route::as('employee.')
-            ->prefix('employee')->group(function () {
-
-                // add new employee
-                Route::post('register', [EmolpyeeController::class, 'register'])->name('register');
-                Route::post('ban', [EmolpyeeController::class, 'ban'])->name('ban');
-                Route::get('getEmployees', [EmolpyeeController::class, 'getEmployees'])->name('getEmployees');
-
-            });
-
-
         //profile
         Route::as('profile.')
             ->prefix('profile')->group(function () {
@@ -48,6 +35,17 @@ Route::as('dashboard.')
 
         //changePassword
         Route::post('changePassword', [ChangePasswordController::class, 'changePassword'])->name('changePassword');
+
+        //profile
+        Route::as('profile.')
+            ->prefix('profile')->group(function () {
+                Route::get('all', [ProfileController::class, 'index'])->name('index');
+                Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
+                Route::post('store', [ProfileController::class, 'store'])->name('store')->withoutMiddleware('auth:sanctum');
+                Route::put('update/{user}', [ProfileController::class, 'update'])->name('update');
+                Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout');
+            });
+
 
 
         //Roles & Permissions Crud

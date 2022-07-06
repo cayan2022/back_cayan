@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class LoginRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|string',
-            'password'=>'required|string'
+            'username' => ['required','email:rfc,dns',Rule::exists('users','email')],
+            'password'=>['required','string']
         ];
     }
 }
