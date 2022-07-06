@@ -116,7 +116,7 @@ class User extends Authenticatable implements HasMedia
      */
     public function getResource(): UserResource
     {
-        return new UserResource($this);
+        return new UserResource($this->fresh());
     }
     /**
      * Get the access token currently associated with the user. Create a new.
@@ -145,9 +145,8 @@ class User extends Authenticatable implements HasMedia
     /**
      * The user profile image url.
      *
-     * @return bool
      */
-    public function getAvatar(): bool
+    public function getAvatar()
     {
         return $this->getFirstMediaUrl('images');
     }

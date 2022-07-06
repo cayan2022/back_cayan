@@ -26,7 +26,23 @@ it('is unauthenticated', function () {
 });
 
 it('can\'t update profile', function () {
-    $this->putJson(route('dashboard.profile.update',$this->user))->assertUnauthorized();
+    $this->withExceptionHandling();
+    $this->postJson(route('dashboard.profile.update',$this->user))->assertUnauthorized();
+
+    actingAs($this->user)
+        ->postJson(route('dashboard.profile.update',User::all()->pluck('id')->last() + 1 ), [
+            'password' => '123456789',
+            'password_confirmation' => '123456789',
+        ])->assertNotFound();
+
+    actingAs($this->user)
+        ->postJson(route('dashboard.profile.update',User::first()->id ), [
+            'name' => $this->user->name,
+            'gender' => $this->user->gender,
+            'email' => 'ss@ss.com',
+            'country_id' => Country::inRandomOrder()->take(1)->first()->id,
+            'phone' => $this->user->phone,
+        ])->assertJsonValidationErrorFor('phone');
 });
 
 it('can update profile', function () {
@@ -34,23 +50,23 @@ it('can update profile', function () {
     $this->user = User::factory()->create($oldUserData);
 
     actingAs($this->user)
-        ->putJson(route('dashboard.profile.update',$this->user), [
+        ->postJson(route('dashboard.profile.update',$this->user), [
             'name' => $this->user->name,
             'gender' => $this->user->gender,
             'email' => 'ss@ss.com',
             'country_id' => Country::inRandomOrder()->take(1)->first()->id,
-            'phone' => '999999999',
+            'phone' => $this->user->phone,
             'password' => '123456789',
             'password_confirmation' => '123456789',
             'image' => File::image('test.jpg'),
         ])->assertSuccessful()
-        ->assertExactJson(['data' => $this->user->fresh()->getResource()->jsonSerialize()]);
+        ->assertExactJson(['data' => $this->user->getResource()->jsonSerialize()]);
     $this->assertFileExists($this->user->getFirstMedia('images')->getPath());
 
     expect([$oldUserData['name'], $oldUserData['gender']])
         ->toMatchArray([$this->user->name, $this->user->gender])
         ->toBeTruthy()
-        ->and($this->user->fresh()->getResource()->jsonSerialize()['image'])
+        ->and($this->user->getResource()->jsonSerialize()['image'])
         ->toEqual($this->user->getAvatar())
         ->and($oldUserData['email'])
         ->not
@@ -68,11 +84,11 @@ test('image validation during updating profile', function () {
         'image'=>'text'
     ];
     actingAs($this->user)
-        ->putJson(route('dashboard.profile.update',$this->user),$updatedData )
+        ->postJson(route('dashboard.profile.update',$this->user),$updatedData )
         ->assertJsonValidationErrorFor('image');
 
     actingAs($this->user)
-        ->putJson(route('dashboard.profile.update',$this->user),Arr::set($updatedData, 'image', null))
+        ->postJson(route('dashboard.profile.update',$this->user),Arr::set($updatedData, 'image', null))
         ->assertSuccessful()
         ->assertJsonMissingValidationErrors('image');
 });
