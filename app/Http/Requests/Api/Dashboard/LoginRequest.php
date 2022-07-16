@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\NotBlockedUser;
+use Doctrine\Inflector\Rules\NorwegianBokmal\Rules;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,8 +27,16 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => ['required','email:rfc,dns',Rule::exists('users','email')],
+            'username' => ['required','email:rfc,dns',Rule::exists('users','email'),new NotBlockedUser],
             'password'=>['required','string']
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'username'=>trans('auth.attributes.email'),
+            'password'=>trans('auth.attributes.password'),
         ];
     }
 }

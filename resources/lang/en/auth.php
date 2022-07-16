@@ -20,7 +20,12 @@ return [
     'logged_out'=>'User Has Logged Out',
     'success_operation'=>'Success Operation',
     'errors'=>[
-        'wrong_credentials'=>'Credentials Are Wrong!'
+        'wrong_credentials'=>'Credentials Are Wrong!',
+        'user_is_blocked'=>'This User Has Been Blocked!'
+    ],
+    'attributes'=>[
+        'email'=>'Email Address',
+        'password'=>'Password'
     ]
 
 ];
