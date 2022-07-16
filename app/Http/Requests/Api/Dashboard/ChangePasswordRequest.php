@@ -15,7 +15,7 @@ class ChangePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -27,6 +27,7 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'user_id' => 'required|numeric|exists:users,id',
+            'old_password'=>['sometimes','required','string','current_password:sanctum','different:password'],
             'password' => ['required', 'confirmed','string', Password::defaults()],
         ];
     }

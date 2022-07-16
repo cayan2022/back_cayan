@@ -133,11 +133,17 @@ class User extends Authenticatable implements HasMedia
         return $this->createToken($device)->plainTextToken;
     }
 
+    /**
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return $this->type===self::ADMIN;
     }
 
+    /**
+     * @return bool
+     */
     public function isModerator(): bool
     {
         return $this->type===self::MODERATOR;
@@ -151,6 +157,16 @@ class User extends Authenticatable implements HasMedia
         return $this->getFirstMediaUrl('images');
     }
 
+    /**
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('images')
+            ->useFallbackUrl(asset('images/anonymous-user.jpg'))
+            ->useFallbackPath(asset('images/anonymous-user.jpg'));
+    }
     /*Relations*/
     /**
      * @return HasMany
@@ -160,6 +176,9 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(OrderHistory::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class);

@@ -62,5 +62,15 @@ class DatabaseSeeder extends Seeder
         $adminRole->givePermissionTo(Permission::all());
         $admin = User::findOrFail(1);
         $admin->assignRole($adminRole);
+
+        $customerRole =  Role::firstOrCreate(['name'=>'customer','guard_name'=>'api']);
+        $customerRole->givePermissionTo(Permission::whereType('Customers')->get());
+        $moderator1 = User::findOrFail(2);
+        $moderator1->assignRole($customerRole);
+
+        $pagesRole =  Role::firstOrCreate(['name'=>'pages','guard_name'=>'api']);
+        $pagesRole->givePermissionTo(Permission::whereType('Pages')->get());
+        $moderator2 = User::findOrFail(3);
+        $moderator2->assignRole($pagesRole);
     }
 }

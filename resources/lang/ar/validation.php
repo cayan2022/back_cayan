@@ -94,6 +94,7 @@ return [
     'not_regex'            => 'صيغة :attribute غير صحيحة.',
     'numeric'              => 'يجب على :attribute أن يكون رقمًا.',
     'password'             => 'كلمة المرور غير صحيحة.',
+    'current_password'     => 'كلمة المرور الحالية غير صحيحة.',
     'present'              => 'يجب تقديم :attribute.',
     'regex'                => 'صيغة :attribute .غير صحيحة.',
     'required'             => ':attribute مطلوب.',
