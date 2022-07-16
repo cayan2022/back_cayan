@@ -58,6 +58,7 @@ it('can update profile', function () {
             'phone' => $this->user->phone,
             'password' => '123456789',
             'password_confirmation' => '123456789',
+            'role_id'=>'1',
             'image' => File::image('test.jpg'),
         ])->assertSuccessful()
         ->assertExactJson(['data' => $this->user->getResource()->jsonSerialize()]);
@@ -81,7 +82,8 @@ test('image validation during updating profile', function () {
         'phone' => '999999999',
         'password' => '123456789',
         'password_confirmation' => '123456789',
-        'image'=>'text'
+        'image'=>'text',
+        'role_id'=>'1'
     ];
     actingAs($this->user)
         ->postJson(route('dashboard.profile.update',$this->user),$updatedData )

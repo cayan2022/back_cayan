@@ -9,7 +9,11 @@ use App\Models\User;
 
 class StoreProfileTest extends TestCase
 {
-
+    public function setUp():void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
     public function test_store_profile_validation()
     {
         $this->postJson(route('dashboard.profile.store'), [])
