@@ -17,7 +17,7 @@ class UpdateProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -34,8 +34,8 @@ class UpdateProfileRequest extends FormRequest
             'country_id'    => 'required|numeric|exists:countries,id',
             'phone'    => ['required','string','max:255',Rule::unique('users','phone')->ignore( $this->user->id)],
             'password' => ['sometimes','required', 'confirmed','string', Password::defaults()],
-            'image' => 'nullable|image'
-
+            'image' => 'nullable|mimes:jpg,jpeg,png,svg',
+            'role_id' => 'required|numeric|exists:roles,id',
         ];
     }
 }

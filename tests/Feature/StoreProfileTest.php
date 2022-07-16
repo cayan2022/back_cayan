@@ -9,18 +9,23 @@ use App\Models\User;
 
 class StoreProfileTest extends TestCase
 {
-
+    public function setUp():void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
     public function test_store_profile_validation()
     {
         $this->postJson(route('dashboard.profile.store'), [])
-            ->assertJsonValidationErrors(['name', 'email','country_id', 'phone', 'password']);
+            ->assertJsonValidationErrors(['name', 'email','country_id', 'phone', 'password','gender','role_id']);
 
         $this->postJson(route('dashboard.profile.store'), [
             'name' => 'User',
             'email' => 'user.demo.com5',
             'country_id' => '1',
             'phone' => '123456',
-            'type' => User::MODERATOR,
+            'role_id'=>'1',
+            'gender' => User::MALE,
             'image' => UploadedFile::fake()->create('file.pdf'),
             'password' => 'password',
             'password_confirmation' => '123456',
@@ -32,6 +37,7 @@ class StoreProfileTest extends TestCase
     {
         $response = $this->postJson(route('dashboard.profile.store'), [
             'name' => 'User Test',
+            'role_id'=>'1',
             'email' => 'user@demo.com',
             'country_id' => '1',
             'phone' => '123456',

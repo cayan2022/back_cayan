@@ -16,7 +16,10 @@ class CountryController extends Controller
      */
     public function index()
     {
-        return CountryResource::collection(Country::paginate());
+        $countries=Country::when(request()->filled('name'), function ($query) {
+            $query->where('name', 'like','%'.request('name').'%');
+        })->paginate();
+        return CountryResource::collection($countries);
     }
 
     /**

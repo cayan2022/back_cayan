@@ -18,7 +18,7 @@ class NotBlockedUser implements Rule
     {
         $user=User::whereEmail($value)->first();
         if ($user){
-            return $user->is_block === false;
+            return $user->isActive();
         }
         return true;
     }
