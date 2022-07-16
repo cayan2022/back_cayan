@@ -20,6 +20,11 @@ return [
     'logged_out'=>'تم تسجيل خروج المستخدم',
     'success_operation'=>'عملية ناجحه',
     'errors'=>[
-        'wrong_credentials'=>'بيانات التسجيل خاطئة!'
+        'wrong_credentials'=>'بيانات التسجيل خاطئة!',
+        'user_is_blocked'=>'هذا المستخدم محظور!'
+    ],
+    'attributes'=>[
+        'email'=>'البريد الالكترونى',
+        'password'=>'كلمة المرور'
     ]
 ];
