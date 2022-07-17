@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Dashboard\StoreProfileRequest;
 use App\Http\Requests\Api\Dashboard\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 /**
  *
@@ -32,6 +33,11 @@ class ProfileController extends Controller
     {
         $user = User::create($request->validated());
 
+        // assign role its has permissions to user
+        $role = Role::findOrFail($request->role_id);
+
+        $user->assignRole($role);
+
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $user->addMediaFromRequest('image')->toMediaCollection('images');
         }
@@ -55,6 +61,11 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request,User $user)
     {
         $user->update($request->validated());
+
+        // assign role its has permissions to user
+        $role = Role::findOrFail($request->role_id);
+
+        $user->assignRole($role);
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $user->clearMediaCollection('images');
