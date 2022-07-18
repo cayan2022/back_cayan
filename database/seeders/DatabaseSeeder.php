@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
         //create roles
         $adminRole =  Role::firstOrCreate(['name'=>'super-admin','guard_name'=>'api']);
         $adminRole->givePermissionTo(Permission::all());
-        $admin = User::findOrFail(1);
+        $admin = User::factory()->create(['email'=>'super-admin@gmail.com']);
         $admin->assignRole($adminRole);
 
         $customerRole =  Role::firstOrCreate(['name'=>'customer','guard_name'=>'api']);
