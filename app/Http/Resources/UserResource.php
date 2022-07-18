@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'type' => $this->type,
             'gender' => $this->gender,
             'is_block' => $this->is_block,
-            'role' => optional($this->roles->first())->id,//if not exists null
+            'role_id' => optional($this->roles->first())->id,//if not exists null
             'image' => $this->getAvatar(),
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'created_at_formatted' => $this->created_at ? $this->created_at->diffForHumans() : null,
