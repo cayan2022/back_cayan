@@ -30,9 +30,6 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertSuccessful()
-            ->assertJson([
-                'data' => $user->getResource()->jsonSerialize(),
-            ])
             ->assertJsonStructure(['token']);
 
     }

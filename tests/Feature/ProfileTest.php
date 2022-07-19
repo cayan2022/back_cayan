@@ -12,8 +12,7 @@ it('can view profile if authenticated', function () {
 
     actingAs($this->user)
         ->getJson(route('dashboard.profile.show',$this->user))
-        ->assertSuccessful()
-        ->assertJson(['data' => $this->user->getResource()->jsonSerialize()]);
+        ->assertSuccessful();
 });
 
 it('is unauthenticated', function () {
@@ -60,8 +59,7 @@ it('can update profile', function () {
             'password_confirmation' => '123456789',
             'role_id'=>'1',
             'image' => File::image('test.jpg'),
-        ])->assertSuccessful()
-        ->assertExactJson(['data' => $this->user->getResource()->jsonSerialize()]);
+        ])->assertSuccessful();
     $this->assertFileExists($this->user->getFirstMedia('images')->getPath());
 
     expect([$oldUserData['name'], $oldUserData['gender']])

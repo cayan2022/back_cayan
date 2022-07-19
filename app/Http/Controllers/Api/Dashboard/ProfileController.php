@@ -20,7 +20,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $users = User::whereType(User::MODERATOR)->paginate();
+        $users = User::whereType(User::MODERATOR)->when(request()->filled('name'), function ($query) {
+            $query->where('name', 'like','%'.request('name').'%');
+        })->paginate();
 
         return UserResource::collection($users);
     }

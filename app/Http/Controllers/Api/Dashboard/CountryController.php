@@ -18,7 +18,7 @@ class CountryController extends Controller
     {
         $countries=Country::when(request()->filled('name'), function ($query) {
             $query->where('name', 'like','%'.request('name').'%');
-        })->paginate();
+        })->get();
         return CountryResource::collection($countries);
     }
 

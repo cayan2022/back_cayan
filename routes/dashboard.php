@@ -34,7 +34,7 @@ Route::as('dashboard.')
             ->prefix('profile')->group(function () {
                 Route::get('all', [ProfileController::class, 'index'])->name('index');
                 Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
-                Route::post('store', [ProfileController::class, 'store'])->name('store')->withoutMiddleware('auth:sanctum');
+                Route::post('store', [ProfileController::class, 'store'])->name('store');
                 Route::post('update/{user}', [ProfileController::class, 'update'])->name('update');
                 Route::post('change-password', ChangePasswordController::class)->name('change.password');
                 Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout');
