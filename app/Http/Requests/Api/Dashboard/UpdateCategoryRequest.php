@@ -13,7 +13,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|unique:categories,name',
+            'description' => 'required|string',
+            'is_active' => 'required|boolean',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,svg',
         ];
     }
 }
