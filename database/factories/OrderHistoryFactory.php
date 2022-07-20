@@ -21,7 +21,7 @@ class OrderHistoryFactory extends Factory
         return [
             'order_id'=>Order::factory()->create(),
             'sub_status_id'=>SubStatus::factory()->create(),
-            'user_id'=>User::factory()->create(),
+            'user_id' => User::first()->id,
             'description'=>$this->faker->text,
             'duration'=>$this->faker->dateTime(),
         ];

@@ -53,7 +53,6 @@ class DatabaseSeeder extends Seeder
         OrderHistory::factory([
                                   'order_id' => $orders->first()->id,
                                   'sub_status_id' => $subStatuses->first()->id,
-                                  'user_id' => $users->first()->id
                               ])->count($counter)->create();
         Testimonial::factory()->count($counter)->create();
 
