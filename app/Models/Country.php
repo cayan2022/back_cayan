@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Translatable\HasTranslations;
 
-class Country extends Model implements HasMedia
+class Country extends Model implements HasMedia,TranslatableContract
 {
-    use HasFactory,HasTranslations,InteractsWithMedia;
-    protected $fillable=['name','code'];
-    public $translatable = ['name'];
+    use HasFactory,InteractsWithMedia,Translatable;
+
+    public $translatedAttributes = ['name'];
+    protected $fillable=['code'];
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
@@ -22,6 +25,7 @@ class Country extends Model implements HasMedia
     {
         return $this->getFirstMediaUrl('country_avatar');
     }
+
     public function registerMediaCollections(): void
     {
         $this

@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->foreignId('country_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('country_id')->constrained()->cascadeOnUpdate();
             $table->string('phone')->unique();
             $table->enum('type', User::TYPES);
             $table->enum('gender', User::GENDERS);
