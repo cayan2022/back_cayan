@@ -8,9 +8,13 @@ use App\Http\Requests\Api\Dashboard\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Helpers\Traits\RespondsWithHttpStatus;
+
 
 class CategoryController extends Controller
 {
+
+      use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +33,12 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        $category = Category::create($request->validated());
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $category->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+        return new CategoryResource($category);
+
     }
 
     /**
@@ -52,7 +61,16 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category = Category::findorFail($category->id);
+
+        $category->update($request->validated());
+
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $category->clearMediaCollection('images');
+            $category->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
+        return new CategoryResource($category);
     }
 
     /**
@@ -63,6 +81,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category = Category::findorFail($category->id);
+
+        $category->delete();
+
+        return $this->success('category Deleted Successfully');
+
     }
 }
