@@ -65,6 +65,7 @@ class ProfileController extends Controller
         $user->update($request->validated());
 
         // assign role its has permissions to user
+        $user->roles()->detach();
         $role = Role::findOrFail($request->role_id);
 
         $user->assignRole($role);
