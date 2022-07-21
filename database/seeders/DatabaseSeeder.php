@@ -19,7 +19,7 @@ use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role as Role;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,7 +32,9 @@ class DatabaseSeeder extends Seeder
     {
         $counter = config('database.seeder_count');
         Country::factory()->count($counter)->create();
-        $users = User::factory()->count($counter)->create();
+        $customerRole =  Role::firstOrCreate(['name'=>'customer','guard_name'=>'api']);
+        $customerRole->givePermissionTo(Permission::whereType('Customers')->get());
+        $users = User::factory()->count($counter)->create()->each(fn($user) => $user->assignRole($customerRole));
         About::factory()->count(3)->create();
         Setting::factory()->count(3)->create();
         $categories = Category::factory()->count($counter)->create();
@@ -51,7 +53,6 @@ class DatabaseSeeder extends Seeder
         OrderHistory::factory([
                                   'order_id' => $orders->first()->id,
                                   'sub_status_id' => $subStatuses->first()->id,
-                                  'user_id' => $users->first()->id
                               ])->count($counter)->create();
         Testimonial::factory()->count($counter)->create();
 
@@ -63,14 +64,5 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create(['email'=>'super-admin@gmail.com']);
         $admin->assignRole($adminRole);
 
-        $customerRole =  Role::firstOrCreate(['name'=>'customer','guard_name'=>'api']);
-        $customerRole->givePermissionTo(Permission::whereType('Customers')->get());
-        $moderator1 = User::findOrFail(2);
-        $moderator1->assignRole($customerRole);
-
-        $pagesRole =  Role::firstOrCreate(['name'=>'pages','guard_name'=>'api']);
-        $pagesRole->givePermissionTo(Permission::whereType('Pages')->get());
-        $moderator2 = User::findOrFail(3);
-        $moderator2->assignRole($pagesRole);
     }
 }

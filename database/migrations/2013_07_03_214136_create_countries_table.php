@@ -15,9 +15,16 @@ class CreateCountriesTable extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->timestamps();
+        });
+        Schema::create('country_translations', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('locale')->index();
+            $table->string('name');
+
+            $table->unique(['country_id', 'locale']);
+            $table->foreignId('country_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

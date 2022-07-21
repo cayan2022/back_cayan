@@ -86,7 +86,7 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'is_block'=>'boolean'
     ];
-
+    protected $perPage = 16;
     /**
      * The "booted" method of the model.
      *
