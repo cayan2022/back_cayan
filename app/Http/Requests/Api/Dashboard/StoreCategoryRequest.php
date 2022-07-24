@@ -26,7 +26,7 @@ class StoreCategoryRequest extends FormRequest
     {
 
         return RuleFactory::make([
-            '%name%' => ['required','string','unique:categories,name'],
+            '%name%' => ['required','string','unique:category_translations,name'],
             '%description%' => ['required','string'],
             'is_active' => 'required|boolean',
             'image' => 'required|image|mimes:jpg,jpeg,png,svg',

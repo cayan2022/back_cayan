@@ -33,9 +33,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        dd($request->validated());
         $category = Category::create($request->validated());
-        $category->translate('en')->name = 'My cool post';
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $category->addMediaFromRequest('image')->toMediaCollection('images');
         }
