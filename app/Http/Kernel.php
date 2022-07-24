@@ -41,7 +41,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,  // if you plan to utilize Sanctum to authenticate an SPA
+          //  \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,  // if you plan to utilize Sanctum to authenticate an SPA
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             Localization::class

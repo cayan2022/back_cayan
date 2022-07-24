@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ *
+ */
 class LoginController extends Controller
 {
     /**
@@ -16,7 +20,7 @@ class LoginController extends Controller
      * @param  LoginRequest  $request
      * @return JsonResponse
      */
-    public function __invoke(LoginRequest $request)
+    public function login(LoginRequest $request)
     {
         $credentials = ['email' => $request->username, 'password' => $request->password];
 
@@ -26,5 +30,24 @@ class LoginController extends Controller
         }
 
         return response()->json(['error' => __('auth.errors.wrong_credentials')], 401);
+    }
+
+    /**
+     * @param  Request  $request
+     * @return mixed
+     */
+    public function user(Request $request)
+    {
+        return $request->user()->getResource();
+    }
+
+    /**
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        return response()->json(['message' => __('auth.logged_out')]);
     }
 }

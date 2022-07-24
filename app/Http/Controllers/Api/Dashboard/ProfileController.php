@@ -78,12 +78,6 @@ class ProfileController extends Controller
 
         return $user->getResource();
     }
-
-    public function me(Request $request)
-    {
-        return $request->user()->getResource();
-    }
-
     /**
      * @param  User  $user
      * @return \Illuminate\Http\JsonResponse
