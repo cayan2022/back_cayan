@@ -40,6 +40,7 @@ Route::as('dashboard.')
                 Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout');
                 Route::post('block/{user}', [ProfileController::class, 'block'])->name('block');
                 Route::post('active/{user}', [ProfileController::class, 'active'])->name('active');
+                Route::get('me', [ProfileController::class, 'me'])->name('me');
             });
 
         //Roles & Permissions Crud

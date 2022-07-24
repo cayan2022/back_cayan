@@ -15,10 +15,17 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->longText('description');
             $table->boolean('is_active');
             $table->timestamps();
+        });
+
+        Schema::create('category_translations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->longText('description');
+            $table->string('locale')->index();
+            $table->unique(['category_id', 'locale']);
+            $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -29,6 +36,8 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('category_translations');
     }
 }

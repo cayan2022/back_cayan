@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Dashboard\StoreProfileRequest;
 use App\Http\Requests\Api\Dashboard\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -76,6 +77,11 @@ class ProfileController extends Controller
         }
 
         return $user->getResource();
+    }
+
+    public function me(Request $request)
+    {
+        return $request->user()->getResource();
     }
 
     /**

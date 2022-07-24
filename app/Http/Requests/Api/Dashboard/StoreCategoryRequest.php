@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCategoryRequest extends FormRequest
@@ -23,11 +24,12 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|unique:categories,name',
-            'description' => 'required|string',
+
+        return RuleFactory::make([
+            '%name%' => ['required','string','unique:categories,name'],
+            '%description%' => ['required','string'],
             'is_active' => 'required|boolean',
             'image' => 'required|image|mimes:jpg,jpeg,png,svg',
-        ];
+        ]);
     }
 }
