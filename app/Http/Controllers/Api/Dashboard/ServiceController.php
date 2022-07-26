@@ -8,9 +8,12 @@ use App\Http\Requests\Api\Dashboard\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Helpers\Traits\RespondsWithHttpStatus;
 
 class ServiceController extends Controller
 {
+
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +32,9 @@ class ServiceController extends Controller
      */
     public function store(StoreServiceRequest $request)
     {
-        //
+        $service = Service::create($request->validated());
+
+        return new ServiceResource($service);
     }
 
     /**
@@ -52,7 +57,11 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        //
+        $service = Service::findorFail($service->id);
+
+        $service->update($request->validated());
+
+        return new ServiceResource($service);
     }
 
     /**
@@ -63,6 +72,10 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        $service = Service::findorFail($service->id);
+
+        $service->delete();
+
+        return $this->success('Service Deleted Successfully');
     }
 }

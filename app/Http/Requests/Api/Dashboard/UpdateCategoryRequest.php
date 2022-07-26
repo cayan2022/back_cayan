@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
 {
@@ -23,11 +25,11 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|unique:categories,name',
-            'description' => 'required|string',
+        return RuleFactory::make([
+            '%name%' => ['required','string',Rule::unique('category_translations','name')->ignore($this->id)],
+            '%description%' => ['required','string'],
             'is_active' => 'required|boolean',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,svg',
-        ];
+            'image' => 'required|image|mimes:jpg,jpeg,png,svg',
+        ]);
     }
 }

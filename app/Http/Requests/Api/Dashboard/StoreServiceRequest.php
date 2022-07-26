@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreServiceRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreServiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,13 @@ class StoreServiceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return RuleFactory::make([
+            '%name%' => ['required','string','unique:service_translations,name'],
+            '%short_description%' => ['required','string'],
+            '%description%' => ['required','string'],
+            'category_id' => 'required|numeric|exists:categories,id',
+            'is_active' => 'required|boolean',
+
+        ]);
     }
 }
