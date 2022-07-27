@@ -18,7 +18,7 @@ class CountryFactory extends Factory
         return [
             'code'=>'+'.$this->faker->unique()->randomNumber(3),
             'en' => ['name' =>$this->faker->country],
-            'ar' => ['name' => $this->localFaker->country], //please don't change it to normal faker ,it helps to create arabic country
+            'ar' => ['name' => $this->localFaker()->country], //please don't change it to normal faker ,it helps to create arabic country
         ];
     }
 }
