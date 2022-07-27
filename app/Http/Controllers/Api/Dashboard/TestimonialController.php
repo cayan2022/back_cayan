@@ -18,7 +18,9 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        return TestimonialResource::collection(Testimonial::paginate());
+        return TestimonialResource::collection(Testimonial::when(request()->filled('name'),function ($query){
+             $query->where('name','like'.'%'.request('name'),'%');
+        })->paginate());
     }
 
     /**
@@ -29,7 +31,11 @@ class TestimonialController extends Controller
      */
     public function store(StoreTestimonialRequest $request)
     {
-        //
+        $testimonial=Testimonial::create($request->validated());
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $testimonial->addMediaFromRequest('image')->toMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
+        }
+        return $testimonial->getResource();
     }
 
     /**
@@ -40,19 +46,26 @@ class TestimonialController extends Controller
      */
     public function show(Testimonial $testimonial)
     {
-        return new TestimonialResource($testimonial);
+        return $testimonial->getResource();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Dashboard\UpdateTestimonialRequest  $request
+     * @param  UpdateTestimonialRequest  $request
      * @param  Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
+     * @return TestimonialResource
      */
     public function update(UpdateTestimonialRequest $request, Testimonial $testimonial)
     {
-        //
+        $testimonial->update($request->validated());
+
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $testimonial->clearMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
+            $testimonial->addMediaFromRequest('image')->toMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
+        }
+
+        return $testimonial->getResource();
     }
 
     /**
@@ -63,6 +76,7 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-        //
+        $testimonial->forceDelete();
+        return response()->noContent();
     }
 }

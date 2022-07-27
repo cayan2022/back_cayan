@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreTestimonialRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreTestimonialRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -24,7 +25,10 @@ class StoreTestimonialRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_name'=>'required|string|max:255',
+            'comment'=>'required|string',
+            'is_active'=>'required|boolean',
+            'image' => 'nullable|mimes:jpg,jpeg,png,svg'
         ];
     }
 }

@@ -86,6 +86,9 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'is_block'=>'boolean'
     ];
+    public const MEDIA_COLLECTION_NAME = 'images';
+    public const MEDIA_COLLECTION_URL = 'images/user.png';
+
     protected $perPage = 16;
     /**
      * The "booted" method of the model.
@@ -154,7 +157,7 @@ class User extends Authenticatable implements HasMedia
      */
     public function getAvatar()
     {
-        return $this->getFirstMediaUrl('images');
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAME);
     }
 
     /**
@@ -162,10 +165,9 @@ class User extends Authenticatable implements HasMedia
      */
     public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaCollection('images')
-            ->useFallbackUrl(asset('images/anonymous-user.jpg'))
-            ->useFallbackPath(asset('images/anonymous-user.jpg'));
+        $this->addMediaCollection(self::MEDIA_COLLECTION_NAME)
+            ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
+            ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
     }
     /*Relations*/
     /**

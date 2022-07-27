@@ -17,6 +17,7 @@ class CreateTestimonialsTable extends Migration
             $table->id();
             $table->string('user_name');
             $table->longText('comment');
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

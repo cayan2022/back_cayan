@@ -16,6 +16,6 @@ class TestimonialController extends Controller
      */
     public function __invoke(): AnonymousResourceCollection
     {
-        return TestimonialResource::collection(Testimonial::paginate());
+        return TestimonialResource::collection(Testimonial::whereActivationIs(true)->paginate());
     }
 }

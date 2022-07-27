@@ -18,6 +18,7 @@ class TestimonialResource extends JsonResource
             'id'=>$this->id,
             'user_name'=>$this->user_name,
             'comment'=>$this->comment,
+            'is_active'=>$this->is_active
         ];
     }
 }

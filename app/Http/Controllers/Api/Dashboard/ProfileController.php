@@ -42,7 +42,7 @@ class ProfileController extends Controller
         $user->assignRole($role);
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $user->addMediaFromRequest('image')->toMediaCollection('images');
+            $user->addMediaFromRequest('image')->toMediaCollection(User::MEDIA_COLLECTION_NAME);
         }
         return $user->getResource()->additional(['token' => $user->createTokenForDevice($request->header('user-agent'))]);
     }
@@ -72,8 +72,8 @@ class ProfileController extends Controller
         $user->assignRole($role);
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $user->clearMediaCollection('images');
-            $user->addMediaFromRequest('image')->toMediaCollection('images');
+            $user->clearMediaCollection(User::MEDIA_COLLECTION_NAME);
+            $user->addMediaFromRequest('image')->toMediaCollection(User::MEDIA_COLLECTION_NAME);
         }
 
         return $user->getResource();
