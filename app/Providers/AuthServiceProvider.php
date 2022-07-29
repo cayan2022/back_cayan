@@ -13,8 +13,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+       // 'App\Models\Category' => 'App\Policies\CategoryPolicy',
     ];
+
 
     /**
      * Register any authentication / authorization services.
@@ -29,5 +30,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole('admin') ? true : null;
         });
+
+//        Gate::guessPolicyNamesUsing(function ($modelClass) {
+//            return '\App\Policies\\'.class_basename($modelClass).'Policy';
+//        });
     }
 }

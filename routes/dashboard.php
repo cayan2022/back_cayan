@@ -55,6 +55,7 @@ Route::as('dashboard.')
 
         //pages
         Route::as('pages.')
+           // ->middleware(['permission:Categories list'])
             ->prefix('pages')->group(function () {
                 Route::apiResources([
                     'categories' => CategoryController::class,

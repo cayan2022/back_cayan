@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Filters\Filterable;
+use App\Http\Filters\SourceFilter;
 class Source extends Model
 {
-    use HasFactory;
+    use HasFactory , Translatable , Filterable;
 
     protected $fillable = [
         'name',
@@ -16,10 +18,20 @@ class Source extends Model
         'description',
         'is_active'
     ];
+
+    public $translatedAttributes = ['name','short_description','description'];
+
     protected $casts = [
         'identifier' => 'string',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * The query parameter's filter of the model.
+     *
+     * @var string
+     */
+    protected $filter = SourceFilter::class;
 
     public function orders()
     {

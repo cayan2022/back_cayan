@@ -16,11 +16,19 @@ class SourceFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->unique()->name,
+            'en' => [
+                'name' =>$this->faker->unique()->name,
+                'short_description'=>$this->faker->sentence,
+                'description' =>$this->faker->text
+            ],
+            'ar' => [
+                'name' =>$this->faker->unique()->name,
+                'short_description'=>$this->faker->sentence,
+                'description' => $this->faker->text
+            ],
             'identifier'=>$this->faker->slug,
-            'short_description'=>$this->faker->sentence,
-            'description'=>$this->faker->text,
             'is_active'=>$this->faker->boolean,
         ];
+
     }
 }
