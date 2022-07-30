@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSourceRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class UpdateSourceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +25,13 @@ class UpdateSourceRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return RuleFactory::make([
+            '%name%' => ['required','string',Rule::unique('source_translations','name')->ignore($this->id)],
+            '%short_description%' => ['required','string'],
+            '%description%' => ['required','string'],
+            'identifier' => 'required|url',
+            'is_active' => 'required|boolean',
+
+        ]);
     }
 }
