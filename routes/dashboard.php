@@ -55,7 +55,7 @@ Route::as('dashboard.')
 
         //pages
         Route::as('pages.')
-           // ->middleware(['permission:Categories list'])
+          ->middleware(['check_permissions:sanctum'])
             ->prefix('pages')->group(function () {
                 Route::apiResources([
                     'categories' => CategoryController::class,
