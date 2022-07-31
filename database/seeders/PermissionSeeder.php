@@ -22,19 +22,6 @@ class PermissionSeeder extends Seeder
         // create permissions
         $this->createPermissions();
 
-        $this->createAppTables();
-    }
-
-    protected function createAppTables()
-    {
-        //this should move to it's migration to be added when table add
-        AppTables::firstOrCreate(['title' => 'Admins', 'title_ar' => 'ادارة المسئولين ', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Customers', 'title_ar' => 'ادارة الاعضاء', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Pages', 'title_ar' => 'ادارةالصفحات', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Categories', 'title_ar' => 'ادارةالاقسام ', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Sliders', 'title_ar' => 'ادارةالسليدرز ', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Servcies', 'title_ar' => 'الخدمات ادارة', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Orders', 'title_ar' => 'ادارةالطلبات ', 'is_active' => 1]);
     }
 
     protected function createPermissions()

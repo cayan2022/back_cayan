@@ -28,7 +28,7 @@ class UserFilter extends BaseFilters
 
         return $this->builder;
     }
-    
+
 
     /**
      * Filter the query to include users by email.

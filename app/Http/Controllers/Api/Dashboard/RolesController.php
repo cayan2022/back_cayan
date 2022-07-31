@@ -8,6 +8,7 @@ use App\Http\Requests\Api\Dashboard\PermissionRequest;
 use App\Http\Requests\Api\Dashboard\RoleRequest;
 use App\Models\AppTables;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -28,16 +29,13 @@ class RolesController extends Controller
     public function getRolePermissions()
     {
         $permissions = Permission::all();
-        $tables = AppTables::whereIsActive(1)->pluck('title')->toArray();
-        $title_pre = [];
-        foreach ($tables as $iValue) {
+        $permissionsAsArray = [];
             foreach ($permissions as $permission) {
-                if ($iValue == $permission->type) {
-                    $title_pre[$iValue][] = $permission->name;
+                if (Str::words($permission->name,1,'') == $permission->type) {
+                    $permissionsAsArray[$permission->type][] = ['id'=>$permission->id,'name'=>$permission->name];
                 }
             }
-        }
-        return response()->json(['data' => $title_pre]);
+        return response()->json(['data' => $permissionsAsArray]);
     }
 
 
