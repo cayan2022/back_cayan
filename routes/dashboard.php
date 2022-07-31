@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\Dashboard\{
     ChangePasswordController
 
 };
-
+//route naming is need to make check_permissions middleware
 Route::as('dashboard.')
     ->middleware(['auth:sanctum','check_permissions'])
     ->prefix('dashboard')
