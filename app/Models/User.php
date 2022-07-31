@@ -14,13 +14,14 @@ use App\Http\Resources\UserResource;
  use Illuminate\Support\Facades\Hash;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-
+use App\Http\Filters\Filterable;
+use App\Http\Filters\UserFilter;
 /**
  * User Class
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory, Notifiable, HasApiTokens, HasRoles , InteractsWithMedia, HasActivation;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles , InteractsWithMedia, HasActivation , Filterable;
 
     /**
      *
@@ -76,6 +77,8 @@ class User extends Authenticatable implements HasMedia
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected  $filter  = UserFilter::class;
 
     /**
      * The attributes that should be cast to native types.

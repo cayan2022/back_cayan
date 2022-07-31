@@ -56,6 +56,7 @@ Route::as('dashboard.')
 
         //pages
         Route::as('pages.')
+           // ->middleware(['permission:Categories list'])
             ->prefix('pages')->group(function () {
                 /*doctors*/
                 Route::group([], function (){

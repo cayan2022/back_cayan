@@ -8,9 +8,11 @@ use App\Http\Requests\Api\Dashboard\UpdateSourceRequest;
 use App\Http\Resources\SourceResource;
 use App\Models\Source;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-
+use App\Helpers\Traits\RespondsWithHttpStatus;
 class SourceController extends Controller
 {
+
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +20,7 @@ class SourceController extends Controller
      */
     public function index()
     {
-        return SourceResource::collection(Source::paginate());
+        return SourceResource::collection(Source::filter()->simplePaginate());
     }
 
     /**
@@ -29,7 +31,9 @@ class SourceController extends Controller
      */
     public function store(StoreSourceRequest $request)
     {
-        //
+        $source = Source::create($request->validated());
+
+        return new SourceResource($source);
     }
 
     /**
@@ -52,7 +56,9 @@ class SourceController extends Controller
      */
     public function update(UpdateSourceRequest $request, Source $source)
     {
-        //
+        $source->update($request->validated());
+
+        return new ServiceResource($source);
     }
 
     /**
@@ -63,6 +69,10 @@ class SourceController extends Controller
      */
     public function destroy(Source $source)
     {
-        //
+        $source = Source::findorFail($source->id);
+
+        $source->delete();
+
+        return $this->success('Source Deleted Successfully');
     }
 }
