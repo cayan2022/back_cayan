@@ -21,7 +21,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::whereType(User::MODERATOR)->filter()->simplePaginate());
+        return UserResource::collection(User::whereType(User::MODERATOR)->filter()->paginate());
     }
 
     /**

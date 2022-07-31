@@ -20,7 +20,7 @@ class SourceController extends Controller
      */
     public function index()
     {
-        return SourceResource::collection(Source::filter()->simplePaginate());
+        return SourceResource::collection(Source::filter()->paginate());
     }
 
     /**

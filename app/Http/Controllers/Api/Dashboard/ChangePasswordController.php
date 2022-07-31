@@ -10,12 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware(['role:super-admin']);
-    }
-
     public function __invoke(ChangePasswordRequest $request)
     {
         $user = User::whereId($request->user_id)->firstOrFail();

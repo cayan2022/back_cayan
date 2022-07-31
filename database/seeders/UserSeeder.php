@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             ->create()
             ->each(fn($user) => $user->assignRole(Role::inRandomOrder()->first()));
         //create super admin roles and give him all permissions
-        $superRole = Role::firstOrCreate(['name' => 'Super', 'guard_name' => 'api']);
+        $superRole = Role::firstOrCreate(['name' => 'super', 'guard_name' => 'api']);
         $superRole->givePermissionTo(Permission::all());
         $superAdmin = User::factory()->create(['email' => 'super-admin@gmail.com']);
         $superAdmin->assignRole($superRole);
