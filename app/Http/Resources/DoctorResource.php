@@ -18,7 +18,8 @@ class DoctorResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'specialization'=>$this->specialization,
-            'is_active'=>$this->is_active
+            'image'=>$this->getAvatar(),
+            'is_block'=>$this->is_block
         ];
     }
 }

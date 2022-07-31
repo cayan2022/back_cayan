@@ -96,6 +96,7 @@ class ProfileController extends Controller
     public function block(User $user)
     {
         $user->block();
+        $user->tokens()->delete();
         return response()->json(['message'=>__('auth.success_operation')]);
     }
     /**

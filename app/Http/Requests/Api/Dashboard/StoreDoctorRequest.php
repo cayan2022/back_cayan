@@ -26,9 +26,7 @@ class StoreDoctorRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:255',
-            'specialization'=>'required|string|max:255',
-            'is_active'=>'required|boolean',
-            'image' => 'nullable|mimes:jpg,jpeg,png,svg'
+            'specialization'=>'required|string|max:255'
         ];
     }
 }

@@ -53,12 +53,10 @@ class ServiceController extends Controller
      *
      * @param  \App\Http\Requests\Api\Dashboard\UpdateServiceRequest  $request
      * @param  Service  $service
-     * @return \Illuminate\Http\Response
+     * @return ServiceResource
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        $service = Service::findorFail($service->id);
-
         $service->update($request->validated());
 
         return new ServiceResource($service);
@@ -72,8 +70,6 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        $service = Service::findorFail($service->id);
-
         $service->delete();
 
         return $this->success('Service Deleted Successfully');

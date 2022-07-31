@@ -18,7 +18,7 @@ class DoctorFactory extends Factory
         return [
             'name'=>$this->faker->name,
             'specialization'=>$this->faker->jobTitle,
-            'is_active'=>$this->faker->boolean,
+            'is_block'=>$this->faker->boolean,
         ];
     }
 }

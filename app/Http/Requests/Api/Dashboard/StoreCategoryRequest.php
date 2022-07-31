@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +30,7 @@ class StoreCategoryRequest extends FormRequest
             '%name%' => ['required','string','unique:category_translations,name'],
             '%description%' => ['required','string'],
             'is_active' => 'required|boolean',
-            'image' => 'required|image|mimes:jpg,jpeg,png,svg',
+            'image' => ['required',new SupportedImage()],
         ]);
     }
 }

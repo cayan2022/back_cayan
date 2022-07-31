@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckPermissions;
 use App\Http\Middleware\Localization;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -68,6 +69,7 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        'localization'=>Localization::class
+        'localization'=>Localization::class,
+        'check_permissions'=>CheckPermissions::class
     ];
 }

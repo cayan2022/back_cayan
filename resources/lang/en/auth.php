@@ -21,7 +21,10 @@ return [
     'success_operation'=>'Success Operation',
     'errors'=>[
         'wrong_credentials'=>'Credentials Are Wrong!',
-        'user_is_blocked'=>'This User Has Been Blocked!'
+        'user_is_blocked'=>'This User Has Been Blocked!',
+        'not_login'=>'User Is not Login!',
+        'wrong_route'=>'Route Is not Correct!',
+        'has_no_permission'=>'Sorry, You have No Permission!'
     ],
     'attributes'=>[
         'email'=>'Email Address',

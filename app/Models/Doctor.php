@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\DoctorResource;
+use App\Models\Traits\HasActivation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -10,15 +11,15 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Doctor extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, HasActivation;
 
     protected $fillable = [
         'name',
         'specialization',
-        'is_active'
+        'is_block' //default true in migration file
     ];
     protected $casts = [
-        'is_active' => 'boolean',
+        'is_block' => 'boolean',
     ];
     public const MEDIA_COLLECTION_NAME = 'doctor_avatar';
         public const MEDIA_COLLECTION_URL = 'images/doctor.png';
@@ -43,11 +44,5 @@ class Doctor extends Model implements HasMedia
             ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
     }
 
-    /*
-     * Scopes
-     * */
-    public function scopeWhereActivationIs($query, bool $bool)
-    {
-        return $query->where('is_active', $bool);
-    }
+
 }

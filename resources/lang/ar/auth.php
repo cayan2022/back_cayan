@@ -21,7 +21,10 @@ return [
     'success_operation'=>'عملية ناجحه',
     'errors'=>[
         'wrong_credentials'=>'بيانات التسجيل خاطئة!',
-        'user_is_blocked'=>'هذا المستخدم محظور!'
+        'user_is_blocked'=>'هذا المستخدم محظور!',
+        'not_login'=>'المستخدم غير مسجل دخول!',
+        'wrong_route'=>'مسار الوصول غير صحيح!',
+        'has_no_permission'=>'عذرا، ليس لديك صلاحية!'
     ],
     'attributes'=>[
         'email'=>'البريد الالكترونى',
