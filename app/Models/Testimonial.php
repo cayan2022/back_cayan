@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Resources\TestimonialResource;
+use App\Models\Traits\HasActivation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -10,12 +11,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Testimonial extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia,HasActivation;
 
     protected $fillable = [
         'user_name',
         'comment',
-        'is_active'
+        'is_block'
     ];
     public const MEDIA_COLLECTION_NAME = 'testimonial_avatar';
     public const MEDIA_COLLECTION_URL = 'images/testimonial.png';
@@ -41,13 +42,5 @@ class Testimonial extends Model implements HasMedia
         $this->addMediaCollection(self::MEDIA_COLLECTION_NAME)
             ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
             ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
-    }
-
-    /*
-     * Scopes
-     * */
-    public function scopeWhereActivationIs($query, bool $bool)
-    {
-        return $query->where('is_active', $bool);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Dashboard;
 
 use App\Models\User;
+use App\Rules\SupportedImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,7 @@ class UpdateProfileRequest extends FormRequest
             'country_id'    => 'required|numeric|exists:countries,id',
             'phone'    => ['required','string','max:255',Rule::unique('users','phone')->ignore( $this->user->id)],
             'password' => ['sometimes','required', 'confirmed','string', Password::defaults()],
-            'image' => 'nullable|mimes:jpg,jpeg,png,svg',
+            'image' => ['nullable',new SupportedImage()],
             'role_id' => 'required|numeric|exists:roles,id',
         ];
     }

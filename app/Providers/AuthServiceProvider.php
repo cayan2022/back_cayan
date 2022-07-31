@@ -16,7 +16,6 @@ class AuthServiceProvider extends ServiceProvider
        // 'App\Models\Category' => 'App\Policies\CategoryPolicy',
     ];
 
-
     /**
      * Register any authentication / authorization services.
      *
@@ -26,13 +25,5 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('admin') ? true : null;
-        });
-
-//        Gate::guessPolicyNamesUsing(function ($modelClass) {
-//            return '\App\Policies\\'.class_basename($modelClass).'Policy';
-//        });
     }
 }

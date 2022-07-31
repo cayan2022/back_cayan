@@ -81,5 +81,21 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
-
+    /*
+   |--------------------------------------------------------------------------
+   | Supported Uploads Files
+   |--------------------------------------------------------------------------
+   |
+   | Here you may configure the supported files: images,files
+   |
+   */
+    'supported_uploads' => [
+        'images' => [
+            'mimetypes' =>  explode(',', env('SUPPORTED_UPLOAD_IMAGE_TYPES', sprintf(
+                '%s',
+                'jpg,jpeg,png,bmp,svg'
+            ))),
+            'maxsize' => env('MAX_IMAGE_UPLOAD_SIZE',5000) //5 MB
+        ]
+    ]
 ];

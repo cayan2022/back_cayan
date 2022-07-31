@@ -77,7 +77,26 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        $doctor->forceDelete();
+        $doctor->delete();
         return response()->noContent();
+    }
+
+    /**
+     * @param  Doctor $doctor
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function block(Doctor $doctor)
+    {
+        $doctor->block();
+        return response()->json(['message'=>__('auth.success_operation')]);
+    }
+    /**
+     * @param  Doctor $doctor
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function active(Doctor $doctor)
+    {
+        $doctor->active();
+        return response()->json(['message'=>__('auth.success_operation')]);
     }
 }

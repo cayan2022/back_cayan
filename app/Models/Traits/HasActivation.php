@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits;
 
-use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasActivation
 {
@@ -14,28 +14,39 @@ trait HasActivation
     {
         return $this->is_block === true;
     }
-    public function block(?User $user=null):void
+    public function block(?Model $model=null):void
     {
-        if (isset($user)){
-            $user->update(['is_block'=>true]);
+        if (isset($model)){
+            $model->update(['is_block'=>true]);
         }else{
             $this->update(['is_block'=>true]);
         }
     }
-    public function active(?User $user=null):void
+    public function active(?Model $model=null):void
     {
-        if (isset($user)){
-            $user->update(['is_block'=>false]);
+        if (isset($model)){
+            $model->update(['is_block'=>false]);
         }else{
             $this->update(['is_block'=>false]);
         }
     }
-    public function toggleActivation(?User $user=null):void
+    public function toggleActivation(?Model $model=null):void
     {
-        if (isset($user)){
-            $user->isActive() ? $user->block() : $user->active();
+        if (isset($model)){
+            $model->isActive() ? $model->block() : $model->active();
         }else{
             $this->isActive() ? $this->block() : $this->active();
         }
+    }
+    /*
+     * Scopes
+     * */
+    public function scopeWhereIsActive($query)
+    {
+        return $query->where('is_block', false);
+    }
+    public function scopeWhereIsBlock($query)
+    {
+        return $query->where('is_block', true);
     }
 }

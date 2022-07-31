@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ class UpdateTestimonialRequest extends FormRequest
             'user_name'=>'required|string|max:255',
             'comment'=>'required|string',
             'is_active'=>'required|boolean',
-            'image' => 'nullable|mimes:jpg,jpeg,png,svg'
+            'image' => ['nullable',new SupportedImage()]
         ];
     }
 }

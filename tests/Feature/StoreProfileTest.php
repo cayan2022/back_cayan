@@ -12,14 +12,14 @@ class StoreProfileTest extends TestCase
     public function setUp():void
     {
         parent::setUp();
-        $this->actingAs(User::factory()->create());
+        $this->actingAs(User::all()->last());
     }
     public function test_store_profile_validation()
     {
-        $this->postJson(route('dashboard.profile.store'), [])
+        $this->postJson(route('dashboard.profiles.store'), [])
             ->assertJsonValidationErrors(['name', 'email','country_id', 'phone', 'password','gender','role_id']);
 
-        $this->postJson(route('dashboard.profile.store'), [
+        $this->postJson(route('dashboard.profiles.store'), [
             'name' => 'User',
             'email' => 'user.demo.com5',
             'country_id' => '1',
@@ -35,7 +35,7 @@ class StoreProfileTest extends TestCase
 
     function test_store_profile()
     {
-        $response = $this->postJson(route('dashboard.profile.store'), [
+        $response = $this->postJson(route('dashboard.profiles.store'), [
             'name' => 'User Test',
             'role_id'=>'1',
             'email' => 'user@demo.com',

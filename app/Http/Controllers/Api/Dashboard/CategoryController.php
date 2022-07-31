@@ -61,8 +61,6 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category = Category::findorFail($category->id);
-
         $category->update($request->validated());
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
@@ -81,8 +79,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category = Category::findorFail($category->id);
-
         $category->delete();
 
         return $this->success('category Deleted Successfully');

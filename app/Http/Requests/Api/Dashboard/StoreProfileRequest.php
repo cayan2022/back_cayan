@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Dashboard;
 
 use App\Models\User;
+use App\Rules\SupportedImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -35,7 +36,7 @@ class StoreProfileRequest extends FormRequest
             'phone' => 'required|string|max:255|unique:users,phone',
             'role_id' => 'required|numeric|exists:roles,id',
             'password' => ['required', 'confirmed', 'string', Password::defaults()],
-            'image' => 'nullable|mimes:jpg,jpeg,png,svg'
+            'image' => ['nullable',new SupportedImage()]
         ];
     }
 }
