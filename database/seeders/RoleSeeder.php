@@ -41,7 +41,7 @@ class RoleSeeder extends Seeder
 
                 $routeNameToArray = explode('.', $routeName);
                 //get last to element of array ex: (countries index) and convert to string then make first word Capitalize
-                $permissionName = Str::ucfirst(implode(' ', array_splice($routeNameToArray, -2)));
+                $permissionName = implode(' ', array_splice($routeNameToArray, -2));
                 $roleName=Str::words($permissionName, 1,'');
                 $findRole = Role::where('name', $roleName)->first();
 

@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Artisan::call('cache:forget spatie.permission.cache');
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
         //the order is very important
         $this->call(
             [

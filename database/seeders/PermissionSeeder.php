@@ -35,7 +35,6 @@ class PermissionSeeder extends Seeder
         AppTables::firstOrCreate(['title' => 'Sliders', 'title_ar' => 'ادارةالسليدرز ', 'is_active' => 1]);
         AppTables::firstOrCreate(['title' => 'Servcies', 'title_ar' => 'الخدمات ادارة', 'is_active' => 1]);
         AppTables::firstOrCreate(['title' => 'Orders', 'title_ar' => 'ادارةالطلبات ', 'is_active' => 1]);
-        AppTables::firstOrCreate(['title' => 'Orders', 'title_ar' => 'ادارة متابعة الطلبات ', 'is_active' => 1]);
     }
 
     protected function createPermissions()
@@ -49,7 +48,7 @@ class PermissionSeeder extends Seeder
 
                 $routeNameToArray = explode('.', $routeName);
                 //get last to element of array ex: (countries index) and convert to string then make first word Capitalize
-                $permissionName = Str::ucfirst(implode(' ', array_splice($routeNameToArray, -2)));
+                $permissionName = implode(' ', array_splice($routeNameToArray, -2));
 
                 $permission = Permission::where('name', $permissionName)->first();
 

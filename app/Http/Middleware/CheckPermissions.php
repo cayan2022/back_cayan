@@ -4,16 +4,13 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  *
  */
 class CheckPermissions
 {
-
     /**
      * @param  Request  $request
      * @param  Closure  $next
@@ -36,8 +33,8 @@ class CheckPermissions
         }
 
         $routeNameToArray= explode('.', $route);
-        //get last to element of array ex: (countries index) and convert to string then make first word Capitalize
-        $permissionName = Str::ucfirst(implode(' ', array_splice($routeNameToArray, -2)));
+        //get last to element of array ex: (countries index) and convert to string
+        $permissionName = implode(' ', array_splice($routeNameToArray, -2));
 
         $permission=Permission::where('name',$permissionName)
             ->where('guard_name','api')
@@ -46,6 +43,11 @@ class CheckPermissions
         if (is_null($permission)) {
             return $exception(trans('auth.errors.wrong_route'));
         }
+
+        /** uncomment next line if you need to clear permissions,roles cache
+        | ex: when you change via database directly
+        | app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+        */
 
         if ($authGuard->user()->hasPermissionTo($permissionName,'api')) {
             return $next($request);

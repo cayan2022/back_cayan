@@ -47,7 +47,7 @@ it('can\'t update profile', function () {
 it('can update profile', function () {
     $oldUserData = ['name' => 'test', 'gender' => User::MALE, 'email' => 'test@test.com'];
     $this->user = User::factory()->create($oldUserData);
-    $this->user->assignRole(\Spatie\Permission\Models\Role::whereName('Profiles')->first());
+    $this->user->assignRole(\Spatie\Permission\Models\Role::whereName('profiles')->first());
     actingAs($this->user)
         ->postJson(route('dashboard.profiles.update',$this->user), [
             'name' => $this->user->name,

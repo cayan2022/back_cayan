@@ -19,7 +19,7 @@ trait HasActivation
         if (isset($model)){
             $model->update(['is_block'=>true]);
         }else{
-            $model->update(['is_block'=>true]);
+            $this->update(['is_block'=>true]);
         }
     }
     public function active(?Model $model=null):void

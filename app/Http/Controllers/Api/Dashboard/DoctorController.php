@@ -87,7 +87,6 @@ class DoctorController extends Controller
      */
     public function block(Doctor $doctor)
     {
-
         $doctor->block();
         return response()->json(['message'=>__('auth.success_operation')]);
     }
