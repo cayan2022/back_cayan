@@ -39,7 +39,7 @@ php artisan test
 
 [//]: # (- [X] &#40;for checked checkbox&#41;)
 ### Nasr
-- [ ] discus app table in permissions seeder
+- [X] discus app table in permissions seeder
 - [ ] translate role and permissions using __() function
 - [ ] add filters to models not use it
 - [ ] change all is_active to is_block 
