@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\DoctorFilter;
+use App\Http\Filters\Filterable;
 use App\Http\Resources\DoctorResource;
 use App\Models\Traits\HasActivation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Doctor extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, HasActivation;
+    use HasFactory, InteractsWithMedia, HasActivation,Filterable;
 
     protected $fillable = [
         'name',
@@ -21,8 +23,11 @@ class Doctor extends Model implements HasMedia
     protected $casts = [
         'is_block' => 'boolean',
     ];
+
+    protected $filter=DoctorFilter::class;
+
     public const MEDIA_COLLECTION_NAME = 'doctor_avatar';
-        public const MEDIA_COLLECTION_URL = 'images/doctor.png';
+    public const MEDIA_COLLECTION_URL = 'images/doctor.png';
     /*Helpers*/
     /**
      * @return DoctorResource

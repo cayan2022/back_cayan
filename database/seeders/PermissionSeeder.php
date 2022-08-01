@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\AppTables;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role as Role;
 
 class PermissionSeeder extends Seeder
 {
@@ -21,7 +19,6 @@ class PermissionSeeder extends Seeder
     {
         // create permissions
         $this->createPermissions();
-
     }
 
     protected function createPermissions()
@@ -29,7 +26,6 @@ class PermissionSeeder extends Seeder
         $routes = Route::getRoutes()->getRoutes();
 
         foreach ($routes as $route) {
-
             if ($route->getName() !== '' && in_array('check_permissions', $route->getAction('middleware'), true)) {
                 $routeName = $route->getName();
 

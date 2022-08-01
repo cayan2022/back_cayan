@@ -16,10 +16,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries=Country::when(request()->filled('name'), function ($query) {
-            $query->whereTranslationLike('name', '%'.request('name').'%');
-        })->get();
-        return CountryResource::collection($countries);
+        return CountryResource::collection(Country::filter()->get());
     }
 
     /**

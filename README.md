@@ -38,13 +38,13 @@ php artisan test
 [//]: # (- [ ] &#40;for unchecked checkbox&#41;)
 
 [//]: # (- [X] &#40;for checked checkbox&#41;)
-<<<<<<< HEAD
+
 ### Nasr
 - [X] discus app table in permissions seeder
-- [ ] translate role and permissions using __() function
-- [ ] add filters to models not use it
-- [ ] change all is_active to is_block 
+- [X] add filters to models not use it
+- [ ] change all is_active to is_block
 - [ ] add HasActivation trait to all models has is_block attribute
+- [ ] translate role and permissions using __() function
 
 ### Hisham Tarek
 - [ ] Branches

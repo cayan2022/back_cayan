@@ -19,9 +19,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        return DoctorResource::collection(Doctor::when(request()->filled('name'), function ($query) {
-            $query->where('name', 'like','%'.request('name').'%');
-        })->paginate());
+        return DoctorResource::collection(Doctor::filter()->paginate());
     }
 
     /**
