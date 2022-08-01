@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +27,8 @@ class StoreDoctorRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:255',
-            'specialization'=>'required|string|max:255'
+            'specialization'=>'required|string|max:255',
+            'image' => ['nullable',new SupportedImage()]
         ];
     }
 }

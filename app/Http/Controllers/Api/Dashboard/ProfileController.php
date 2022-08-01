@@ -7,7 +7,6 @@ use App\Http\Requests\Api\Dashboard\StoreProfileRequest;
 use App\Http\Requests\Api\Dashboard\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 /**
@@ -38,7 +37,9 @@ class ProfileController extends Controller
         $user->assignRole($role);
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $user->addMediaFromRequest('image')->toMediaCollection(User::MEDIA_COLLECTION_NAME);
+            $user->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(User::MEDIA_COLLECTION_NAME);
         }
         return $user->getResource()->additional(['token' => $user->createTokenForDevice($request->header('user-agent'))]);
     }
@@ -69,7 +70,9 @@ class ProfileController extends Controller
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $user->clearMediaCollection(User::MEDIA_COLLECTION_NAME);
-            $user->addMediaFromRequest('image')->toMediaCollection(User::MEDIA_COLLECTION_NAME);
+            $user->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(User::MEDIA_COLLECTION_NAME);
         }
 
         return $user->getResource();
