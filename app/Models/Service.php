@@ -22,7 +22,7 @@ class Service extends Model implements   HasMedia,TranslatableContract
     const MEDIA_COLLECTION_URL = 'images/service.png';
     protected $fillable = [
         'category_id',
-        'is_active'
+        'is_block'
     ];
 
     /**
