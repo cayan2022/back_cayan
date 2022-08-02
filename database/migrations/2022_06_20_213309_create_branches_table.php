@@ -15,16 +15,23 @@ class CreateBranchesTable extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
             $table->string('city');
             $table->string('address');
             $table->string('phone');
             $table->string('whatsapp_phone');
             $table->string('map_link');
-            $table->string('short_description');
-            $table->longText('description');
             $table->boolean('is_active');
             $table->timestamps();
+        });
+
+        Schema::create('branch_translations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('short_description');
+            $table->longText('description');
+            $table->string('locale')->index();
+            $table->unique(['branch_id', 'locale']);
+            $table->foreignId('branch_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -35,6 +42,8 @@ class CreateBranchesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('branches');
+        Schema::dropIfExists('branch_translations');
     }
 }

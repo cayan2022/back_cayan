@@ -8,9 +8,12 @@ use App\Http\Requests\Api\Dashboard\UpdateBranchRequest;
 use App\Http\Resources\BranchResource;
 use App\Models\Branch;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Helpers\Traits\RespondsWithHttpStatus;
 
 class BranchController extends Controller
 {
+
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +32,9 @@ class BranchController extends Controller
      */
     public function store(StoreBranchRequest $request)
     {
-        //
+        $branch = Branch::create($request->validated());
+
+        return new BranchResource($branch);
     }
 
     /**
@@ -52,7 +57,10 @@ class BranchController extends Controller
      */
     public function update(UpdateBranchRequest $request, Branch $branch)
     {
-        //
+        $branch->update($request->validated());
+
+        return new BranchResource($branch);
+
     }
 
     /**
@@ -63,6 +71,8 @@ class BranchController extends Controller
      */
     public function destroy(Branch $branch)
     {
-        //
+        $branch->delete();
+
+        return $this->success('Branch Deleted Successfully');
     }
 }
