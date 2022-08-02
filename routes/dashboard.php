@@ -73,9 +73,9 @@ Route::as('dashboard.')
                 });
                 /*services*/
                 Route::group([], function (){
-                    Route::put('services/{testimonial}/block',[ServiceController::class,'block'])->name('services.block');
-                    Route::put('services/{testimonial}/active',[ServiceController::class,'active'])->name('services.active');
-                    Route::post('services/{testimonial}',[ServiceController::class,'update'])->name('services.update');
+                    Route::put('services/{service}/block',[ServiceController::class,'block'])->name('services.block');
+                    Route::put('services/{service}/active',[ServiceController::class,'active'])->name('services.active');
+                    Route::post('services/{service}',[ServiceController::class,'update'])->name('services.update');
                     Route::apiResource('services',ServiceController::class)->except('update');
                 });
                 Route::apiResources([
