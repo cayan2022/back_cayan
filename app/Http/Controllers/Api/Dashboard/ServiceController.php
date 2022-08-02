@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\StoreServiceRequest;
 use App\Http\Requests\Api\Dashboard\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
-use App\Models\Doctor;
 use App\Models\Service;
-use App\Models\Testimonial;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Helpers\Traits\RespondsWithHttpStatus;
 
@@ -82,21 +80,21 @@ class ServiceController extends Controller
         return $this->success(__('auth.success_operation'));
     }
     /**
-     * @param  Testimonial $testimonial
+     * @param  Service $service
      * @return \Illuminate\Http\JsonResponse
      */
-    public function block(Testimonial $testimonial)
+    public function block(Service $service)
     {
-        $testimonial->block();
+        $service->block();
         return response()->json(['message'=>__('auth.success_operation')]);
     }
     /**
-     * @param  Testimonial $testimonial
+     * @param  Service $service
      * @return \Illuminate\Http\JsonResponse
      */
-    public function active(Testimonial $testimonial)
+    public function active(Service $service)
     {
-        $testimonial->active();
+        $service->active();
         return response()->json(['message'=>__('auth.success_operation')]);
     }
 }

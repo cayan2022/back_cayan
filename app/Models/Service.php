@@ -32,7 +32,7 @@ class Service extends Model implements   HasMedia,TranslatableContract
      */
     protected $filter = ServiceFilter::class;
 
-    public $translatedAttributes = ['name', 'short_description','description'];
+    public $translatedAttributes = ['name','description'];
 
     protected $casts = [
         'is_active' => 'boolean'
