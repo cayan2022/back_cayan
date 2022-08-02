@@ -31,7 +31,6 @@ class UpdateServiceRequest extends FormRequest
              '%name%' => [
                  'required',
                  'string',
-                 Rule::unique('category_translations', 'name')->ignore($this->id)
              ],
              '%description%' => ['required', 'string'],
              'category_id' => 'required|numeric|exists:categories,id',

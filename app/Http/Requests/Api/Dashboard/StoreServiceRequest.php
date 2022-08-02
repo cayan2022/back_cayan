@@ -27,7 +27,7 @@ class StoreServiceRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-             '%name%' => ['required', 'string', 'unique:service_translations,name'],
+             '%name%' => ['required', 'string'],
              '%description%' => ['required', 'string'],
              'category_id' => 'required|numeric|exists:categories,id',
              'image' => ['nullable', new SupportedImage()]
