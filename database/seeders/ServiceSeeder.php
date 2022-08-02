@@ -26,6 +26,6 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        Service::factory()->count($this->count)->for(Category::inRandomOrder()->first())->create();
+        Service::factory()->count($this->count)->create();
     }
 }

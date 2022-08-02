@@ -20,17 +20,15 @@ class ServiceFactory extends Factory
 
             'en' => [
                 'name' =>$this->faker->name,
-                'short_description' =>$this->faker->sentence,
                 'description' =>$this->faker->text,
             ],
             'ar' => [
                 'name' =>$this->faker->name,
-                'short_description' =>$this->faker->sentence,
                 'description' =>$this->faker->text,
             ],
 
-            'category_id'=>Category::factory()->create(),
-            'is_active'=>$this->faker->boolean,
+            'category_id'=>Category::inRandomOrder()->take(1)->first()->id,
+            'is_block'=>$this->faker->boolean,
         ];
     }
 }
