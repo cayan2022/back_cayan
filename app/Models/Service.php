@@ -35,7 +35,7 @@ class Service extends Model implements   HasMedia,TranslatableContract
     public $translatedAttributes = ['name','description'];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_block' => 'boolean'
     ];
 
     protected $with=['category'];
