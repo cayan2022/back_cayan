@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helpers\Traits\CustomFactoryLocal;
 use App\Models\Category;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ServiceFactory extends Factory
 {
     protected $model=Service::class;
+    use CustomFactoryLocal;
     /**
      * Define the model's default state.
      *
@@ -23,8 +25,8 @@ class ServiceFactory extends Factory
                 'description' =>$this->faker->text,
             ],
             'ar' => [
-                'name' =>$this->faker->name,
-                'description' =>$this->faker->text,
+                'name' =>$this->localFaker()->name,
+                'description' =>$this->localFaker()->text,
             ],
 
             'category_id'=>Category::inRandomOrder()->take(1)->first()->id,
