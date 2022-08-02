@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ServiceResource;
+use App\Models\Traits\HasActivation;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,15 +11,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Http\Filters\Filterable;
 use App\Http\Filters\ServiceFilter;
-class Service extends Model implements  TranslatableContract
-{
-    use HasFactory , Translatable , Filterable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
+class Service extends Model implements   HasMedia,TranslatableContract
+{
+    use HasFactory ,InteractsWithMedia, Translatable , Filterable,HasActivation;
+
+    const MEDIA_COLLECTION_NAME = 'service_avatar';
+    const MEDIA_COLLECTION_URL = 'images/service.png';
     protected $fillable = [
         'category_id',
-        'name',
-        'short_description',
-        'description',
         'is_active'
     ];
 
@@ -29,12 +33,35 @@ class Service extends Model implements  TranslatableContract
     protected $filter = ServiceFilter::class;
 
     public $translatedAttributes = ['name', 'short_description','description'];
+
     protected $casts = [
         'is_active' => 'boolean'
     ];
+
     protected $with=['category'];
+    /*Relations*/
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+    /*helpers*/
+    /**
+     * @return ServiceResource
+     */
+    public function getResource(): ServiceResource
+    {
+        return new ServiceResource($this->fresh());
+    }
+
+    public function getAvatar()
+    {
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAME);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::MEDIA_COLLECTION_NAME)
+            ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
+            ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
     }
 }

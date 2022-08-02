@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreServiceRequest extends FormRequest
 {
@@ -14,7 +16,7 @@ class StoreServiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -25,12 +27,12 @@ class StoreServiceRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%' => ['required','string','unique:service_translations,name'],
-            '%short_description%' => ['required','string'],
-            '%description%' => ['required','string'],
-            'category_id' => 'required|numeric|exists:categories,id',
-            'is_active' => 'required|boolean',
-
-        ]);
+             '%name%' => ['required', 'string', 'unique:service_translations,name'],
+             '%short_description%' => ['required', 'string'],
+             '%description%' => ['required', 'string'],
+             'category_id' => 'required|numeric|exists:categories,id',
+             'is_active' => 'required|boolean',
+             'image' => ['nullable', new SupportedImage()]
+         ]);
     }
 }

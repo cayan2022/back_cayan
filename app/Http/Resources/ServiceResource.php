@@ -20,6 +20,7 @@ class ServiceResource extends JsonResource
             'short_description'=>$this->short_description,
             'description'=>$this->description,
             'is_active'=>$this->is_active,
+            'image'=>$this->getAvatar(),
             'category'=>new CategoryResource($this->category),
         ];
     }
