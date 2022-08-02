@@ -81,7 +81,7 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return $this->success('category Deleted Successfully');
+        return $this->success('Category Deleted Successfully');
 
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Filters\Filterable;
+use App\Http\Filters\BranchFilter;
 class Branch extends Model
 {
-    use HasFactory;
+    use HasFactory , Translatable;
 
     protected $fillable = [
         'name',
@@ -20,6 +22,11 @@ class Branch extends Model
         'description',
         'is_active'
     ];
+
+    protected $filter = BranchFilter::class;
+
+    public $translatedAttributes = ['name', 'short_description','description'];
+
     protected $casts = [
         'phone'=>'string',
         'whatsapp_phone'=>'string',

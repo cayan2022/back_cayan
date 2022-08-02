@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateBranchRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateBranchRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,16 @@ class UpdateBranchRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return RuleFactory::make([
+            '%name%' => ['required','string','unique:branch_translations,name'],
+            '%description%' => ['required','string'],
+            '%short_description%' => ['required','string'],
+            'city' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required|numeric',
+            'whatsapp_phone' => 'required|numeric',
+            'map_link' => 'required|url',
+            'is_active' => 'required|boolean',
+        ]);
     }
 }

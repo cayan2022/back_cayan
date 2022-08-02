@@ -16,15 +16,16 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
-           'name'=>$this->faker->unique()->name,
-           'city'=>$this->faker->city,
-           'address'=>$this->faker->address,
-           'phone'=>$this->faker->phoneNumber,
-           'whatsapp_phone'=>$this->faker->phoneNumber,
-           'map_link'=>$this->faker->url,
-           'short_description'=>$this->faker->sentence,
-           'description'=>$this->faker->text,
-           'is_active'=>$this->faker->boolean,
+
+            'en' => ['name' =>$this->faker->unique()->name,'short_description'=>$this->faker->sentence,'description' =>$this->faker->text],
+            'ar' => ['name' => $this->faker->name,'short_description'=>$this->faker->sentence,'description' => $this->faker->text],
+
+            'city'=>$this->faker->city,
+            'address'=>$this->faker->address,
+            'phone'=>$this->faker->phoneNumber,
+            'whatsapp_phone'=>$this->faker->phoneNumber,
+            'map_link'=>$this->faker->url,
+            'is_active'=>$this->faker->boolean,
         ];
     }
 }
