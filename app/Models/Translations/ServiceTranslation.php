@@ -9,5 +9,5 @@ class ServiceTranslation extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['name', 'short_description','description'];
+    protected $fillable = ['name','description'];
 }
