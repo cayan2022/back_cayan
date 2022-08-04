@@ -102,7 +102,7 @@ class RolesController extends Controller
     {
         $rolePermissions = Role::find($role->id)->permissions;
 
-        return response()->json(['data' => $rolePermissions]);
+        return response()->json(['data' => [$role->name,$rolePermissions]]);
 
     }
 }
