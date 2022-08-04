@@ -105,4 +105,22 @@ class RolesController extends Controller
         return response()->json(['data' => [$role->name,$rolePermissions]]);
 
     }
+
+    public function update(RoleRequest $request,  Role $role)
+    {
+        $requested_permissions = $request->requested_permissions;
+
+        $role->update(['name' => $request->name]);
+        $role_permission = Role::find($role->id)->permissions->pluck('name')->toArray();
+        $role->revokePermissionTo($role_permission);
+        foreach ($requested_permissions as $value) {
+            $permission = Permission::findOrFail($value);
+            $permission->assignRole($role);
+        }
+
+        return response()->json(['message'=>'role update successfully'],200);
+
+    }
+
+
 }
