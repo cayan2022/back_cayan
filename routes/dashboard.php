@@ -46,6 +46,7 @@ Route::as('dashboard.')
                 Route::post('add-role', [RolesController::class, 'addRole'])->name('store');
                 Route::post('assignRoleToUser', [RolesController::class, 'assignRoleToUser'])->name('assign');
                 Route::get('edit/{role}', [RolesController::class, 'edit'])->name('edit');
+                Route::post('update/{role}', [RolesController::class, 'update'])->name('update');
 
             });
 
