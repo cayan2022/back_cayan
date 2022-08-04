@@ -29,7 +29,7 @@ class Country extends Model implements HasMedia, TranslatableContract
 
     public function getAvatar()
     {
-        return $this->getFirstMediaUrl('country_avatar');
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAME);
     }
 
     public function registerMediaCollections(): void

@@ -29,7 +29,7 @@ class TestimonialController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Dashboard\StoreTestimonialRequest  $request
+     * @param  StoreTestimonialRequest  $request
      * @return Response
      */
     public function store(StoreTestimonialRequest $request)
@@ -80,7 +80,7 @@ class TestimonialController extends Controller
     public function destroy(Testimonial $testimonial)
     {
         $testimonial->delete();
-        return response()->noContent();
+        return $this->success(__('auth.success_operation'));
     }
     /**
      * @param  Testimonial $testimonial

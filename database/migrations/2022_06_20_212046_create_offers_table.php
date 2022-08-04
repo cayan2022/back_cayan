@@ -15,12 +15,20 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->double('price');
+            $table->double('discount_percentage');
             $table->longText('url');
-            $table->longText('description');
-            $table->boolean('is_active');
+            $table->boolean('is_block')->default(false);
             $table->timestamps();
+        });
+
+        Schema::create('offer_translations', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('locale')->index();
+            $table->string('name');
+            $table->longText('description');
+            $table->foreignId('offer_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['offer_id', 'locale']);
         });
     }
 
@@ -31,6 +39,8 @@ class CreateOffersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('offers');
+        Schema::dropIfExists('offer_translations');
     }
 }

@@ -73,6 +73,14 @@ Route::as('dashboard.')
                     Route::post('testimonials/{testimonial}',[TestimonialController::class,'update'])->name('testimonials.update');
                     Route::apiResource('testimonials',TestimonialController::class)->except('update');
                 });
+                /*offers*/
+                Route::group([], function (){
+                    Route::put('offers/{offer}/block',[OfferController::class,'block'])->name('offers.block');
+                    Route::put('offers/{offer}/active',[OfferController::class,'active'])->name('offers.active');
+                    Route::post('offers/{offer}',[OfferController::class,'update'])->name('offers.update');
+                    Route::apiResource('offers',OfferController::class)->except('update');
+                });
+
                 /*services*/
                 Route::group([], function (){
                     Route::put('services/{service}/block',[ServiceController::class,'block'])->name('services.block');
@@ -80,9 +88,9 @@ Route::as('dashboard.')
                     Route::post('services/{service}',[ServiceController::class,'update'])->name('services.update');
                     Route::apiResource('services',ServiceController::class)->except('update');
                 });
+
                 Route::apiResources([
                     'categories' => CategoryController::class,
-                    'offers' => OfferController::class,
                     'sources' => SourceController::class,
                     'branches' => BranchController::class,
                     'statuses' => StatusController::class,

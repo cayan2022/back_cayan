@@ -37,5 +37,6 @@ class CreateCountriesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('countries');
+        Schema::dropIfExists('country_translations');
     }
 }
