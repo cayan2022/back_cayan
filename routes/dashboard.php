@@ -45,6 +45,8 @@ Route::as('dashboard.')
                 Route::get('get-role-permissions', [RolesController::class, 'getRolePermissions'])->name('show');
                 Route::post('add-role', [RolesController::class, 'addRole'])->name('store');
                 Route::post('assignRoleToUser', [RolesController::class, 'assignRoleToUser'])->name('assign');
+                Route::get('edit/{role}', [RolesController::class, 'edit'])->name('edit');
+
             });
 
         //Permissions

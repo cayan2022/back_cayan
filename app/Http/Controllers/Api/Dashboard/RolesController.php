@@ -96,6 +96,13 @@ class RolesController extends Controller
             'data' => 'Role Not Founded'
         ], 404);
 
+    }
+
+    public function edit(Role $role)
+    {
+        $rolePermissions = Role::find($role->id)->permissions;
+
+        return response()->json(['data' => $rolePermissions]);
 
     }
 }

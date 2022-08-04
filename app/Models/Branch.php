@@ -32,4 +32,11 @@ class Branch extends Model
         'whatsapp_phone'=>'string',
         'is_active'=>'boolean'
     ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['translations'];
 }

@@ -38,7 +38,7 @@ class Service extends Model implements   HasMedia,TranslatableContract
         'is_block' => 'boolean'
     ];
 
-    protected $with=['category'];
+    protected $with=['category','translations'];
     /*Relations*/
     public function category(): BelongsTo
     {

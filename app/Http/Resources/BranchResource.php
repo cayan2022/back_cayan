@@ -24,6 +24,7 @@ class BranchResource extends JsonResource
             'map_link'=>$this->map_link,
             'short_description'=>$this->short_description,
             'description'=>$this->description,
+            'translations'=> $this->translations,
             'is_active'=>$this->is_active
         ];
     }

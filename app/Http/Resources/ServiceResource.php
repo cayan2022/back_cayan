@@ -18,6 +18,7 @@ class ServiceResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'description'=>$this->description,
+            'translations'=> $this->translations,
             'is_block'=>$this->is_block,
             'image'=>$this->getAvatar(),
             'category'=>new CategoryResource($this->category),

@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
 class CategoryResource extends JsonResource
 {
@@ -20,6 +19,7 @@ class CategoryResource extends JsonResource
             'name'=>$this->name,
             'description'=>$this->description,
             'is_active'=>$this->is_active,
+            'translations'=> $this->translations,
             'image' => $this->getFirstMediaUrl('images')
         ];
     }

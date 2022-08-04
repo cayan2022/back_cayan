@@ -20,6 +20,7 @@ class SourceResource extends JsonResource
             'link'=>$this->link,
             'short_description'=>$this->short_description,
             'description'=>$this->description,
+            'translations'=> $this->translations,
             'is_active'=>$this->is_active
         ];
     }

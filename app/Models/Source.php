@@ -27,6 +27,13 @@ class Source extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['translations'];
+
+    /**
      * The query parameter's filter of the model.
      *
      * @var string
