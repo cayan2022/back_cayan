@@ -7,8 +7,12 @@ use App\Http\Requests\Api\Dashboard\StoreServiceRequest;
 use App\Http\Requests\Api\Dashboard\UpdateServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Helpers\Traits\RespondsWithHttpStatus;
+use Illuminate\Http\Response;
 
 class ServiceController extends Controller
 {
@@ -34,7 +38,9 @@ class ServiceController extends Controller
     {
         $service= Service::create($request->validated());
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $service->addMediaFromRequest('image')->toMediaCollection(Service::MEDIA_COLLECTION_NAME);
+            $service->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Service::MEDIA_COLLECTION_NAME);
         }
         return $service->getResource();
     }
@@ -62,7 +68,9 @@ class ServiceController extends Controller
         $service->update($request->validated());
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $service->clearMediaCollection(Service::MEDIA_COLLECTION_NAME);
-            $service->addMediaFromRequest('image')->toMediaCollection(Service::MEDIA_COLLECTION_NAME);
+            $service->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Service::MEDIA_COLLECTION_NAME);
         }
         return $service->getResource();
     }
@@ -71,7 +79,7 @@ class ServiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Service  $service
-     * @return \Illuminate\Http\Response
+     * @return Application|ResponseFactory|Response
      */
     public function destroy(Service $service)
     {
@@ -81,20 +89,20 @@ class ServiceController extends Controller
     }
     /**
      * @param  Service $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function block(Service $service)
     {
         $service->block();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
     /**
      * @param  Service $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function active(Service $service)
     {
         $service->active();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
 }

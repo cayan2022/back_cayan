@@ -16,10 +16,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Service extends Model implements   HasMedia,TranslatableContract
 {
-    use HasFactory ,InteractsWithMedia, Translatable , Filterable,HasActivation;
+    use HasFactory ,InteractsWithMedia, Translatable , Filterable, HasActivation;
 
-    const MEDIA_COLLECTION_NAME = 'service_avatar';
-    const MEDIA_COLLECTION_URL = 'images/service.png';
+    public const MEDIA_COLLECTION_NAME = 'service_avatar';
+    public const MEDIA_COLLECTION_URL = 'images/service.png';
     protected $fillable = [
         'category_id',
         'is_block'

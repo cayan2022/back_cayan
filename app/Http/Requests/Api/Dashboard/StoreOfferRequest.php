@@ -6,6 +6,7 @@ use App\Rules\SupportedImage;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreOfferRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class StoreOfferRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-             '%name%' => ['required', 'string','max:255'],
+             '%name%' => ['required', 'string','max:255',Rule::unique('offer_translations','name')],
              '%description%' => ['required', 'string','max:255'],
              'price' => 'required|numeric|min:0',
              'discount_percentage' => 'required|numeric|min:0',

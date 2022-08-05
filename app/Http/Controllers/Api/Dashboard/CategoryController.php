@@ -7,8 +7,11 @@ use App\Http\Requests\Api\Dashboard\StoreCategoryRequest;
 use App\Http\Requests\Api\Dashboard\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Helpers\Traits\RespondsWithHttpStatus;
+use Illuminate\Http\Response;
 
 
 class CategoryController extends Controller
@@ -22,7 +25,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(Category::filter()->paginate());
+        $schema=request()->filled('page') ? 'paginate':'get';
+        return CategoryResource::collection(Category::filter()->$schema());
     }
 
     /**
@@ -35,9 +39,11 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->validated());
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $category->addMediaFromRequest('image')->toMediaCollection('images');
+            $category->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Category::MEDIA_COLLECTION_NAME);
         }
-        return new CategoryResource($category);
+        return $category->getResource();
 
     }
 
@@ -49,26 +55,28 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return new CategoryResource($category);
+        return $category->getResource();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Dashboard\UpdateCategoryRequest  $request
+     * @param  UpdateCategoryRequest  $request
      * @param  Category  $category
-     * @return \Illuminate\Http\Response
+     * @return CategoryResource
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->validated());
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $category->clearMediaCollection('images');
-            $category->addMediaFromRequest('image')->toMediaCollection('images');
+            $category->clearMediaCollection(Category::MEDIA_COLLECTION_NAME);
+            $category->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Category::MEDIA_COLLECTION_NAME);
         }
 
-        return new CategoryResource($category);
+        return $category->getResource();
     }
 
     /**
@@ -81,7 +89,26 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return $this->success('Category Deleted Successfully');
+        return $this->success(__('auth.success_operation'));
+    }
 
+    /**
+     * @param  Category  $category
+     * @return Application|ResponseFactory|Response
+     */
+    public function block(Category $category)
+    {
+        $category->block();
+        return $this->success(__('auth.success_operation'));
+    }
+
+    /**
+     * @param  Category  $category
+     * @return Application|ResponseFactory|Response
+     */
+    public function active(Category $category)
+    {
+        $category->active();
+        return $this->success(__('auth.success_operation'));
     }
 }

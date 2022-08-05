@@ -15,7 +15,7 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_active');
+            $table->boolean('is_block')->default(false);
             $table->timestamps();
         });
 
@@ -24,8 +24,8 @@ class CreateCategoriesTable extends Migration
             $table->string('name')->unique();
             $table->longText('description');
             $table->string('locale')->index();
-            $table->unique(['category_id', 'locale']);
             $table->foreignId('category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['category_id', 'locale']);
         });
     }
 

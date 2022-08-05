@@ -22,7 +22,14 @@ class CategoryFilter extends BaseFilters
     protected function name($value)
     {
         if ($value) {
-            return $this->builder->whereTranslationLike('name', "$value%");
+            return $this->builder
+                ->when(
+                    $this->request->filled('name'),
+                    function ($query) use ($value) {
+                        $query->whereTranslationLike('name','%'.$value.'%')
+                            ->orWhereTranslationLike('description','%'.$value.'%');
+                    }
+                );
         }
 
         return $this->builder;

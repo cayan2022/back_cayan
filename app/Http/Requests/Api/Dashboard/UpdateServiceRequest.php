@@ -31,8 +31,9 @@ class UpdateServiceRequest extends FormRequest
              '%name%' => [
                  'required',
                  'string',
+                 Rule::unique('service_translations','name')->ignore($this->id)
              ],
-             '%description%' => ['required', 'string'],
+             '%description%' => ['required', 'string','max:255'],
              'category_id' => 'required|numeric|exists:categories,id',
              'image' => ['nullable', new SupportedImage()]
          ]);
