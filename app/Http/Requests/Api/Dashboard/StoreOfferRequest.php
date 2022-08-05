@@ -28,7 +28,7 @@ class StoreOfferRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-             '%name%' => ['required', 'string','max:255',Rule::unique('offer_translations','name')],
+             '%name%' => ['required', 'string','max:255'],
              '%description%' => ['required', 'string','max:255'],
              'price' => 'required|numeric|min:0',
              'discount_percentage' => 'required|numeric|min:0',

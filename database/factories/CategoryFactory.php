@@ -19,8 +19,8 @@ class CategoryFactory extends Factory
     {
         return [
 
-            'en' => ['name' =>$this->faker->unique()->name,'description' =>$this->faker->text],
-            'ar' => ['name' => $this->localFaker()->unique()->name,'description' => $this->localFaker()->text],
+            'en' => ['name' =>$this->faker->name,'description' =>$this->faker->text],
+            'ar' => ['name' => $this->localFaker()->name,'description' => $this->localFaker()->text],
 
             'is_block'=>$this->faker->boolean,
 

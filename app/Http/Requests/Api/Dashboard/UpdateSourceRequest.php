@@ -26,7 +26,7 @@ class UpdateSourceRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%' => ['required','string',Rule::unique('source_translations','name')->ignore($this->id)],
+            '%name%' => ['required','string','max:255'],
             '%short_description%' => ['required','string'],
             '%description%' => ['required','string'],
             'identifier' => 'required|url',

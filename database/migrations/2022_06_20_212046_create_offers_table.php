@@ -25,7 +25,7 @@ class CreateOffersTable extends Migration
         Schema::create('offer_translations', function(Blueprint $table) {
             $table->increments('id');
             $table->string('locale')->index();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->longText('description');
             $table->foreignId('offer_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->unique(['offer_id', 'locale']);

@@ -25,7 +25,7 @@ class StoreBranchRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%' => ['required','string','unique:branch_translations,name'],
+            '%name%' => ['required','string','max:255'],
             '%description%' => ['required','string'],
             '%short_description%' => ['required','string'],
             'city' => 'required|string',

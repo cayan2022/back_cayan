@@ -21,11 +21,11 @@ class ServiceFactory extends Factory
         return [
 
             'en' => [
-                'name' =>$this->faker->unique()->name,
+                'name' =>$this->faker->name,
                 'description' =>$this->faker->text,
             ],
             'ar' => [
-                'name' =>$this->localFaker()->unique()->name,
+                'name' =>$this->localFaker()->name,
                 'description' =>$this->localFaker()->text,
             ],
 

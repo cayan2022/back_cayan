@@ -28,7 +28,7 @@ class StoreCategoryRequest extends FormRequest
     {
 
         return RuleFactory::make([
-            '%name%' => ['required','string','unique:category_translations,name','max:255'],
+            '%name%' => ['required','string','max:255'],
             '%description%' => ['required','string'],
             'image' => ['nullable',new SupportedImage()],
         ]);
