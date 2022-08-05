@@ -79,7 +79,7 @@ class DoctorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Doctor  $doctor
-     * @return Response
+     * @return Application|ResponseFactory|Response
      */
     public function destroy(Doctor $doctor)
     {

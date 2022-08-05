@@ -79,7 +79,7 @@ class TestimonialController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Testimonial  $testimonial
-     * @return Response
+     * @return Application|ResponseFactory|Response
      */
     public function destroy(Testimonial $testimonial)
     {

@@ -81,7 +81,7 @@ class OfferController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Offer  $offer
-     * @return Response
+     * @return Application|ResponseFactory|Response
      */
     public function destroy(Offer $offer)
     {

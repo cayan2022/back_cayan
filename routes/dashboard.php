@@ -89,8 +89,15 @@ Route::as('dashboard.')
                     Route::apiResource('services',ServiceController::class)->except('update');
                 });
 
+                /*categories*/
+                Route::group([], function (){
+                    Route::put('categories/{category}/block',[CategoryController::class,'block'])->name('categories.block');
+                    Route::put('categories/{category}/active',[CategoryController::class,'active'])->name('categories.active');
+                    Route::post('categories/{category}',[CategoryController::class,'update'])->name('categories.update');
+                    Route::apiResource('categories',CategoryController::class)->except('update');
+                });
+
                 Route::apiResources([
-                    'categories' => CategoryController::class,
                     'sources' => SourceController::class,
                     'branches' => BranchController::class,
                     'statuses' => StatusController::class,

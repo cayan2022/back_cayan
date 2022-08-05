@@ -67,4 +67,10 @@ class Category extends Model implements HasMedia , TranslatableContract
         return $this->hasMany(Service::class);
     }
 
+    public function canDeleted(): bool
+    {
+        return $this->orders()->doesntExist() &&
+            $this->services()->doesntExist() ;
+    }
+
 }

@@ -33,7 +33,7 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\Api\Dashboard\StoreCategoryRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreCategoryRequest $request)
     {
@@ -83,13 +83,16 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Category  $category
-     * @return \Illuminate\Http\Response
+     * @return Application|ResponseFactory|Response
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        if($category->canDeleted()){
+            $category->delete();
+            return $this->success(__('auth.success_operation'));
+        }
 
-        return $this->success(__('auth.success_operation'));
+        return $this->failure(__('auth.fail_operation'));
     }
 
     /**
