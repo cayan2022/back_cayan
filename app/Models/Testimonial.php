@@ -13,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Testimonial extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia,HasActivation,Filterable;
+    use HasFactory, InteractsWithMedia, HasActivation, Filterable;
 
     protected $fillable = [
         'user_name',

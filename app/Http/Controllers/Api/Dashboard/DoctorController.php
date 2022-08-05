@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers\Api\Dashboard;
 
+use App\Helpers\Traits\RespondsWithHttpStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\StoreDoctorRequest;
 use App\Http\Requests\Api\Dashboard\UpdateDoctorRequest;
 use App\Http\Resources\DoctorResource;
 use App\Models\Doctor;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class DoctorController extends Controller
 {
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +36,9 @@ class DoctorController extends Controller
     {
         $doctor=Doctor::create($request->validated());
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $doctor->addMediaFromRequest('image')->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
+            $doctor->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
         }
         return $doctor->getResource();
     }
@@ -61,7 +67,9 @@ class DoctorController extends Controller
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $doctor->clearMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
-            $doctor->addMediaFromRequest('image')->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
+            $doctor->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
         }
 
         return $doctor->getResource();
@@ -76,25 +84,25 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor)
     {
         $doctor->delete();
-        return response()->noContent();
+        return $this->success(__('auth.success_operation'));
     }
 
     /**
      * @param  Doctor $doctor
-     * @return \Illuminate\Http\JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function block(Doctor $doctor)
     {
         $doctor->block();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
     /**
      * @param  Doctor $doctor
-     * @return \Illuminate\Http\JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function active(Doctor $doctor)
     {
         $doctor->active();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
 }

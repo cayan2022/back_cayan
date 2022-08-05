@@ -27,7 +27,7 @@ class StoreTestimonialRequest extends FormRequest
     {
         return [
             'user_name'=>'required|string|max:255',
-            'comment'=>'required|string',
+            'comment'=>'required|string|max:255',
             'image' => ['nullable',new SupportedImage()]
         ];
     }

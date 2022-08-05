@@ -18,7 +18,7 @@ class Doctor extends Model implements HasMedia
     protected $fillable = [
         'name',
         'specialization',
-        'is_block' //default true in migration file
+        'is_block'
     ];
     protected $casts = [
         'is_block' => 'boolean',

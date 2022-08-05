@@ -23,7 +23,7 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        return TestimonialResource::collection(Testimonial::filter()->paginate());
+        return TestimonialResource::collection(Testimonial::filter()->latest()->paginate());
     }
 
     /**
@@ -36,7 +36,9 @@ class TestimonialController extends Controller
     {
         $testimonial=Testimonial::create($request->validated());
         if($request->hasFile('image') && $request->file('image')->isValid()){
-            $testimonial->addMediaFromRequest('image')->toMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
+            $testimonial->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
         }
         return $testimonial->getResource();
     }
@@ -65,7 +67,9 @@ class TestimonialController extends Controller
 
         if($request->hasFile('image') && $request->file('image')->isValid()){
             $testimonial->clearMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
-            $testimonial->addMediaFromRequest('image')->toMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
+            $testimonial->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->toMediaCollection(Testimonial::MEDIA_COLLECTION_NAME);
         }
 
         return $testimonial->getResource();
