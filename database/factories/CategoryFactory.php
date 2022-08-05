@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
         return [
 
             'en' => ['name' =>$this->faker->unique()->name,'description' =>$this->faker->text],
-            'ar' => ['name' => $this->localFaker()->unique()->realText(15),'description' => $this->localFaker()->realText(25)],
+            'ar' => ['name' => $this->localFaker()->unique()->name,'description' => $this->localFaker()->text],
 
             'is_block'=>$this->faker->boolean,
 

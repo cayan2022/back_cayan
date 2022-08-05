@@ -21,12 +21,12 @@ class ServiceFactory extends Factory
         return [
 
             'en' => [
-                'name' =>$this->faker->unique()->realText(50),
+                'name' =>$this->faker->unique()->name,
                 'description' =>$this->faker->text,
             ],
             'ar' => [
-                'name' =>$this->localFaker()->unique()->realText(50),
-                'description' =>$this->localFaker()->realText(100),
+                'name' =>$this->localFaker()->unique()->name,
+                'description' =>$this->localFaker()->text,
             ],
 
             'category_id'=>Category::inRandomOrder()->take(1)->first()->id,

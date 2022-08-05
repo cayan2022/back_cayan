@@ -20,12 +20,12 @@ class OfferFactory extends Factory
         return [
 
             'en' => [
-                'name' =>$this->faker->unique()->realText(50),
+                'name' =>$this->faker->unique()->name,
                 'description' =>$this->faker->text,
             ],
             'ar' => [
-                'name' =>$this->localFaker()->unique()->realText(50),
-                'description' =>$this->localFaker()->realText(),
+                'name' =>$this->localFaker()->unique()->name,
+                'description' =>$this->localFaker()->text,
             ],
            'price'=>$this->faker->numberBetween(1,1000),
            'url'=>$this->faker->url,
