@@ -5,6 +5,7 @@ namespace App\Http\Requests\Api\Dashboard;
 use App\Rules\SupportedImage;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -27,10 +28,9 @@ class StoreCategoryRequest extends FormRequest
     {
 
         return RuleFactory::make([
-            '%name%' => ['required','string','unique:category_translations,name'],
+            '%name%' => ['required','string','max:255'],
             '%description%' => ['required','string'],
-            'is_active' => 'required|boolean',
-            'image' => ['required',new SupportedImage()],
+            'image' => ['nullable',new SupportedImage()],
         ]);
     }
 }

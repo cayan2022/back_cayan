@@ -18,9 +18,9 @@ class CategoryResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'description'=>$this->description,
-            'is_active'=>$this->is_active,
-            'translations'=> $this->translations,
-            'image' => $this->getFirstMediaUrl('images')
+            'is_block'=>$this->is_block,
+            'translations'=> $this->getTranslationsArray(),
+            'image' => $this->getAvatar()
         ];
     }
 }

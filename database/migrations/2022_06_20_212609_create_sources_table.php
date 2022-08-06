@@ -22,7 +22,7 @@ class CreateSourcesTable extends Migration
 
         Schema::create('source_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('short_description');
             $table->string('description');
             $table->string('locale')->index();

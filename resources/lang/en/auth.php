@@ -19,6 +19,7 @@ return [
     'block' => 'User Block Successfully',
     'logged_out'=>'User Has Logged Out',
     'success_operation'=>'Success Operation',
+    'fail_operation'=>'Fail Operation',
     'errors'=>[
         'wrong_credentials'=>'Credentials Are Wrong!',
         'user_is_blocked'=>'This User Has Been Blocked!',

@@ -25,8 +25,8 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->string('locale')->index();
-            $table->unique(['service_id', 'locale']);
             $table->foreignId('service_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['service_id', 'locale']);
         });
     }
 

@@ -16,6 +16,6 @@ class OfferController extends Controller
      */
     public function __invoke(): AnonymousResourceCollection
     {
-        return OfferResource::collection(Offer::paginate());
+        return OfferResource::collection(Offer::whereIsActive()->filter()->latest()->paginate());
     }
 }

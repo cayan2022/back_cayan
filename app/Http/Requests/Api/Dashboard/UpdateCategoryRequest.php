@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateCategoryRequest extends FormRequest
@@ -15,7 +17,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -26,10 +28,9 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%' => ['required','string',Rule::unique('category_translations','name')->ignore($this->id)],
+            '%name%' => ['required','string','max:255'],
             '%description%' => ['required','string'],
-            'is_active' => 'required|boolean',
-            'image' => 'required|image|mimes:jpg,jpeg,png,svg',
+            'image' => ['nullable',new SupportedImage()],
         ]);
     }
 }

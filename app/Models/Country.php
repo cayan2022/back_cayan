@@ -17,19 +17,24 @@ class Country extends Model implements HasMedia, TranslatableContract
     use HasFactory, InteractsWithMedia, Translatable,Filterable;
 
     public $translatedAttributes = ['name'];
+
     protected $fillable = ['code'];
+
+    protected $filter= CountryFilter::class;
+
     public const MEDIA_COLLECTION_NAME = 'country_avatar';
     public const MEDIA_COLLECTION_URL = 'images/country.png';
 
-    protected $filter= CountryFilter::class;
+    /*Relations*/
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
     }
 
+    /*Helpers*/
     public function getAvatar()
     {
-        return $this->getFirstMediaUrl('country_avatar');
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAME);
     }
 
     public function registerMediaCollections(): void

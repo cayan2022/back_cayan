@@ -23,8 +23,8 @@ class CreateCountriesTable extends Migration
             $table->string('locale')->index();
             $table->string('name');
 
-            $table->unique(['country_id', 'locale']);
             $table->foreignId('country_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['country_id', 'locale']);
         });
     }
 
@@ -37,5 +37,6 @@ class CreateCountriesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('countries');
+        Schema::dropIfExists('country_translations');
     }
 }

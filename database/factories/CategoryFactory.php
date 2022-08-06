@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Helpers\Traits\CustomFactoryLocal;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CategoryFactory extends Factory
 {
+    use CustomFactoryLocal;
     protected $model=Category::class;
     /**
      * Define the model's default state.
@@ -18,9 +20,9 @@ class CategoryFactory extends Factory
         return [
 
             'en' => ['name' =>$this->faker->name,'description' =>$this->faker->text],
-            'ar' => ['name' => $this->faker->name,'description' => $this->faker->text],
+            'ar' => ['name' => $this->localFaker()->name,'description' => $this->localFaker()->text],
 
-            'is_active'=>$this->faker->boolean,
+            'is_block'=>$this->faker->boolean,
 
         ];
     }

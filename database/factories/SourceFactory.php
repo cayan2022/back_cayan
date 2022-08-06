@@ -17,12 +17,12 @@ class SourceFactory extends Factory
     {
         return [
             'en' => [
-                'name' =>$this->faker->unique()->name,
+                'name' =>$this->faker->name,
                 'short_description'=>$this->faker->sentence,
                 'description' =>$this->faker->text
             ],
             'ar' => [
-                'name' =>$this->faker->unique()->name,
+                'name' =>$this->faker->name,
                 'short_description'=>$this->faker->sentence,
                 'description' => $this->faker->text
             ],
