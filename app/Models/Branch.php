@@ -9,7 +9,7 @@ use App\Http\Filters\Filterable;
 use App\Http\Filters\BranchFilter;
 class Branch extends Model
 {
-    use HasFactory , Translatable;
+    use HasFactory , Translatable, Filterable;
 
     protected $fillable = [
         'name',
