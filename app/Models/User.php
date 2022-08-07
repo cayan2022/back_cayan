@@ -36,29 +36,10 @@ class User extends Authenticatable implements HasMedia
     /**
      *
      */
-    public const MALE = 'male';
-
-    /**
-     *
-     */
-    public const FEMALE = 'female';
-
-    /**
-     *
-     */
     public const TYPES = [
         self::ADMIN,
         self::MODERATOR,
     ];
-
-    /**
-     *
-     */
-    public const GENDERS = [
-        self::MALE,
-        self::FEMALE,
-    ];
-
 
     /**
      * The attributes that are mass assignable.
@@ -66,7 +47,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'type', 'phone' , 'gender', 'password', 'is_block','country_id'
+        'name', 'email', 'type', 'phone' , 'password', 'is_block','country_id'
     ];
 
     /**

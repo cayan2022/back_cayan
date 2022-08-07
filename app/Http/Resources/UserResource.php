@@ -21,7 +21,6 @@ class UserResource extends JsonResource
             'country' => new CountryResource($this->country), //if not exists null
             'phone' => $this->phone,
             'type' => $this->type,
-            'gender' => $this->gender,
             'is_block' => $this->is_block,
             'role_id' => optional($this->roles->first())->id,//if not exists null
             'image' => $this->getAvatar(),

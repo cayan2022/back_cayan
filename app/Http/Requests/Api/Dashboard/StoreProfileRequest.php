@@ -30,7 +30,6 @@ class StoreProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'gender' => ['required', 'string', Rule::in(User::GENDERS)],
             'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')],
             'country_id' => 'required|numeric|exists:countries,id',
             'phone' => 'required|string|max:255|unique:users,phone',

@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->foreignId('country_id')->constrained()->cascadeOnUpdate();
             $table->string('phone')->unique();
             $table->enum('type', User::TYPES);
-            $table->enum('gender', User::GENDERS);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_block')->default(false);
