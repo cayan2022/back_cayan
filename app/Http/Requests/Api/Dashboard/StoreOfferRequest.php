@@ -31,7 +31,7 @@ class StoreOfferRequest extends FormRequest
              '%name%' => ['required', 'string','max:255'],
              '%description%' => ['required', 'string','max:255'],
              'price' => 'required|numeric|min:0',
-             'discount_percentage' => 'required|numeric|min:0',
+             'discount_percentage' => 'required|numeric|min:0|max:100',
              'url' => 'required|string|max:255|url',
              'image' => ['nullable', new SupportedImage()]
          ]);
