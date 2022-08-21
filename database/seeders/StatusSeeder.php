@@ -26,6 +26,6 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        Status::factory()->count($this->count)->create();
+        Status::factory()->count((int)$this->count)->create();
     }
 }

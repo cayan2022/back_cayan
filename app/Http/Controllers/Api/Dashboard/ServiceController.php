@@ -9,7 +9,6 @@ use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Helpers\Traits\RespondsWithHttpStatus;
 use Illuminate\Http\Response;

@@ -18,7 +18,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return StatusResource::collection(Status::paginate());
+        return StatusResource::collection(Status::paginate(4));
     }
 
     /**

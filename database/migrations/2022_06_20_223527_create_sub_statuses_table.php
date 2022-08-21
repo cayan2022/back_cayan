@@ -15,9 +15,16 @@ class CreateSubStatusesTable extends Migration
     {
         Schema::create('sub_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
+        });
+
+        Schema::create('sub_status_translations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('locale')->index();
+            $table->unique(['sub_status_id', 'locale']);
+            $table->foreignId('sub_status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -30,5 +37,6 @@ class CreateSubStatusesTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('sub_statuses');
+        Schema::dropIfExists('sub_status_translations');
     }
 }

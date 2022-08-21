@@ -33,12 +33,15 @@ class User extends Authenticatable implements HasMedia
      */
     public const MODERATOR = 'moderator';
 
+    public const PATIENT = 'patient';
+
     /**
      *
      */
     public const TYPES = [
         self::ADMIN,
         self::MODERATOR,
+        self::PATIENT
     ];
 
     /**

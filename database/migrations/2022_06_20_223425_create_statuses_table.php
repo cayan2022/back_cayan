@@ -15,8 +15,15 @@ class CreateStatusesTable extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->timestamps();
+        });
+
+        Schema::create('status_translations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('locale')->index();
+            $table->unique(['status_id', 'locale']);
+            $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -27,6 +34,8 @@ class CreateStatusesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('statuses');
+        Schema::dropIfExists('status_translations');
     }
 }

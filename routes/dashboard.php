@@ -16,7 +16,8 @@ use App\Http\Controllers\Api\Dashboard\{
     TestimonialController,
     AboutController,
     ProfileController,
-    ChangePasswordController
+    ChangePasswordController,
+    OrderController
 
 };
 //route naming is need to make check_permissions middleware
@@ -29,6 +30,7 @@ Route::as('dashboard.')
         Route::as('profiles.')
             ->prefix('profile')->group(function () {
                 Route::get('all', [ProfileController::class, 'index'])->name('index');
+                Route::get('getCustomerPatients', [ProfileController::class, 'getCustomerPatients'])->name('getCustomerPatients');
                 Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
                 Route::post('store', [ProfileController::class, 'store'])->name('store');
                 Route::post('update/{user}', [ProfileController::class, 'update'])->name('update');
@@ -100,6 +102,7 @@ Route::as('dashboard.')
                 Route::apiResources([
                     'sources' => SourceController::class,
                     'branches' => BranchController::class,
+                    'orders' => OrderController::class,
                     'statuses' => StatusController::class,
                     'substatuses' => SubStatusController::class,
                     'settings' => SettingController::class,

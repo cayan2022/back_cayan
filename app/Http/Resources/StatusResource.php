@@ -17,7 +17,7 @@ class StatusResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'substatuses'=>SubStatusResource::collection($this->whenLoaded('subStatuses'))
+            //'substatuses'=>SubStatusResource::collection($this->whenLoaded('subStatuses'))
         ];
     }
 }

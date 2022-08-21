@@ -16,8 +16,15 @@ class SubStatusFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('ar_JO');
+
         return [
-            'name' => $this->faker->word(),
+            'en' => [
+                'name' =>$this->faker->name,
+            ],
+            'ar' => [
+                'name' =>$faker->firstName,
+            ],
             'status_id' => Status::factory()->create()
         ];
     }
