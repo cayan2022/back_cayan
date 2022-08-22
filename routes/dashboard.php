@@ -99,6 +99,16 @@ Route::as('dashboard.')
                     Route::apiResource('categories',CategoryController::class)->except('update');
                 });
 
+                /*get substauses by status id*/
+                Route::group([], function (){
+                    Route::get('statuses/{status}/substatuses',[StatusController::class,'subStatuses'])->name('subStatuses');
+                });
+
+                /*Follow Order*/
+                Route::group([], function (){
+                    Route::post('orders/follow-order',[OrderController::class,'followOrder'])->name('followOrder');
+                });
+
                 Route::apiResources([
                     'sources' => SourceController::class,
                     'branches' => BranchController::class,

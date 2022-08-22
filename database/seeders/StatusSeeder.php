@@ -26,6 +26,32 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        Status::factory()->count((int)$this->count)->create();
+        //Status::factory()->count(4)->create();
+
+        Status::create(
+            [
+                'ar' => ['name' => 'جديد'],
+                'en' => ['name' => 'New']
+            ]
+        );
+        Status::create(
+            [
+                'ar' => ['name' => 'متابعة'],
+                'en' => ['name' => 'Following']
+            ]
+        );
+        Status::create(
+            [
+                'ar' => ['name' => 'تم الدفع'],
+                'en' => ['name' => 'Paid']
+            ]
+        );
+
+        Status::create(
+            [
+                'ar' => ['name' => 'فشل'],
+                'en' => ['name' => 'Fail']
+            ]
+        );
     }
 }

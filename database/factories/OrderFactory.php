@@ -25,7 +25,7 @@ class OrderFactory extends Factory
             'user_id' => User::inRandomOrder()->take(1)->first()->id,
             'category_id' => Category::factory()->create(),
             'source_id' => Source::factory()->create(),
-            'status_id' => Status::factory()->create(),
+            'status_id' => Status::inRandomOrder()->take(1)->first()->id,
         ];
     }
 }

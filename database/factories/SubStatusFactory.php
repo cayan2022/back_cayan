@@ -16,16 +16,16 @@ class SubStatusFactory extends Factory
      */
     public function definition()
     {
-        $faker = \Faker\Factory::create('ar_JO');
-
-        return [
-            'en' => [
-                'name' =>$this->faker->name,
-            ],
-            'ar' => [
-                'name' =>$faker->firstName,
-            ],
-            'status_id' => Status::factory()->create()
-        ];
+//        $faker = \Faker\Factory::create('ar_JO');
+//
+//        return [
+//            'en' => [
+//                'name' =>$this->faker->name,
+//            ],
+//            'ar' => [
+//                'name' =>$faker->firstName,
+//            ],
+//            'status_id' => Status::factory()->create()
+//        ];
     }
 }

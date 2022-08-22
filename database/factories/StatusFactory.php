@@ -16,16 +16,16 @@ class StatusFactory extends Factory
      */
     public function definition()
     {
-        $faker = \Faker\Factory::create('ar_JO');
-        return [
-            'en' => [
-                'name' =>$this->faker->name,
-            ],
-            'ar' => [
-                'name' =>$faker->firstName,
-            ],
-
-        ];
+//        $faker = \Faker\Factory::create('ar_JO');
+//        return [
+//            'en' => [
+//                'name' =>$this->faker->name,
+//            ],
+//            'ar' => [
+//                'name' =>$faker->firstName,
+//            ],
+//
+//        ];
 
     }
 }

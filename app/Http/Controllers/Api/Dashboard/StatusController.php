@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\StoreStatusRequest;
 use App\Http\Requests\Api\Dashboard\UpdateStatusRequest;
 use App\Http\Resources\StatusResource;
+use App\Http\Resources\SubStatusResource;
 use App\Models\Status;
+use App\Models\SubStatus;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class StatusController extends Controller
@@ -24,7 +26,7 @@ class StatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Dashboard\StoreStatusRequest  $request
+     * @param \App\Http\Requests\Api\Dashboard\StoreStatusRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreStatusRequest $request)
@@ -35,7 +37,7 @@ class StatusController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Status  $status
+     * @param Status $status
      * @return StatusResource
      */
     public function show(Status $status)
@@ -46,8 +48,8 @@ class StatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Dashboard\UpdateStatusRequest  $request
-     * @param  Status  $status
+     * @param \App\Http\Requests\Api\Dashboard\UpdateStatusRequest $request
+     * @param Status $status
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateStatusRequest $request, Status $status)
@@ -58,11 +60,16 @@ class StatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Status  $status
+     * @param Status $status
      * @return \Illuminate\Http\Response
      */
     public function destroy(Status $status)
     {
         //
+    }
+
+    public function subStatuses(Status $status)
+    {
+        return SubStatusResource::collection(SubStatus::where('status_id', $status->id)->paginate());
     }
 }
