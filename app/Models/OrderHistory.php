@@ -9,6 +9,9 @@ class OrderHistory extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['order_id','sub_status_id','user_id','description','duration'];
+
+
     public function employee()
     {
         return $this->belongsTo(User::class,'user_id')->where('type','!=','patient');
@@ -18,4 +21,11 @@ class OrderHistory extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function substatus()
+    {
+        return $this->belongsTo(SubStatus::class,'sub_status_id');
+    }
+
+
 }

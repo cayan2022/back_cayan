@@ -19,9 +19,13 @@ class OrderResource extends JsonResource
             'category' => $this->category->name,
             'status' => $this->status->name,
             'user_name' => $this->user->name,
+            'user_phone' => $this->user->phone,
             'user_avatar' => $this->user->getAvatar(),
             'source' => $this->source->name,
-            'created_at' =>$this->created_at->diffForHumans()
+            'last_employee' => $this->last_employee,
+            'employee_avatar' => $this->employee_avatar,
+            'created_at' => $this->created_at->diffForHumans(),
+            'histories'  => OrderHistoryResource::collection($this->histories),
         ];
     }
 }

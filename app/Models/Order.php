@@ -20,6 +20,8 @@ class Order extends Model
         'status_id'
     ];
 
+    protected $appends = ['last_employee','employee_avatar'];
+
     protected $filter = OrderFilter::class;
 
 
@@ -47,7 +49,19 @@ class Order extends Model
 
     public function histories()
     {
-        return $this->hasMany(OrderHistory::class);
+        return $this->hasMany(OrderHistory::class,'order_id');
+    }
+
+    public function getLastEmployeeAttribute()
+    {
+
+        return $this->histories->last()->employee->name ?? null;
+    }
+
+    public function getEmployeeAvatarAttribute()
+    {
+
+        return count($this->histories) > 0 ? $this->histories->last()->employee->getAvatar() : null;
     }
 
 }

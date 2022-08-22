@@ -16,7 +16,7 @@ class StatusSeeder extends Seeder
 
     public function __construct()
     {
-        $this->count=config('database.seeder_count');
+        $this->count = config('database.seeder_count');
     }
 
     /**
