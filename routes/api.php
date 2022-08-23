@@ -1,15 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Site\{
-    CategoryController,
+use App\Http\Controllers\Api\Site\{CategoryController,
+    OrderController,
     ServiceController,
     OfferController,
     DoctorController,
     AboutController,
     BranchController,
-    TestimonialController
-};
+    TestimonialController};
 
 
 /*
@@ -35,4 +34,5 @@ Route::as('site.')
     Route::get('abouts', AboutController::class)->name('abouts');
     Route::get('branches', BranchController::class)->name('branches');
     Route::get('testimonials', TestimonialController::class)->name('testimonials');
+    Route::post('order', OrderController::class)->name('order.store');
 });

@@ -17,7 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'category' => $this->category->name,
-            'status' => $this->status->name,
+            'status' => new StatusResource($this->status),
             'user_name' => $this->user->name,
             'user_phone' => $this->user->phone,
             'user_avatar' => $this->user->getAvatar(),
