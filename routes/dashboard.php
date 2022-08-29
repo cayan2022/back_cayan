@@ -17,7 +17,8 @@ use App\Http\Controllers\Api\Dashboard\{
     AboutController,
     ProfileController,
     ChangePasswordController,
-    OrderController
+    OrderController,
+    TidingController
 
 };
 //route naming is need to make check_permissions middleware
@@ -90,6 +91,12 @@ Route::as('dashboard.')
                     Route::post('services/{service}',[ServiceController::class,'update'])->name('services.update');
                     Route::apiResource('services',ServiceController::class)->except('update');
                 });
+                /*tidings || news*/
+                Route::group([], function (){
+                    Route::put('tidings/{tiding}/active',[TidingController::class,'active'])->name('tidings.active');
+                    Route::post('tidings/{tiding}',[TidingController::class,'update'])->name('tidings.update');
+                    Route::apiResource('tidings',TidingController::class)->except('update');
+                });
 
                 /*categories*/
                 Route::group([], function (){
@@ -117,7 +124,7 @@ Route::as('dashboard.')
                     'substatuses' => SubStatusController::class,
                     'settings' => SettingController::class,
                     'abouts' => AboutController::class,
-                    'countries' => CountryController::class
+                    'countries' => CountryController::class,
                 ]);
             });
     });
