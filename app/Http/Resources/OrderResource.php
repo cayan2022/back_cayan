@@ -22,6 +22,7 @@ class OrderResource extends JsonResource
             'user_phone' => $this->user->phone,
             'user_avatar' => $this->user->getAvatar(),
             'source' => $this->source->name,
+            'branch' => $this->branch->name,
             'last_employee' => $this->last_employee,
             'employee_avatar' => $this->employee_avatar,
             'created_at' => $this->created_at->diffForHumans(),

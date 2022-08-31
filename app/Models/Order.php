@@ -12,18 +12,21 @@ class Order extends Model
     use HasFactory , Filterable;
 
     protected $fillable = [
-//        'patient_name',
-//        'patient_phone',
         'user_id',
         'category_id',
         'source_id',
-        'status_id'
+        'status_id',
+        'branch_id'
     ];
 
     protected $appends = ['last_employee','employee_avatar'];
 
     protected $filter = OrderFilter::class;
 
+    public const NEW=1;
+    public const FOLLOWING=2;
+    public const Paid=3;
+    public const Fail=4;
 
     /*
      * patient relation
@@ -52,6 +55,10 @@ class Order extends Model
         return $this->hasMany(OrderHistory::class,'order_id');
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
     public function getLastEmployeeAttribute()
     {
 

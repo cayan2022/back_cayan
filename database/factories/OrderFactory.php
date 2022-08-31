@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Source;
@@ -20,12 +21,11 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-//            'patient_name' => $this->faker->name,
-//            'patient_phone' => $this->faker->phoneNumber,
-            'user_id' => User::inRandomOrder()->take(1)->first()->id,
+            'user_id' => User::factory(['type'=>User::PATIENT])->create(),
             'category_id' => Category::factory()->create(),
             'source_id' => Source::factory()->create(),
             'status_id' => Status::inRandomOrder()->take(1)->first()->id,
+            'branch_id' => Branch::inRandomOrder()->take(1)->first()->id,
         ];
     }
 }

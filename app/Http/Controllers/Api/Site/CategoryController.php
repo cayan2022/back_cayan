@@ -16,6 +16,6 @@ class CategoryController extends Controller
      */
     public function __invoke(): AnonymousResourceCollection
     {
-        return CategoryResource::collection(Category::paginate());
+        return CategoryResource::collection(Category::whereIsActive()->filter()->latest()->paginate());
     }
 }

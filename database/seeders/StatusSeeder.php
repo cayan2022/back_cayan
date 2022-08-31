@@ -26,8 +26,6 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        //Status::factory()->count(4)->create();
-
         Status::create(
             [
                 'ar' => ['name' => 'جديد'],

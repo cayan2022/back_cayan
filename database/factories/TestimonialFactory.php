@@ -18,6 +18,7 @@ class TestimonialFactory extends Factory
         return [
            'user_name'=>$this->faker->name,
            'comment'=>$this->faker->text,
+           'job'=>$this->faker->jobTitle,
            'is_block'=>$this->faker->boolean,
         ];
     }

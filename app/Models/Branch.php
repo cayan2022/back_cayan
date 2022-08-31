@@ -39,4 +39,9 @@ class Branch extends Model
      * @var array
      */
     protected $with = ['translations'];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

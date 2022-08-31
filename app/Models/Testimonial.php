@@ -18,6 +18,7 @@ class Testimonial extends Model implements HasMedia
     protected $fillable = [
         'user_name',
         'comment',
+        'job',
         'is_block'
     ];
 

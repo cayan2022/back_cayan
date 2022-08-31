@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Dashboard\{
-    CountryController,
+use App\Http\Controllers\Api\Dashboard\{CountryController,
+    CustomerController,
     RolesController,
     CategoryController,
     ServiceController,
@@ -18,9 +18,7 @@ use App\Http\Controllers\Api\Dashboard\{
     ProfileController,
     ChangePasswordController,
     OrderController,
-    TidingController
-
-};
+    TidingController};
 //route naming is need to make check_permissions middleware
 Route::as('dashboard.')
     ->middleware(['auth:sanctum','check_permissions'])
@@ -116,6 +114,15 @@ Route::as('dashboard.')
                     Route::post('orders/follow-order',[OrderController::class,'followOrder'])->name('followOrder');
                 });
 
+                Route::as('customers.')->prefix('customers')->group( function (){
+                    Route::post('block/{user}', [CustomerController::class, 'block'])->name('block');
+                    Route::post('active/{user}', [CustomerController::class, 'active'])->name('active');
+                    Route::get('all', [CustomerController::class, 'index'])->name('index');
+                    Route::post('store', [CustomerController::class, 'store'])->name('store');
+                    Route::get('show/{user}', [CustomerController::class, 'show'])->name('show');
+                    Route::post('update/{user}', [CustomerController::class, 'update'])->name('update');
+                    Route::delete('delete/{user}', [CustomerController::class, 'destroy'])->name('destroy');
+                });
                 Route::apiResources([
                     'sources' => SourceController::class,
                     'branches' => BranchController::class,

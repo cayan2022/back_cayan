@@ -16,6 +16,6 @@ class BranchController extends Controller
      */
     public function __invoke(): AnonymousResourceCollection
     {
-        return BranchResource::collection(Branch::paginate());
+        return BranchResource::collection(Branch::where('is_active',true)->filter()->latest()->paginate());
     }
 }

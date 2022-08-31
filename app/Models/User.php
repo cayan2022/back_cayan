@@ -85,7 +85,6 @@ class User extends Authenticatable implements HasMedia
     protected static function booted()
     {
         static::creating(function ($user) {
-            $user->type = self::MODERATOR;
             $user->is_block = false;
         });
     }

@@ -5,8 +5,10 @@ namespace App\Http\Requests\Api\Dashboard;
 use App\Rules\SupportedImage;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
-class StoreTestimonialRequest extends FormRequest
+class StoreCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +28,10 @@ class StoreTestimonialRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_name'=>'required|string|max:255',
-            'comment'=>'required|string|max:255',
-            'job'=>'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')],
+            'country_id' => 'required|numeric|exists:countries,id',
+            'phone' => 'required|string|max:255|unique:users,phone',
             'image' => ['nullable',new SupportedImage()]
         ];
     }

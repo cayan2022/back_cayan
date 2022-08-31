@@ -27,7 +27,9 @@ class CreateOrderRequest extends FormRequest
             'name' => 'required|string|max:255',
             'source_id' => 'required|integer|exists:sources,id',
             'category_id' => 'required|integer|exists:categories,id',
-            'phone'=>'required|string|max:255'
+            'branch_id'=>'required|integer|exists:branches,id',
+            'phone'=>'required|string|max:255',
+            'email'=>['required', 'email:rfc,dns']
         ];
     }
 }

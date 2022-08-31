@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Site\{CategoryController,
     DoctorController,
     AboutController,
     BranchController,
+    SourceController,
     TestimonialController};
 
 
@@ -28,6 +29,8 @@ require __DIR__.'/dashboard.php';
 Route::as('site.')
     ->prefix('site')->group(function () {
     Route::get('categories', CategoryController::class)->name('categories');
+    Route::get('sources', SourceController::class)->name('sources');
+    Route::get('branches', BranchController::class)->name('branches');
     Route::get('services', ServiceController::class)->name('services');
     Route::get('offers', OfferController::class)->name('offers');
     Route::get('doctors', DoctorController::class)->name('doctors');

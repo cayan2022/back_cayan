@@ -19,13 +19,17 @@ class OrderController extends Controller
      */
     public function __invoke(CreateOrderRequest $createOrderRequest)
     {
-        $user = User::firstOrCreate(['phone' => $createOrderRequest->phone],
-                                    ['country_id' => Country::first()->id, 'name' => $createOrderRequest->name]);
+        $user = User::firstOrCreate(['phone' => $createOrderRequest->phone,'email'=>$createOrderRequest->email],
+                                    [
+                                        'country_id' => Country::first()->id,
+                                        'name' => $createOrderRequest->name,
+                                        'type' => User::PATIENT
+                                    ]);
         $order = Order::create(
-            $createOrderRequest->only(['source_id', 'category_id']) +
+            $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
             [
                 'user_id' => $user->id,
-                'status_id' => 1
+                'status_id' => Order::NEW
             ]
         );
 

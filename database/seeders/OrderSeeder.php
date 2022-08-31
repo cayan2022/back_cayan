@@ -29,10 +29,6 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        Order::factory([
-                           'category_id' => Category::inRandomOrder()->first()->id,
-                           'source_id' => Source::inRandomOrder()->first()->id,
-                           'status_id' => Status::inRandomOrder()->first()->id
-                       ])->count($this->count)->create();
+        Order::factory()->count($this->count)->create();
     }
 }

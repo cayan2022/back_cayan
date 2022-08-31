@@ -12,6 +12,7 @@ class UserFilter extends BaseFilters
     protected $filters = [
         'name',
         'email',
+        'phone'
     ];
 
     /**
@@ -45,4 +46,18 @@ class UserFilter extends BaseFilters
         return $this->builder;
     }
 
+    protected function phone($value){
+
+        if ($value) {
+            return $this->builder
+                ->when(
+                    $this->request->filled('phone'),
+                    function ($query) use ($value) {
+                        $query->where('phone', 'like', '%'.$value.'%');
+                    }
+                );
+        }
+
+        return $this->builder;
+    }
 }

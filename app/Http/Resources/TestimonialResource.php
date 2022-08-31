@@ -18,6 +18,7 @@ class TestimonialResource extends JsonResource
             'id'=>$this->id,
             'image'=>$this->getAvatar(),
             'user_name'=>$this->user_name,
+            'job'=>$this->job,
             'comment'=>$this->comment,
             'is_block'=>$this->is_block
         ];
