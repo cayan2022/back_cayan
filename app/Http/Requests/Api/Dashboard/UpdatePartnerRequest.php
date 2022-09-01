@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateAboutRequest extends FormRequest
+class UpdatePartnerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +27,9 @@ class UpdateAboutRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-                                     '%title%' => ['required', 'string', 'max:255'],
-                                     '%description%' => ['required', 'string'],
+                                     '%name%' => ['required', 'string', 'max:255'],
+                                     'link' => ['required', 'url'],
+                                     'image' => ['nullable', new SupportedImage()]
                                  ]);
     }
 }

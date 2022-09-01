@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
                 OrderHistorySeeder::class,
                 TestimonialSeeder::class,
                 TidingSeeder::class,
-                BlogSeeder::class
+                BlogSeeder::class,
+                PartnerSeeder::class
             ]
         );
     }

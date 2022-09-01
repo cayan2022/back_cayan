@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Dashboard\{
-    BlogController,
+use App\Http\Controllers\Api\Dashboard\{BlogController,
     CountryController,
     CustomerController,
+    PartnerController,
     RolesController,
     CategoryController,
     ServiceController,
@@ -20,8 +20,7 @@ use App\Http\Controllers\Api\Dashboard\{
     ProfileController,
     ChangePasswordController,
     OrderController,
-    TidingController
-};
+    TidingController};
 //route naming is need to make check_permissions middleware
 Route::as('dashboard.')
     ->middleware(['auth:sanctum','check_permissions'])
@@ -139,6 +138,28 @@ Route::as('dashboard.')
                     Route::delete('delete/{blog}', [BlogController::class, 'destroy'])->name('destroy');
                 });
 
+                /*Abouts*/
+                Route::as('abouts.')->prefix('abouts')->group( function (){
+                    Route::put('block/{about}', [AboutController::class, 'block'])->name('block');
+                    Route::put('active/{about}', [AboutController::class, 'active'])->name('active');
+                    Route::get('all', [AboutController::class, 'index'])->name('index');
+                    Route::post('store', [AboutController::class, 'store'])->name('store');
+                    Route::get('show/{about}', [AboutController::class, 'show'])->name('show');
+                    Route::post('update/{about}', [AboutController::class, 'update'])->name('update');
+                    Route::delete('delete/{about}', [AboutController::class, 'destroy'])->name('destroy');
+                });
+
+                /*Partners*/
+                Route::as('partners.')->prefix('partners')->group( function (){
+                    Route::put('block/{partner}', [PartnerController::class, 'block'])->name('block');
+                    Route::put('active/{partner}', [PartnerController::class, 'active'])->name('active');
+                    Route::get('all', [PartnerController::class, 'index'])->name('index');
+                    Route::post('store', [PartnerController::class, 'store'])->name('store');
+                    Route::get('show/{partner}', [PartnerController::class, 'show'])->name('show');
+                    Route::post('update/{partner}', [PartnerController::class, 'update'])->name('update');
+                    Route::delete('delete/{partner}', [PartnerController::class, 'destroy'])->name('destroy');
+                });
+
 
                 Route::apiResources([
                     'sources' => SourceController::class,
@@ -147,7 +168,6 @@ Route::as('dashboard.')
                     'statuses' => StatusController::class,
                     'substatuses' => SubStatusController::class,
                     'settings' => SettingController::class,
-                    'abouts' => AboutController::class,
                     'countries' => CountryController::class,
                 ]);
             });

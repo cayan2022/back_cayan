@@ -16,8 +16,10 @@ class AboutResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'title'=>$this->title,
-            'description'=>$this->description,
+            'is_block'=>$this->is_block,
+            'title' => $this->title,
+            'description' => $this->description,
+            'translations'=> $this->getTranslationsArray(),
         ];
     }
 }
