@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Api\Dashboard;
 
+use App\Helpers\Traits\RespondsWithHttpStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\StoreCustomerRequest;
 use App\Http\Requests\Api\Dashboard\UpdateCustomerRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
 class CustomerController extends Controller
 {
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -77,31 +81,31 @@ class CustomerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  User $user
-     * @return JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function destroy(User $user)
     {
         $user->delete();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
 
     /**
      * @param  User  $user
-     * @return JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function block(User $user)
     {
         $user->block();
         $user->tokens()->delete();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
     /**
      * @param  User  $user
-     * @return JsonResponse
+     * @return Application|ResponseFactory|Response
      */
     public function active(User $user)
     {
         $user->active();
-        return response()->json(['message'=>__('auth.success_operation')]);
+        return $this->success(__('auth.success_operation'));
     }
 }

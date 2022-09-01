@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Site\{CategoryController,
+use App\Http\Controllers\Api\Site\{BlogController,
+    CategoryController,
     OrderController,
     ServiceController,
     OfferController,
@@ -37,5 +38,6 @@ Route::as('site.')
     Route::get('abouts', AboutController::class)->name('abouts');
     Route::get('branches', BranchController::class)->name('branches');
     Route::get('testimonials', TestimonialController::class)->name('testimonials');
+    Route::get('blogs', BlogController::class)->name('blogs');
     Route::post('order', OrderController::class)->name('order.store');
 });

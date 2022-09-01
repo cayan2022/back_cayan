@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Dashboard\{CountryController,
+use App\Http\Controllers\Api\Dashboard\{
+    BlogController,
+    CountryController,
     CustomerController,
     RolesController,
     CategoryController,
@@ -18,7 +20,8 @@ use App\Http\Controllers\Api\Dashboard\{CountryController,
     ProfileController,
     ChangePasswordController,
     OrderController,
-    TidingController};
+    TidingController
+};
 //route naming is need to make check_permissions middleware
 Route::as('dashboard.')
     ->middleware(['auth:sanctum','check_permissions'])
@@ -114,15 +117,29 @@ Route::as('dashboard.')
                     Route::post('orders/follow-order',[OrderController::class,'followOrder'])->name('followOrder');
                 });
 
+                /*Customers*/
                 Route::as('customers.')->prefix('customers')->group( function (){
-                    Route::post('block/{user}', [CustomerController::class, 'block'])->name('block');
-                    Route::post('active/{user}', [CustomerController::class, 'active'])->name('active');
+                    Route::put('block/{user}', [CustomerController::class, 'block'])->name('block');
+                    Route::put('active/{user}', [CustomerController::class, 'active'])->name('active');
                     Route::get('all', [CustomerController::class, 'index'])->name('index');
                     Route::post('store', [CustomerController::class, 'store'])->name('store');
                     Route::get('show/{user}', [CustomerController::class, 'show'])->name('show');
                     Route::post('update/{user}', [CustomerController::class, 'update'])->name('update');
                     Route::delete('delete/{user}', [CustomerController::class, 'destroy'])->name('destroy');
                 });
+
+                /*Blogs*/
+                Route::as('blogs.')->prefix('blogs')->group( function (){
+                    Route::put('block/{blog}', [BlogController::class, 'block'])->name('block');
+                    Route::put('active/{blog}', [BlogController::class, 'active'])->name('active');
+                    Route::get('all', [BlogController::class, 'index'])->name('index');
+                    Route::post('store', [BlogController::class, 'store'])->name('store');
+                    Route::get('show/{blog}', [BlogController::class, 'show'])->name('show');
+                    Route::post('update/{blog}', [BlogController::class, 'update'])->name('update');
+                    Route::delete('delete/{blog}', [BlogController::class, 'destroy'])->name('destroy');
+                });
+
+
                 Route::apiResources([
                     'sources' => SourceController::class,
                     'branches' => BranchController::class,
