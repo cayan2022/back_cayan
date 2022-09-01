@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Helpers\Traits\CustomFactoryLocal;
-use App\Models\About;
+use App\Models\Partner;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class AboutFactory extends Factory
+class PartnerFactory extends Factory
 {
     use CustomFactoryLocal;
-    protected $model=About::class;
+    protected $model=Partner::class;
     /**
      * Define the model's default state.
      *
@@ -19,14 +19,14 @@ class AboutFactory extends Factory
     {
         return [
             'en' => [
-                'title' =>$this->faker->title,
-                'description' =>$this->faker->paragraph(),
+                'name' =>$this->faker->company,
             ],
             'ar' => [
-                'title' =>$this->localFaker()->name,
-                'description' =>$this->faker->paragraph(),
+                'name' =>$this->localFaker()->company,
             ],
-            'is_block'=>$this->faker->boolean()
+
+            'link'=>$this->faker->url,
+            'is_block'=>$this->faker->boolean,
         ];
     }
 }

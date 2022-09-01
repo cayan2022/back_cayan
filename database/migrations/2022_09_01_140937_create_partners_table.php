@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAboutsTable extends Migration
+class CreatePartnersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateAboutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('abouts', function (Blueprint $table) {
+        Schema::create('partners', function (Blueprint $table) {
             $table->id();
+            $table->longText('link');
             $table->boolean('is_block')->default(false);
             $table->timestamps();
         });
-        Schema::create('about_translations', function (Blueprint $table) {
+        Schema::create('partner_translations', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->longText('description');
+            $table->string('name');
             $table->string('locale')->index();
-            $table->foreignId('about_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->unique(['about_id', 'locale']);
+            $table->foreignId('partner_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['partner_id', 'locale']);
         });
     }
 
@@ -35,9 +35,8 @@ class CreateAboutsTable extends Migration
      */
     public function down()
     {
-
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('abouts');
-        Schema::dropIfExists('about_translations');
+        Schema::dropIfExists('partners');
+        Schema::dropIfExists('partner_translations');
     }
 }

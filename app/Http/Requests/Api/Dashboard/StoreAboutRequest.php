@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreAboutRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class StoreAboutRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -23,8 +25,9 @@ class StoreAboutRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return RuleFactory::make([
+                                     '%title%' => ['required', 'string', 'max:255'],
+                                     '%description%' => ['required', 'string'],
+                                 ]);
     }
 }

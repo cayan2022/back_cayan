@@ -16,6 +16,6 @@ class AboutController extends Controller
      */
     public function __invoke(): AnonymousResourceCollection
     {
-        return AboutResource::collection(About::paginate());
+        return AboutResource::collection(About::whereIsActive()->filter()->paginate());
     }
 }
