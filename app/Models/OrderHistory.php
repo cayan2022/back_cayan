@@ -14,7 +14,7 @@ class OrderHistory extends Model
 
     public function employee()
     {
-        return $this->belongsTo(User::class,'user_id')->where('type','!=','patient');
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function order()
