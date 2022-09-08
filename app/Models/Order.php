@@ -52,7 +52,7 @@ class Order extends Model
 
     public function histories()
     {
-        return $this->hasMany(OrderHistory::class,'order_id');
+        return $this->hasMany(OrderHistory::class,'order_id')->latest();
     }
 
     public function branch()

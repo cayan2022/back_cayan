@@ -23,7 +23,7 @@ class OrderHistoryResource extends JsonResource
             'duration' => $this->duration,
             'description' => $this->description,
             'last_update' => $this->updated_at->diffForHumans(),
-            'created_at' => $this->created_at->toTimeString()
+            'created_at' => $this->created_at->toDateTimeString()
         ];
     }
 }
