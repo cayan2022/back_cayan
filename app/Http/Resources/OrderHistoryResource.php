@@ -17,6 +17,7 @@ class OrderHistoryResource extends JsonResource
         return [
             'id' => $this->id,
             'order_id' => $this->order->id,
+            'status'=>new StatusResource($this->substatus->status),
             'sub_status' => new SubStatusResource($this->substatus),
             'employee_name' => $this->employee->name ,
             'employee_avatar' => $this->employee->getAvatar() ,
