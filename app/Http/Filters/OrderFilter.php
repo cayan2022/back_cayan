@@ -23,6 +23,7 @@ class OrderFilter extends BaseFilters
         'last_month',
         'this_year',
         'last_year',
+        'start_date',
     ];
 
     /**
@@ -161,5 +162,24 @@ class OrderFilter extends BaseFilters
         return $this->builder;
     }
 
+    public function startDate($value)
+    {
+        if ($value) {
+            return $this->builder
+                ->when(
+                    $this->request->filled('start_date') && $this->request->filled('end_date'),
+                    function ($query) {
+                        $query->whereBetween(
+                            'created_at',
+                            [
+                                $this->request->get('start_date'),
+                                $this->request->get('end_date')
+                            ]
+                        );
+                    }
+                );
+        }
 
+        return $this->builder;
+    }
 }

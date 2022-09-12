@@ -17,6 +17,12 @@ class Status extends Model implements TranslatableContract
 
     protected $with=['subStatuses'];
 
+    protected $withCount=['orders'];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
     public function subStatuses()
     {
         return $this->hasMany(SubStatus::class);
