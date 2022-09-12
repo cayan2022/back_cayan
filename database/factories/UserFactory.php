@@ -23,7 +23,6 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-       // dd(User::TYPES);
         return [
             'name' => $this->faker->name,
             'type'=>$this->faker->randomElement(User::TYPES),
