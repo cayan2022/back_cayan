@@ -49,7 +49,7 @@ class RoleSeeder extends Seeder
                     $role=Role::create(
                         ['name' => $roleName, 'guard_name' => 'api']
                     );
-                    $role->givePermissionTo(Permission::whereType($roleName)->get());
+                    $role->syncPermissions(Permission::whereType($roleName)->get());
                 }
             }
         }

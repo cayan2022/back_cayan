@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Dashboard\{BlogController,
     CountryController,
     CustomerController,
+    ExportOrdersController,
     PartnerController,
     RolesController,
     CategoryController,
@@ -160,6 +161,7 @@ Route::as('dashboard.')
                     Route::delete('delete/{partner}', [PartnerController::class, 'destroy'])->name('destroy');
                 });
 
+                Route::get('orders/export', ExportOrdersController::class)->name('orders.export');
 
                 Route::apiResources([
                     'sources' => SourceController::class,
@@ -170,5 +172,6 @@ Route::as('dashboard.')
                     'settings' => SettingController::class,
                     'countries' => CountryController::class,
                 ]);
+
             });
     });

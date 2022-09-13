@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderRequest extends FormRequest
@@ -13,7 +15,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -24,7 +26,7 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id' => 'required|integer|exists:users,id,type,'.User::PATIENT,
             'source_id' => 'required|integer|exists:sources,id',
             'category_id' => 'required|integer|exists:categories,id',
             'status_id' => 'required|integer|exists:statuses,id',
