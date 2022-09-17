@@ -171,4 +171,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Country::class);
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class,'order_histories','user_id','order_id');
+    }
 }

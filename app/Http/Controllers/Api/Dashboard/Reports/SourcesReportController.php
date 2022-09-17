@@ -17,6 +17,6 @@ class SourcesReportController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return SourcesReportResource::collection(Source::filter()->with('orders')->paginate());
+        return SourcesReportResource::collection(Source::filter()->get());
     }
 }

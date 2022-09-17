@@ -50,7 +50,7 @@ class SourceFilter extends BaseFilters
     public function startDate($value)
     {
         if ($value) {
-            return $this->builder
+            return $this->builder->with('orders')
                 ->when(
                     $this->request->filled('start_date') && $this->request->filled('end_date'),
                     function ($query) {

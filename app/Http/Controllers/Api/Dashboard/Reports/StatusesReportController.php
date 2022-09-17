@@ -17,6 +17,6 @@ class StatusesReportController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return StatusResource::collection(Status::filter()->paginate());
+        return StatusResource::collection(Status::filter()->get());
     }
 }
