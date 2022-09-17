@@ -69,10 +69,5 @@ class SourceController extends Controller
      */
     public function destroy(Source $source)
     {
-        $source = Source::findorFail($source->id);
-
-        $source->delete();
-
-        return $this->success('Source Deleted Successfully');
     }
 }

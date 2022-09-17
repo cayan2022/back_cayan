@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\Filterable;
+use App\Http\Filters\StatusFilter;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model implements TranslatableContract
 {
-    use HasFactory , Translatable;
+    use HasFactory , Translatable,Filterable;
 
     protected $fillable=['name'];
 
@@ -19,6 +21,17 @@ class Status extends Model implements TranslatableContract
 
     protected $withCount=['orders'];
 
+    public const NEW='New';
+    public const FOLLOWING='Following';
+    public const PAID='Paid';
+    public const FAIL='Fail';
+
+    /**
+     * The query parameter's filter of the model.
+     *
+     * @var string
+     */
+    protected $filter = StatusFilter::class;
     public function orders()
     {
         return $this->hasMany(Order::class);

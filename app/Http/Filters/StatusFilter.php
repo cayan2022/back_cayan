@@ -2,7 +2,7 @@
 
 namespace App\Http\Filters;
 
-class SourceFilter extends BaseFilters
+class StatusFilter extends BaseFilters
 {
     /**
      * Registered filters to operate upon.
@@ -11,7 +11,6 @@ class SourceFilter extends BaseFilters
      */
     protected $filters = [
         'name',
-        'identifier',
         'start_date'
     ];
 
@@ -28,20 +27,9 @@ class SourceFilter extends BaseFilters
                 ->when(
                     $this->request->filled('name'),
                     function ($query) use ($value) {
-                        $query->whereTranslationLike('name', '%'.$value.'%')
-                            ->orWhereTranslationLike('short_description', '%'.$value.'%')
-                            ->orWhereTranslationLike('description', '%'.$value.'%');
+                        $query->whereTranslationLike('name', '%'.$value.'%');
                     }
                 );
-        }
-
-        return $this->builder;
-    }
-
-    protected function identifier($value)
-    {
-        if ($value) {
-            return $this->builder->where('identifier', "$value%");
         }
 
         return $this->builder;

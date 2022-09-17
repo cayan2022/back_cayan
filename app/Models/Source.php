@@ -12,10 +12,7 @@ class Source extends Model
     use HasFactory , Translatable , Filterable;
 
     protected $fillable = [
-        'name',
         'identifier',
-        'short_description',
-        'description',
         'is_active'
     ];
 

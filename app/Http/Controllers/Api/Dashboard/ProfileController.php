@@ -33,7 +33,7 @@ class ProfileController extends Controller
      */
     public function store(StoreProfileRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = User::create($request->validated()+['type'=>User::MODERATOR]);
 
         // assign role its has permissions to user
         $role = Role::findOrFail($request->role_id);
