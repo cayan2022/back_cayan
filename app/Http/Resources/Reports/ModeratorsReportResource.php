@@ -19,6 +19,7 @@ class ModeratorsReportResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'image' => $this->getAvatar(),
             'type' => $this->type,
             'total_orders' =>(int) $this->orders->count(),
             'percentage_to_all_orders'=>(float) $this->orders->count() / Order::count() ,
