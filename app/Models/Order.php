@@ -68,7 +68,7 @@ class Order extends Model
     public function getEmployeeAvatarAttribute()
     {
 
-        return count($this->histories) > 0 ? $this->histories->last()->employee->getAvatar() : null;
+        return count($this->histories) > 0 ? $this->histories->last()->employee->getAvatar() : asset(User::MEDIA_COLLECTION_URL);
     }
 
 }
