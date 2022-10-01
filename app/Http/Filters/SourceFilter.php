@@ -11,7 +11,6 @@ class SourceFilter extends BaseFilters
      */
     protected $filters = [
         'name',
-        'identifier',
         'start_date'
     ];
 
@@ -29,19 +28,9 @@ class SourceFilter extends BaseFilters
                     $this->request->filled('name'),
                     function ($query) use ($value) {
                         $query->whereTranslationLike('name', '%'.$value.'%')
-                            ->orWhereTranslationLike('short_description', '%'.$value.'%')
-                            ->orWhereTranslationLike('description', '%'.$value.'%');
+                            ->orWhereTranslationLike('short_description', '%'.$value.'%');
                     }
                 );
-        }
-
-        return $this->builder;
-    }
-
-    protected function identifier($value)
-    {
-        if ($value) {
-            return $this->builder->where('identifier', "$value%");
         }
 
         return $this->builder;

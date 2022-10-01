@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Site;
 
+use App\Models\Project;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\SourceResource;
-use App\Models\Source;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProjectResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class SourceController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -18,6 +18,6 @@ class SourceController extends Controller
      */
     public function __invoke(Request $request): AnonymousResourceCollection
     {
-        return SourceResource::collection(Source::whereIsActive()->filter()->latest()->paginate());
+        return ProjectResource::collection(Project::whereIsActive()->filter()->latest()->paginate());
     }
 }

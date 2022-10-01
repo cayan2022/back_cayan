@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Dashboard\ProjectController;
 use App\Http\Controllers\Api\Dashboard\{BlogController,
     RolesController,
     OfferController,
@@ -22,10 +23,9 @@ use App\Http\Controllers\Api\Dashboard\{BlogController,
     TestimonialController,
     ExportOrdersController,
     ChangePasswordController,
-    Reports\StatusesReportController,
     Reports\SourcesReportController,
-    Reports\ModeratorsReportController
-};
+    Reports\StatusesReportController,
+    Reports\ModeratorsReportController};
 
 //route naming is need to make check_permissions middleware
 Route::as('dashboard.')
@@ -185,15 +185,42 @@ Route::as('dashboard.')
                     Route::delete('delete/{partner}', [PartnerController::class, 'destroy'])->name('destroy');
                 });
 
+                /*Projects*/
+                Route::group([], function () {
+                    Route::put('projects/{project}/block', [ProjectController::class, 'block'])->name('projects.block');
+                    Route::put('projects/{project}/active', [ProjectController::class, 'active'])->name('projects.active');
+                    Route::post('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+                    Route::apiResource('projects', ProjectController::class)->except('update');
+                });
+
+                /*Source*/
+                Route::group([], function () {
+                    Route::put('sources/{source}/block', [SourceController::class, 'block'])->name('sources.block');
+                    Route::put('sources/{source}/active', [SourceController::class, 'active'])->name('sources.active');
+                    Route::post('sources/{source}', [SourceController::class, 'update'])->name('sources.update');
+                    Route::apiResource('sources', SourceController::class)->except('update');
+                });
+
+                /*Branch*/
+                Route::group([], function () {
+                    Route::put('branches/{branch}/block', [BranchController::class, 'block'])->name('branches.block');
+                    Route::put('branches/{branch}/active', [BranchController::class, 'active'])->name('branches.active');
+                    Route::post('branches/{branch}', [BranchController::class, 'update'])->name('branches.update');
+                    Route::apiResource('branches', BranchController::class)->except('update');
+                });
+
+                /*Setting*/
+                Route::as('settings.')->group( function () {
+                    Route::post('settings/{setting}/update', [SettingController::class, 'update'])->name('update');
+                    Route::get('settings/{setting}', [SettingController::class,'show'])->name('show');
+                });
+
                 Route::get('orders/export', ExportOrdersController::class)->name('orders.export');
 
                 Route::apiResources([
-                    'sources' => SourceController::class,
-                    'branches' => BranchController::class,
                     'orders' => OrderController::class,
                     'statuses' => StatusController::class,
                     'substatuses' => SubStatusController::class,
-                    'settings' => SettingController::class,
                     'countries' => CountryController::class,
                 ]);
             });

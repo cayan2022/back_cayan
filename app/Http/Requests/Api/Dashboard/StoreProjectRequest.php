@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Astrotomic\Translatable\Validation\RuleFactory;
 
-class UpdateSourceRequest extends FormRequest
+class StoreProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,12 @@ class UpdateSourceRequest extends FormRequest
      */
     public function rules()
     {
-        return RuleFactory::make([
-                                     '%name%' => ['required', 'string'],
-                                     '%short_description%' => ['required', 'string'],
-                                     'url' => 'required|url',
-                                     'image' => ['nullable', new SupportedImage()]
-                                 ]);
+        return  RuleFactory::make([
+            '%name%' => ['required', 'string','max:255'],
+            '%classification%' => ['required', 'string','max:255'],
+            '%short_description%' => ['required', 'string'],
+            '%full_description%' => ['required', 'string'],
+            'image' => ['nullable', new SupportedImage()]
+        ]);
     }
 }

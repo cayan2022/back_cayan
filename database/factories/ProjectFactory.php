@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Source;
+use App\Models\Project;
 use App\Helpers\Traits\CustomFactoryLocal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SourceFactory extends Factory
+class ProjectFactory extends Factory
 {
     use CustomFactoryLocal;
-    protected $model=Source::class;
+    protected $model=Project::class;
     /**
      * Define the model's default state.
      *
@@ -20,15 +20,17 @@ class SourceFactory extends Factory
         return [
             'en' => [
                 'name' =>$this->faker->name(),
-                'short_description'=>$this->faker->sentence(),
+                'classification' =>$this->faker->text(),
+                'short_description' =>$this->faker->text(),
+                'full_description' =>$this->faker->text(),
             ],
             'ar' => [
                 'name' =>$this->localFaker()->name(),
-                'short_description'=>$this->localFaker()->realText(),
+                'classification' =>$this->localFaker()->realText(),
+                'short_description' =>$this->localFaker()->realText(),
+                'full_description' =>$this->localFaker()->realText(),
             ],
-            'url'=>$this->faker->url,
             'is_block'=>$this->faker->boolean,
         ];
-
     }
 }

@@ -3,11 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Branch;
+use App\Helpers\Traits\CustomFactoryLocal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BranchFactory extends Factory
 {
-    protected $model=Branch::class;
+    use CustomFactoryLocal;
+    protected $model = Branch::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,15 +20,23 @@ class BranchFactory extends Factory
     {
         return [
 
-            'en' => ['name' =>$this->faker->name,'short_description'=>$this->faker->sentence,'description' =>$this->faker->text],
-            'ar' => ['name' => $this->faker->name,'short_description'=>$this->faker->sentence,'description' => $this->faker->text],
+            'en' => [
+                'name' => $this->faker->name,
+                'short_description' => $this->faker->sentence,
+                'full_description' => $this->faker->text
+            ],
+            'ar' => [
+                'name' => $this->localFaker()->company,
+                'short_description' => $this->localFaker()->realText(),
+                'full_description' => $this->localFaker()->realText()
+            ],
 
-            'city'=>$this->faker->city,
-            'address'=>$this->faker->address,
-            'phone'=>$this->faker->phoneNumber,
-            'whatsapp_phone'=>$this->faker->phoneNumber,
-            'map_link'=>$this->faker->url,
-            'is_active'=>$this->faker->boolean,
+            'city' => $this->faker->city,
+            'address' => $this->faker->address,
+            'telephone' => $this->faker->phoneNumber,
+            'whatsapp' => $this->faker->phoneNumber,
+            'map' => $this->faker->url,
+            'is_block' => $this->faker->boolean,
         ];
     }
 }

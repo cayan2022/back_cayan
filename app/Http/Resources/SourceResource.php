@@ -17,11 +17,11 @@ class SourceResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'link'=>$this->link,
             'short_description'=>$this->short_description,
-            'description'=>$this->description,
-            'translations'=> $this->translations,
-            'is_active'=>$this->is_active
+            'is_block'=>$this->is_block,
+            'url'=>$this->url,
+            'image'=>$this->getAvatar(),
+            'translations'=> $this->getTranslationsArray()
         ];
     }
 }

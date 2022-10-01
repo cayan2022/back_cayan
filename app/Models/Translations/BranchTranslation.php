@@ -9,5 +9,5 @@ class BranchTranslation extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['name','short_description','description'];
+    protected $fillable = ['name', 'short_description','full_description'];
 }

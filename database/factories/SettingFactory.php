@@ -15,9 +15,6 @@ class SettingFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'reference' => $this->faker->slug,
-            'content' => $this->faker->text
-        ];
+        return [];
     }
 }

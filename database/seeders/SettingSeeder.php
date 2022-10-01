@@ -9,15 +9,7 @@ use Illuminate\Database\Seeder;
 
 class SettingSeeder extends Seeder
 {
-    /**
-     * @var Repository|Application|mixed
-     */
-    private $count;
 
-    public function __construct()
-    {
-        $this->count=config('database.seeder_count');
-    }
     /**
      * Run the database seeds.
      *
@@ -25,6 +17,6 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-        Setting::factory()->count($this->count)->create();
+        Setting::factory()->create();
     }
 }

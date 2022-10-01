@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BranchResource extends JsonResource
+class ProjectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,15 +17,11 @@ class BranchResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'classification'=>$this->classification,
             'short_description'=>$this->short_description,
-            'full_description'=> $this->full_description,
-            'is_block'=>$this->is_block,
-            'city'=>$this->city,
-            'address'=>$this->address,
-            'telephone'=>$this->telephone,
-            'whatsapp'=>$this->whatsapp,
-            'map'=>$this->map,
+            'full_description'=>$this->full_description,
             'image'=>$this->getAvatar(),
+            'is_block'=>$this->is_block,
             'translations'=> $this->getTranslationsArray()
         ];
     }

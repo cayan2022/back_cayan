@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
+use Illuminate\Support\Facades\Auth;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,7 +16,7 @@ class StoreBranchRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -25,15 +27,15 @@ class StoreBranchRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            '%name%' => ['required','string','max:255'],
-            '%description%' => ['required','string'],
-            '%short_description%' => ['required','string'],
-            'city' => 'required|string',
-            'address' => 'required|string',
-            'phone' => 'required|numeric',
-            'whatsapp_phone' => 'required|numeric',
-            'map_link' => 'required|url',
-            'is_active' => 'required|boolean',
-        ]);
+                                     '%name%' => ['required', 'string', 'max:255'],
+                                     '%short_description%' => ['required', 'string'],
+                                     '%full_description%' => ['required', 'string'],
+                                     'city' => 'required|string|max:255',
+                                     'address' => 'required|string|max:255',
+                                     'telephone' => 'required|string|max:255',
+                                     'whatsapp' => 'required|string|max:255',
+                                     'map' => 'required|url',
+                                     'image' => ['nullable', new SupportedImage()]
+                                 ]);
     }
 }

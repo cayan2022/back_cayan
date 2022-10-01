@@ -2,27 +2,25 @@
 
 namespace App\Models;
 
-use Astrotomic\Translatable\Translatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\Filterable;
+use Spatie\MediaLibrary\HasMedia;
 use App\Http\Filters\SourceFilter;
-class Source extends Model
+use App\Models\Traits\HasActivation;
+use App\Http\Resources\SourceResource;
+use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+
+class Source extends Model implements HasMedia, TranslatableContract
 {
-    use HasFactory , Translatable , Filterable;
+    use HasFactory, InteractsWithMedia, Translatable, Filterable, HasActivation;
 
     protected $fillable = [
-        'identifier',
-        'is_active'
+        'is_block',
+        'url',
     ];
-
-    public $translatedAttributes = ['name','short_description','description'];
-
-    protected $casts = [
-        'identifier' => 'string',
-        'is_active' => 'boolean',
-    ];
-
     /**
      * The relations to eager load on every query.
      *
@@ -30,6 +28,13 @@ class Source extends Model
      */
     protected $with = ['translations'];
 
+    public $translatedAttributes = ['name','short_description'];
+
+    protected $casts = [
+        'is_block' => 'boolean',
+    ];
+    public const MEDIA_COLLECTION_NAME = 'source_avatar';
+    public const MEDIA_COLLECTION_URL = 'images/source.png';
     /**
      * The query parameter's filter of the model.
      *
@@ -42,9 +47,23 @@ class Source extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function getLinkAttribute(): string
+    /*Helpers*/
+    /**
+     * @return SourceResource
+     */
+    public function getResource(): SourceResource
     {
-        $identifier=$this->identifier;
-        return config('app.url')."/?_source=$identifier";
+        return new SourceResource($this->fresh());
+    }
+    public function getAvatar()
+    {
+        return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAME);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::MEDIA_COLLECTION_NAME)
+            ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
+            ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
     }
 }

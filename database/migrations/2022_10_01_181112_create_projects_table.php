@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSourcesTable extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,20 @@ class CreateSourcesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sources', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->longText('url');
             $table->boolean('is_block')->default(false);
             $table->timestamps();
         });
-
-        Schema::create('source_translations', function (Blueprint $table) {
+        Schema::create('project_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('short_description');
             $table->string('locale')->index();
-            $table->unique(['source_id', 'locale']);
-            $table->foreignId('source_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('classification');
+            $table->text('short_description');
+            $table->longText('full_description');
+            $table->foreignId('project_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['project_id', 'locale']);
         });
     }
 
@@ -38,7 +38,7 @@ class CreateSourcesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('sources');
-        Schema::dropIfExists('source_translations');
+        Schema::dropIfExists('projects');
+        Schema::dropIfExists('project_translations');
     }
 }

@@ -15,8 +15,6 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('reference'); //ex : facebook or whtasapp
-            $table->longText('content');//ex :  http://fb.com or 011****
             $table->timestamps();
         });
     }

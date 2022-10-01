@@ -17,21 +17,21 @@ class CreateBranchesTable extends Migration
             $table->id();
             $table->string('city');
             $table->string('address');
-            $table->string('phone');
-            $table->string('whatsapp_phone');
-            $table->string('map_link');
-            $table->boolean('is_active');
+            $table->string('telephone');
+            $table->string('whatsapp');
+            $table->string('map');
+            $table->boolean('is_block')->default(false);
             $table->timestamps();
         });
 
         Schema::create('branch_translations', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('short_description');
-            $table->longText('description');
+            $table->longText('full_description');
             $table->string('locale')->index();
-            $table->unique(['branch_id', 'locale']);
             $table->foreignId('branch_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unique(['branch_id', 'locale']);
         });
     }
 

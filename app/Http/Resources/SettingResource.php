@@ -16,8 +16,7 @@ class SettingResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'reference'=>$this->reference,
-            'content'=>$this->content,
+            'image'=>$this->getAvatar()
         ];
     }
 }

@@ -2,36 +2,13 @@
 
 namespace App\Http\Controllers\Api\Dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Dashboard\StoreSettingRequest;
-use App\Http\Requests\Api\Dashboard\UpdateSettingRequest;
-use App\Http\Resources\SettingResource;
 use App\Models\Setting;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\SettingResource;
+use App\Http\Requests\Api\Dashboard\UpdateSettingRequest;
 
 class SettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return AnonymousResourceCollection
-     */
-    public function index()
-    {
-        return SettingResource::collection(Setting::paginate());
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\Api\Dashboard\StoreSettingRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreSettingRequest $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -40,29 +17,26 @@ class SettingController extends Controller
      */
     public function show(Setting $setting)
     {
-        return new SettingResource($setting);
+        return $setting->getResource();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Api\Dashboard\UpdateSettingRequest  $request
+     * @param  UpdateSettingRequest  $request
      * @param  Setting  $setting
-     * @return \Illuminate\Http\Response
+     * @return SettingResource
      */
     public function update(UpdateSettingRequest $request, Setting $setting)
     {
-        //
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $setting->clearMediaCollection(Setting::MEDIA_COLLECTION_NAME);
+            $setting->addMediaFromRequest('image')
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
+                ->toMediaCollection(Setting::MEDIA_COLLECTION_NAME);
+        }
+
+        return $setting->getResource();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Setting  $setting
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Setting $setting)
-    {
-        //
-    }
 }

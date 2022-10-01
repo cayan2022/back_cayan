@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Rules\SupportedImage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSettingRequest extends FormRequest
@@ -13,7 +15,7 @@ class UpdateSettingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -24,7 +26,7 @@ class UpdateSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'image' => ['nullable', new SupportedImage()]
         ];
     }
 }
