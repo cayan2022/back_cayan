@@ -25,13 +25,6 @@ class TidingSeeder extends Seeder
      */
     public function run()
     {
-        $news = Tiding::factory()->count($this->count)->create();
-//        $faker = Faker::create();
-//        $imageUrl = $faker->imageUrl(640,480, null, false);
-//
-//        foreach($news as $new){
-//            $new->addMedia(public_path(Tiding::MEDIA_COLLECTION_URL))->toMediaCollection('news_avatar');
-//        }
-           //   ->each(fn($new) => $new->addMedia(public_path('\images\news.jpg'))->toMediaCollection('news_avatar'));
+       Tiding::factory()->count($this->count)->create();
     }
 }

@@ -24,7 +24,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::whereType(User::PATIENT)->filter()->paginate());
+        return UserResource::collection(User::whereType(User::PATIENT)->filter()->latest()->paginate());
     }
 
     /**

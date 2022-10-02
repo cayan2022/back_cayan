@@ -24,7 +24,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return ServiceResource::collection(Service::filter()->paginate());
+        return ServiceResource::collection(Service::filter()->latest()->paginate());
     }
 
     /**

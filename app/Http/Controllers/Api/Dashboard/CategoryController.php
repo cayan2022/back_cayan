@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function index()
     {
         $schema=request()->filled('page') ? 'paginate':'get';
-        return CategoryResource::collection(Category::filter()->$schema());
+        return CategoryResource::collection(Category::filter()->latest()->$schema());
     }
 
     /**

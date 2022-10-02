@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Site;
 
+use App\Models\Tiding;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PartnerResource;
-use App\Models\Partner;
 use Illuminate\Http\Request;
+use App\Http\Resources\TidingResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class PartnerController extends Controller
+class TidingController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,8 +16,8 @@ class PartnerController extends Controller
      * @param  Request  $request
      * @return AnonymousResourceCollection
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): AnonymousResourceCollection
     {
-        return PartnerResource::collection(Partner::whereIsActive()->filter()->latest()->paginate());
+        return TidingResource::collection(Tiding::whereIsActive()->filter()->latest()->paginate());
     }
 }

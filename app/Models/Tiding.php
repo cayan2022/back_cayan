@@ -22,7 +22,7 @@ class Tiding extends Model implements   HasMedia,TranslatableContract
     public const MEDIA_COLLECTION_URL = 'images/news.jpg';
 
     protected $fillable = [
-        'link', 'date','name','short_description','description' , 'is_active'
+        'link', 'date' , 'is_block'
     ];
 
     /**
@@ -31,6 +31,10 @@ class Tiding extends Model implements   HasMedia,TranslatableContract
      * @var string
      */
     protected $filter = TidingFilter::class;
+
+    protected $casts=[
+        'is_block' => 'boolean'
+    ];
 
     public $translatedAttributes = ['name','short_description','description'];
 

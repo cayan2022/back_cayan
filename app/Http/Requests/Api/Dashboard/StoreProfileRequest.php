@@ -32,7 +32,7 @@ class StoreProfileRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')],
             'country_id' => 'required|numeric|exists:countries,id',
-            'phone' => 'required|string|max:255|unique:users,phone',
+            'phone' => 'required|numeric|max:255|unique:users,phone',
             'role_id' => 'required|numeric|exists:roles,id',
             'password' => ['required', 'confirmed', 'string', Password::defaults()],
             'image' => ['nullable',new SupportedImage()]

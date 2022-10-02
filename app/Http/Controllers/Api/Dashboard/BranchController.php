@@ -25,7 +25,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        return BranchResource::collection(Branch::filter()->paginate());
+        return BranchResource::collection(Branch::filter()->latest()->paginate());
     }
 
     /**

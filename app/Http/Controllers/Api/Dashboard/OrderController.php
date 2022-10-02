@@ -16,11 +16,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return OrderResource::collection(Order::filter()->paginate());
+        return OrderResource::collection(Order::filter()->latest()->paginate());
     }
 
     /**

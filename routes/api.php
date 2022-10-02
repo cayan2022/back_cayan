@@ -13,7 +13,8 @@ use App\Http\Controllers\Api\Site\{BlogController,
     BranchController,
     SettingController,
     SourceController,
-    TestimonialController};
+    TestimonialController,
+    TidingController};
 
 
 /*
@@ -44,6 +45,7 @@ Route::as('site.')
     Route::get('blogs', BlogController::class)->name('blogs');
     Route::get('partners', PartnerController::class)->name('partners');
     Route::get('projects', ProjectController::class)->name('projects');
+    Route::get('tidings', TidingController::class)->name('tidings');
     Route::get('settings/{setting}', SettingController::class)->name('settings');
     Route::post('order', OrderController::class)->name('order.store');
 });

@@ -23,7 +23,7 @@ class AboutController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return AboutResource::collection(About::filter()->paginate());
+        return AboutResource::collection(About::filter()->latest()->paginate());
     }
 
     /**
