@@ -26,9 +26,9 @@ class ProjectFactory extends Factory
             ],
             'ar' => [
                 'name' =>$this->localFaker()->name(),
-                'classification' =>$this->localFaker()->realText(),
-                'short_description' =>$this->localFaker()->realText(),
-                'full_description' =>$this->localFaker()->realText(),
+                'classification' =>$this->localFaker()->sentence(),
+                'short_description' =>$this->localFaker()->sentence(),
+                'full_description' =>$this->localFaker()->sentence(),
             ],
             'is_block'=>$this->faker->boolean,
         ];

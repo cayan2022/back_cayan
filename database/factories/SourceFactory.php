@@ -24,7 +24,7 @@ class SourceFactory extends Factory
             ],
             'ar' => [
                 'name' =>$this->localFaker()->name(),
-                'short_description'=>$this->localFaker()->realText(),
+                'short_description'=>$this->localFaker()->sentence(),
             ],
             'url'=>$this->faker->url,
             'is_block'=>$this->faker->boolean,

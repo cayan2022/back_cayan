@@ -27,8 +27,8 @@ class BranchFactory extends Factory
             ],
             'ar' => [
                 'name' => $this->localFaker()->company,
-                'short_description' => $this->localFaker()->realText(),
-                'full_description' => $this->localFaker()->realText()
+                'short_description' => $this->localFaker()->sentence,
+                'full_description' => $this->localFaker()->sentence
             ],
 
             'city' => $this->faker->city,
