@@ -32,6 +32,10 @@ class Tiding extends Model implements   HasMedia,TranslatableContract
      */
     protected $filter = TidingFilter::class;
 
+    protected $casts=[
+        'is_block' => 'boolean'
+    ];
+
     public $translatedAttributes = ['name','short_description','description'];
 
     /**
