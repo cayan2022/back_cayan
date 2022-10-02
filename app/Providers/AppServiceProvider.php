@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider

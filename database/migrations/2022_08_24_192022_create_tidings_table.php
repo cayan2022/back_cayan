@@ -17,7 +17,7 @@ class CreateTidingsTable extends Migration
             $table->id();
             $table->string('link');
             $table->date('date');
-            $table->boolean('is_active');
+            $table->boolean('is_block')->default(false);
             $table->timestamps();
         });
 

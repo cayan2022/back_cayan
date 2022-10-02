@@ -22,7 +22,7 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        return PartnerResource::collection(Partner::filter()->paginate());
+        return PartnerResource::collection(Partner::filter()->latest()->paginate());
 
     }
 

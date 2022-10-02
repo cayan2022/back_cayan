@@ -33,7 +33,6 @@ class UpdateTidingRequest extends FormRequest
              '%short_description%' => ['required', 'string','max:255'],
              'date' => 'required|date',
              'link'=> 'required|url',
-             'is_active' => 'required|boolean',
              'image' => ['nullable', new SupportedImage()]
          ]);
     }

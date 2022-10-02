@@ -32,7 +32,7 @@ class TidingFactory extends Factory
             ],
             'link' =>'https://www.wikipedia.org/',
             'date'=>$this->faker->date(),
-            'is_active'=>$this->faker->boolean,
+            'is_block'=>$this->faker->boolean,
         ];
     }
 }

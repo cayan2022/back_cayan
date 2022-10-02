@@ -22,7 +22,7 @@ class Tiding extends Model implements   HasMedia,TranslatableContract
     public const MEDIA_COLLECTION_URL = 'images/news.jpg';
 
     protected $fillable = [
-        'link', 'date','name','short_description','description' , 'is_active'
+        'link', 'date' , 'is_block'
     ];
 
     /**

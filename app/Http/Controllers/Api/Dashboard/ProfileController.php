@@ -20,11 +20,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::whereType(User::MODERATOR)->filter()->paginate());
+        return UserResource::collection(User::whereType(User::MODERATOR)->filter()->latest()->paginate());
     }
     public function getCustomerPatients()
     {
-        return UserResource::collection(User::whereType(User::PATIENT)->filter()->paginate());
+        return UserResource::collection(User::whereType(User::PATIENT)->filter()->latest()->paginate());
     }
 
     /**

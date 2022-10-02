@@ -23,7 +23,7 @@ class TidingController extends Controller
      */
     public function index()
     {
-        return TidingResource::collection(Tiding::filter()->paginate());
+        return TidingResource::collection(Tiding::filter()->latest()->paginate());
     }
 
     /**
@@ -61,7 +61,7 @@ class TidingController extends Controller
      * @param  Tiding  $tiding
      * @return TidingResource
      */
-    public function update(UpdateTidingRequest $request, Tiding $tiding)
+    public function update(UpdateTidingRequest $request, Tiding $tiding): TidingResource
     {
         $tiding->update($request->validated());
         if($request->hasFile('image') && $request->file('image')->isValid()){
@@ -92,6 +92,15 @@ class TidingController extends Controller
     public function active(Tiding $tiding)
     {
         $tiding->active();
+        return $this->success(__('auth.success_operation'));
+    }
+    /**
+     * @param  Tiding $tiding
+     * @return Application|ResponseFactory|Response
+     */
+    public function block(Tiding $tiding)
+    {
+        $tiding->block();
         return $this->success(__('auth.success_operation'));
     }
 }

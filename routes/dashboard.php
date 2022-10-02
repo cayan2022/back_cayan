@@ -111,6 +111,7 @@ Route::as('dashboard.')
                 /*tidings || news*/
                 Route::group([], function () {
                     Route::put('tidings/{tiding}/active', [TidingController::class, 'active'])->name('tidings.active');
+                    Route::put('tidings/{tiding}/block', [TidingController::class, 'block'])->name('tidings.block');
                     Route::post('tidings/{tiding}', [TidingController::class, 'update'])->name('tidings.update');
                     Route::apiResource('tidings', TidingController::class)->except('update');
                 });
