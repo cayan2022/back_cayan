@@ -30,6 +30,7 @@ return [
     'attributes'=>[
         'email'=>'Email Address',
         'password'=>'Password'
-    ]
+    ],
+    'cannot_deleted' => 'Cannot Not deleted this category because it has services or orders'
 
 ];
