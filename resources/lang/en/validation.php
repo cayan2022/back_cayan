@@ -95,6 +95,7 @@ return [
     'numeric' => 'The :attribute must be a number.',
     'password' => 'The password is incorrect.',
     'current_password'  => 'The current password is incorrect.',
+    'phone' => 'The :attribute field contains an invalid phone number.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'The :attribute field is required.',

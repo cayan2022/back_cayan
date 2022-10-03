@@ -17,6 +17,7 @@ class CountryFactory extends Factory
     {
         return [
             'code'=>'+'.$this->faker->unique()->randomNumber(3),
+            'iso_code'=>$this->faker->unique()->countryISOAlpha3,
             'en' => ['name' =>$this->faker->country],
             'ar' => ['name' => $this->localFaker()->country],
         ];

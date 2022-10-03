@@ -95,6 +95,7 @@ return [
     'numeric'              => 'يجب على :attribute أن يكون رقمًا.',
     'password'             => 'كلمة المرور غير صحيحة.',
     'current_password'     => 'كلمة المرور الحالية غير صحيحة.',
+    'phone' => 'يجب على :attribute أن يكون رقمًا هاتفيا صحيحا.',
     'present'              => 'يجب تقديم :attribute.',
     'regex'                => 'صيغة :attribute .غير صحيحة.',
     'required'             => ':attribute مطلوب.',

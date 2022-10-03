@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\Site;
 
+use App\Models\Country;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateOrderRequest extends FormRequest
@@ -28,8 +30,10 @@ class CreateOrderRequest extends FormRequest
             'source_id' => 'required|integer|exists:sources,id',
             'category_id' => 'required|integer|exists:categories,id',
             'branch_id'=>'required|integer|exists:branches,id',
-            'phone'=>'required|string|max:255',
-            'email'=>['required', 'email:rfc,dns']
+            'phone'=>['required','max:255',Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
+            'email'=>['required', 'email:rfc,dns',Rule::unique('users','email')->where(function ($query)  {
+                return $query->where('phone', '!=',request('phone'));
+            })]
         ];
     }
 }

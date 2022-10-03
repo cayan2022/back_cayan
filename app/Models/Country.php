@@ -18,7 +18,7 @@ class Country extends Model implements HasMedia, TranslatableContract
 
     public $translatedAttributes = ['name'];
 
-    protected $fillable = ['code'];
+    protected $fillable = ['code','iso_code'];
 
     protected $filter= CountryFilter::class;
 
