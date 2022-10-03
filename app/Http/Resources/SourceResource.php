@@ -19,6 +19,7 @@ class SourceResource extends JsonResource
             'name'=>$this->name,
             'short_description'=>$this->short_description,
             'is_block'=>$this->is_block,
+            'identifier'=>$this->identifier,
             'url'=>$this->url,
             'image'=>$this->getAvatar(),
             'translations'=> $this->getTranslationsArray()

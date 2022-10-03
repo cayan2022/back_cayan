@@ -29,7 +29,7 @@ class UpdateSourceRequest extends FormRequest
         return RuleFactory::make([
                                      '%name%' => ['required', 'string'],
                                      '%short_description%' => ['required', 'string'],
-                                     'url' => 'required|url',
+                                     'identifier' => ['required','regex:/^[a-zA-Z0-9]*$/','max:255'],
                                      'image' => ['nullable', new SupportedImage()]
                                  ]);
     }

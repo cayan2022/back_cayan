@@ -19,7 +19,7 @@ class Source extends Model implements HasMedia, TranslatableContract
 
     protected $fillable = [
         'is_block',
-        'url',
+        'identifier',
     ];
     /**
      * The relations to eager load on every query.
@@ -65,5 +65,16 @@ class Source extends Model implements HasMedia, TranslatableContract
         $this->addMediaCollection(self::MEDIA_COLLECTION_NAME)
             ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
             ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
+    }
+
+    public function setIdentifierAttribute($value)
+    {
+        $this->attributes['identifier'] = $value;
+    }
+
+    public function getUrlAttribute(): string
+    {
+        $identifier=$this->identifier;
+        return config('app.url')."?_source=$identifier";
     }
 }

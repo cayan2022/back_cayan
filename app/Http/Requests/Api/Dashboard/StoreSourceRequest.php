@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Dashboard;
 
 use App\Rules\SupportedImage;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Astrotomic\Translatable\Validation\RuleFactory;
 use Illuminate\Foundation\Http\FormRequest;
@@ -29,7 +30,7 @@ class StoreSourceRequest extends FormRequest
         return RuleFactory::make([
                                      '%name%' => ['required', 'string'],
                                      '%short_description%' => ['required', 'string'],
-                                     'url' => 'required|url',
+                                     'identifier' => ['required','regex:/^[a-zA-Z0-9]*$/','max:255'],
                                      'image' => ['nullable', new SupportedImage()]
                                  ]);
     }
