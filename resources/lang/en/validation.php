@@ -148,6 +148,21 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'ar.title' =>'title',
+        'ar.short_description' =>'short_description',
+        'ar.long_description' =>'long_description',
+        'ar.classification' =>'classification',
+        'ar.description' =>'description',
+        'ar.name' =>'name',
+        'ar.full_description' =>'full_description',
+        'en.title' =>'title',
+        'en.short_description' =>'short_description',
+        'en.long_description' =>'long_description',
+        'en.classification' =>'classification',
+        'en.description' =>'description',
+        'en.name' =>'name',
+        'en.full_description' =>'full_description',
+    ],
 
 ];
