@@ -32,7 +32,7 @@ class UpdateCustomerRequest extends FormRequest
             'name'     => 'required|string|max:255',
             'email'    => ['required','email:rfc,dns',Rule::unique('users','email')->ignore($this->user->id)],
             'country_id'    => 'required|numeric|exists:countries,id',
-            'phone'    => ['required','string','max:255',Rule::unique('users','phone')->ignore( $this->user->id),Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
+            'phone'    => ['required',Rule::unique('users','phone')->ignore( $this->user->id),Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
             'image' => ['nullable',new SupportedImage()],
         ];
     }

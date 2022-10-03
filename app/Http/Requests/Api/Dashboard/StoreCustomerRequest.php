@@ -32,7 +32,7 @@ class StoreCustomerRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')],
             'country_id' => 'required|numeric|exists:countries,id',
-            'phone' => ['required','numeric','max:255','unique:users,phone',Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
+            'phone' => ['required','unique:users,phone',Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
             'image' => ['nullable',new SupportedImage()]
         ];
     }
