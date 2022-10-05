@@ -18,8 +18,6 @@ class Branch extends Model implements HasMedia, TranslatableContract
     use HasFactory, InteractsWithMedia, Translatable, Filterable, HasActivation;
 
     protected $fillable = [
-        'city',
-        'address',
         'telephone',
         'whatsapp',
         'map',
@@ -28,11 +26,9 @@ class Branch extends Model implements HasMedia, TranslatableContract
 
     protected $filter = BranchFilter::class;
 
-    public $translatedAttributes = ['name', 'short_description','full_description'];
+    public $translatedAttributes = ['city','address','name','full_description'];
 
     protected $casts = [
-        'phone'=>'string',
-        'whatsapp'=>'string',
         'is_block'=>'boolean'
     ];
     public const MEDIA_COLLECTION_NAME = 'branch_avatar';

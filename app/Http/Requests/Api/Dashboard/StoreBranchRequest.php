@@ -28,10 +28,9 @@ class StoreBranchRequest extends FormRequest
     {
         return RuleFactory::make([
                                      '%name%' => ['required', 'string', 'max:255'],
-                                     '%short_description%' => ['required', 'string'],
                                      '%full_description%' => ['required', 'string'],
-                                     'city' => 'required|string|max:255',
-                                     'address' => 'required|string|max:255',
+                                     '%city%' => 'required|string|max:255',
+                                     '%address%' => 'required|string|max:255',
                                      'telephone' => 'required|string|max:255',
                                      'whatsapp' => 'required|string|max:255',
                                      'map' => 'required|url',

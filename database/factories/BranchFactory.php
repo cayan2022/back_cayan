@@ -22,17 +22,17 @@ class BranchFactory extends Factory
 
             'en' => [
                 'name' => $this->faker->name,
-                'short_description' => $this->faker->sentence,
+                'city' => $this->faker->city,
+                'address' => $this->faker->address,
                 'full_description' => $this->faker->text
             ],
             'ar' => [
                 'name' => $this->localFaker()->company,
-                'short_description' => $this->localFaker()->sentence,
+                'city' => $this->localFaker()->city,
+                'address' => $this->localFaker()->address,
                 'full_description' => $this->localFaker()->sentence
             ],
 
-            'city' => $this->faker->city,
-            'address' => $this->faker->address,
             'telephone' => $this->faker->phoneNumber,
             'whatsapp' => $this->faker->phoneNumber,
             'map' => $this->faker->url,
