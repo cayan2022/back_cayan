@@ -93,7 +93,7 @@ return [
         'images' => [
             'mimetypes' =>  explode(',', env('SUPPORTED_UPLOAD_IMAGE_TYPES', sprintf(
                 '%s',
-                'jpg,jpeg,png,bmp,svg'
+                'jpg,jpeg,png,bmp,svg,webp'
             ))),
             'maxsize' => env('MAX_IMAGE_UPLOAD_SIZE',5000) //5 MB
         ]

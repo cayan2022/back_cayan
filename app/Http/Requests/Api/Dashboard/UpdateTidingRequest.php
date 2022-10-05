@@ -29,7 +29,7 @@ class UpdateTidingRequest extends FormRequest
     {
         return RuleFactory::make([
              '%name%' => ['required', 'string','max:255'],
-             '%description%' => ['required', 'string','max:255'],
+             '%description%' => ['required', 'string','max:300000000'],
              '%short_description%' => ['required', 'string','max:255'],
              'date' => 'required|date',
              'link'=> 'required|url',
