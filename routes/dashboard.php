@@ -37,7 +37,6 @@ Route::as('dashboard.')
             ->prefix('profile')
             ->group(function () {
                 Route::get('all', [ProfileController::class, 'index'])->name('index');
-                Route::get('getCustomerPatients', [ProfileController::class, 'getCustomerPatients'])->name('getCustomerPatients');
                 Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
                 Route::post('store', [ProfileController::class, 'store'])->name('store');
                 Route::post('update/{user}', [ProfileController::class, 'update'])->name('update');

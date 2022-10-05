@@ -22,10 +22,6 @@ class ProfileController extends Controller
     {
         return UserResource::collection(User::whereIn('type',[User::ADMIN,User::MODERATOR])->filter()->latest()->paginate());
     }
-    public function getCustomerPatients()
-    {
-        return UserResource::collection(User::whereType(User::PATIENT)->filter()->latest()->paginate());
-    }
 
     /**
      * @param  StoreProfileRequest  $request

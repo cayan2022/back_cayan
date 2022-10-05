@@ -87,6 +87,7 @@ class RolesController extends Controller
             $role_permission = $role->permissions;
             $role->givePermissionTo($role_permission);
             $user = User::where('id', $request->user_id)->firstOrFail();
+            $user->roles()->detach();
             $user->assignRole($role);
             return response()->json([
                 'data' => 'Assign role added To user successfully'
