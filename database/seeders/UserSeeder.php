@@ -11,15 +11,6 @@ use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * @var Repository|Application|mixed
-     */
-    private $count;
-
-    public function __construct()
-    {
-        $this->count=config('database.seeder_count');
-    }
 
     /**
      * Run the database seeds.
@@ -28,14 +19,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()
-            ->count($this->count)
-            ->create()
-            ->each(fn($user) => $user->assignRole(Role::inRandomOrder()->first()));
-        //create super admin roles and give him all permissions
-        $superRole = Role::firstOrCreate(['name' => 'super', 'guard_name' => 'api']);
-        $superRole->givePermissionTo(Permission::all());
-        $superAdmin = User::factory()->create(['email' => 'super-admin@gmail.com']);
-        $superAdmin->assignRole($superRole);
+        //create super admin role and user - check auth service provider
+        $superAdminRole = Role::query()->firstOrCreate(['name' => 'super-admin', 'guard_name' => 'api']);
+        $superAdminRole->syncPermissions(Permission::all()->pluck('id')->toArray());
+        $superAdminUser = User::factory()->create(['email' => 'super-admin@gmail.com']);
+        $superAdminUser->assignRole($superAdminRole);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
@@ -20,7 +21,7 @@ class CheckPermissions
     {
         $authGuard = app('auth')->guard('sanctum');
 
-        $exception = static fn ($msg)=> response()->json( ['message'=>$msg], 403);
+        $exception = static fn($msg) => response()->json(['message' => $msg], 403);
 
         if ($authGuard->guest()) {
             return $exception(trans('auth.errors.not_login'));
@@ -32,28 +33,22 @@ class CheckPermissions
             return $exception(trans('auth.errors.wrong_route'));
         }
 
-        $routeNameToArray= explode('.', $route);
-        //get last to element of array ex: (countries index) and convert to string
-        $permissionName = implode(' ', array_splice($routeNameToArray, -2));
+        $routeNameToArray = explode('.', $route);
 
-        $permission=Permission::where('name',$permissionName)
-            ->where('guard_name','api')
-            ->first();
-
-        if (is_null($permission)) {
-            return $exception(trans('auth.errors.wrong_route'));
-        }
+        $route =  array_splice($routeNameToArray, -2);
 
         /** uncomment next line if you need to clear permissions,roles cache
-        | ex: when you change via database directly
-        | app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        */
+         * | ex: when you change via database directly
+         * | app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+         */
 
-        if ($authGuard->user()->hasPermissionTo($permissionName,'api')) {
-            return $next($request);
+        if (in_array($route[1], ['create', 'destroy'])) {
+            if ($authGuard->user()->hasPermissionTo($route[1]." ".$route[0], 'api')) {
+                return $next($request);
+            }
+            return $exception(trans('auth.errors.has_no_permission'));
         }
 
-        return $exception(trans('auth.errors.has_no_permission'));
-
+        return $next($request);
     }
 }

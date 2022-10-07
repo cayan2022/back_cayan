@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -23,24 +21,30 @@ class PermissionSeeder extends Seeder
 
     protected function createPermissions()
     {
-        $routes = Route::getRoutes()->getRoutes();
+        permission::create(['name' => 'show roles', 'type' => 'roles', 'guard_name' => 'api']);
+        permission::create(['name' => 'create roles', 'type' => 'roles', 'guard_name' => 'api']);
+        permission::create(['name' => 'update roles', 'type' => 'roles', 'guard_name' => 'api']);
+        permission::create(['name' => 'assign roles', 'type' => 'roles', 'guard_name' => 'api']);
 
-        foreach ($routes as $route) {
-            if ($route->getName() !== '' && in_array('check_permissions', $route->getAction('middleware'), true)) {
-                $routeName = $route->getName();
+        permission::create(['name' => 'update settings', 'type' => 'settings', 'guard_name' => 'api']);
 
-                $routeNameToArray = explode('.', $routeName);
-                //get last to element of array ex: (countries index) and convert to string then make first word Capitalize
-                $permissionName = implode(' ', array_splice($routeNameToArray, -2));
+        permission::create(['name' => 'create orders', 'type' => 'orders', 'guard_name' => 'api']);
+        permission::create(['name' => 'show orders', 'type' => 'orders', 'guard_name' => 'api']);
+        permission::create(['name' => 'follow orders', 'type' => 'orders', 'guard_name' => 'api']);
 
-                $permission = Permission::where('name', $permissionName)->first();
+        permission::create(['name' => 'show sources reports', 'type' => 'reports', 'guard_name' => 'api']);
+        permission::create(['name' => 'show moderators reports', 'type' => 'reports', 'guard_name' => 'api']);
+        permission::create(['name' => 'show statuses reports', 'type' => 'reports', 'guard_name' => 'api']);
 
-                if (is_null($permission)) {
-                    permission::create(
-                        ['name' => $permissionName, 'type' => Str::words($permissionName, 1,''), 'guard_name' => 'api']
-                    );
-                }
-            }
+        $items=['profiles','doctors','testimonials','offers','services','tidings','categories','blogs','abouts','partners','projects','sources','branches','customers'];
+        foreach ($items as $item){
+            permission::create(['name' => "show $item", 'type' => $item, 'guard_name' => 'api']);
+            permission::create(['name' => "create $item", 'type' => $item, 'guard_name' => 'api']);
+            permission::create(['name' => "update $item", 'type' => $item, 'guard_name' => 'api']);
+            permission::create(['name' => "delete $item", 'type' => $item, 'guard_name' => 'api']);
+            permission::create(['name' => "block $item", 'type' => $item, 'guard_name' => 'api']);
+            permission::create(['name' => "active $item", 'type' => $item, 'guard_name' => 'api']);
         }
+
     }
 }

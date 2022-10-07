@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RoleRequest extends FormRequest
+class StoreRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::guard('sanctum')->check();
     }
 
     /**
@@ -26,7 +27,7 @@ class RoleRequest extends FormRequest
         return [
             'name' => ['required','unique:roles','string', 'max:255'],
             'requested_permissions'=>['required','array'],
-            'requested_permissions.*'=>'required|numeric|exists:permissions,id'
+            'requested_permissions.*'=>'required|numeric|exists:permissions,id,guard_name,api'
         ];
     }
 }

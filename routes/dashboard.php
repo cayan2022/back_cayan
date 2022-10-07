@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Dashboard\ProjectController;
 use App\Http\Controllers\Api\Dashboard\{BlogController,
-    RolesController,
+    RoleController,
     OfferController,
     AboutController,
     OrderController,
@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\Dashboard\{BlogController,
     CustomerController,
     CategoryController,
     SubStatusController,
+    PermissionController,
     TestimonialController,
     ExportOrdersController,
     ChangePasswordController,
@@ -27,208 +28,175 @@ use App\Http\Controllers\Api\Dashboard\{BlogController,
     Reports\StatusesReportController,
     Reports\ModeratorsReportController};
 
-//route naming is need to make check_permissions middleware
+/*permissions middleware
+1-no permission for show or index methods
+2-RoleController has middleware for create and update
+3-OrderController has middleware for create
+4-check the "check_permission" middleware it generates auto permission check for [create and delete] methods in api resource*/
 Route::as('dashboard.')
-    ->middleware(['auth:sanctum', 'check_permissions'])
+    ->middleware(['auth:sanctum'])
     ->prefix('dashboard')
     ->group(function () {
-        //profile
+        //Profile
         Route::as('profiles.')
             ->prefix('profile')
             ->group(function () {
                 Route::get('all', [ProfileController::class, 'index'])->name('index');
                 Route::get('show/{user}', [ProfileController::class, 'show'])->name('show');
-                Route::post('store', [ProfileController::class, 'store'])->name('store');
-                Route::post('update/{user}', [ProfileController::class, 'update'])->name('update');
-                Route::post('change-password', ChangePasswordController::class)->name('changepassword');
-                Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout');
-                Route::post('block/{user}', [ProfileController::class, 'block'])->name('block');
-                Route::post('active/{user}', [ProfileController::class, 'active'])->name('active');
+                Route::post('store', [ProfileController::class, 'store'])->name('store')->middleware('can:create profiles');
+                Route::post('update/{user}', [ProfileController::class, 'update'])->name('update')->middleware('can:update profiles');
+                Route::post('change-password', ChangePasswordController::class)->name('changepassword')->middleware('can:update profiles');
+                Route::post('logout/{user}', [ProfileController::class, 'logout'])->name('logout')->middleware('can:update profiles');
+                Route::post('block/{user}', [ProfileController::class, 'block'])->name('block')->middleware('can:block profiles');
+                Route::post('active/{user}', [ProfileController::class, 'active'])->name('active')->middleware('can:active profiles');
             });
 
         //Roles
-        Route::as('roles.')
-            ->prefix('roles')
-            ->group(function () {
-                Route::get('get-roles', [RolesController::class, 'getRoles'])->name('index');
-                Route::get('get-role-permissions', [RolesController::class, 'getRolePermissions'])->name('show');
-                Route::post('add-role', [RolesController::class, 'addRole'])->name('store');
-                Route::post('assignRoleToUser', [RolesController::class, 'assignRoleToUser'])->name('assign');
-                Route::get('edit/{role}', [RolesController::class, 'edit'])->name('edit');
-                Route::post('update/{role}', [RolesController::class, 'update'])->name('update');
-            });
+        Route::group([], function () {
+            Route::post('assign', [RoleController::class, 'assign'])->name('assign')->middleware('can:assign roles');
+            Route::apiResource('roles', RoleController::class)->except('delete');
+        });
 
         //Permissions
         Route::as('permissions.')
             ->prefix('permissions')
             ->group(function () {
-                Route::get('get-permissions', [RolesController::class, 'getPermissions'])->name('index');
-                Route::post('add-permission', [RolesController::class, 'addPermission'])->name('store');
+                Route::get('all', [PermissionController::class,'all'])->name('all');
+                Route::get('types', [PermissionController::class,'types'])->name('types');
+                Route::get('user', [PermissionController::class,'user'])->name('user');
             });
 
-        //pages
+
+        //Pages
         Route::as('pages.')
             ->prefix('pages')
             ->group(function () {
-                /*doctors*/
+                /*Doctors*/
                 Route::group([], function () {
-                    Route::put('doctors/{doctor}/block', [DoctorController::class, 'block'])->name('doctors.block');
-                    Route::put('doctors/{doctor}/active', [DoctorController::class, 'active'])->name('doctors.active');
-                    Route::post('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctors.update');
-                    Route::apiResource('doctors', DoctorController::class)->except('update');
+                    Route::put('doctors/{doctor}/block', [DoctorController::class, 'block'])->name('doctors.block')->middleware('can:block doctors');
+                    Route::put('doctors/{doctor}/active', [DoctorController::class, 'active'])->name('doctors.active')->middleware('can:active doctors');
+                    Route::post('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctors.update')->middleware('can:update doctors');
+                    Route::apiResource('doctors', DoctorController::class)->except('update')->middleware('check_permissions')->middleware('check_permissions');
                 });
-                /*testimonials*/
+                /*Testimonials*/
                 Route::group([], function () {
-                    Route::put('testimonials/{testimonial}/block', [TestimonialController::class, 'block'])->name(
-                        'testimonials.block'
-                    );
-                    Route::put('testimonials/{testimonial}/active', [TestimonialController::class, 'active'])->name(
-                        'testimonials.active'
-                    );
-                    Route::post('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name(
-                        'testimonials.update'
-                    );
-                    Route::apiResource('testimonials', TestimonialController::class)->except('update');
+                    Route::put('testimonials/{testimonial}/block', [TestimonialController::class, 'block'])->name('testimonials.block')->middleware('can:block testimonials');
+                    Route::put('testimonials/{testimonial}/active', [TestimonialController::class, 'active'])->name('testimonials.active')->middleware('can:active testimonials');
+                    Route::post('testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('testimonials.update')->middleware('can:update testimonials');
+                    Route::apiResource('testimonials', TestimonialController::class)->except('update')->middleware('check_permissions');
                 });
-                /*offers*/
+                /*Offers*/
                 Route::group([], function () {
-                    Route::put('offers/{offer}/block', [OfferController::class, 'block'])->name('offers.block');
-                    Route::put('offers/{offer}/active', [OfferController::class, 'active'])->name('offers.active');
-                    Route::post('offers/{offer}', [OfferController::class, 'update'])->name('offers.update');
-                    Route::apiResource('offers', OfferController::class)->except('update');
+                    Route::put('offers/{offer}/block', [OfferController::class, 'block'])->name('offers.block')->middleware('can:block offers');
+                    Route::put('offers/{offer}/active', [OfferController::class, 'active'])->name('offers.active')->middleware('can:active offers');
+                    Route::post('offers/{offer}', [OfferController::class, 'update'])->name('offers.update')->middleware('can:update offers');
+                    Route::apiResource('offers', OfferController::class)->except('update')->middleware('check_permissions');
                 });
-
-                /*services*/
+                /*Services*/
                 Route::group([], function () {
-                    Route::put('services/{service}/block', [ServiceController::class, 'block'])->name('services.block');
-                    Route::put('services/{service}/active', [ServiceController::class, 'active'])->name(
-                        'services.active'
-                    );
-                    Route::post('services/{service}', [ServiceController::class, 'update'])->name('services.update');
-                    Route::apiResource('services', ServiceController::class)->except('update');
+                    Route::put('services/{service}/block', [ServiceController::class, 'block'])->name('services.block')->middleware('can:block services');
+                    Route::put('services/{service}/active', [ServiceController::class, 'active'])->name('services.active')->middleware('can:active services');
+                    Route::post('services/{service}', [ServiceController::class, 'update'])->name('services.update')->middleware('can:update services');
+                    Route::apiResource('services', ServiceController::class)->except('update')->middleware('check_permissions');
                 });
-                /*tidings || news*/
+                /*Tidings*/
                 Route::group([], function () {
-                    Route::put('tidings/{tiding}/active', [TidingController::class, 'active'])->name('tidings.active');
-                    Route::put('tidings/{tiding}/block', [TidingController::class, 'block'])->name('tidings.block');
-                    Route::post('tidings/{tiding}', [TidingController::class, 'update'])->name('tidings.update');
-                    Route::apiResource('tidings', TidingController::class)->except('update');
+                    Route::put('tidings/{tiding}/active', [TidingController::class, 'active'])->name('tidings.active')->middleware('can:active tidings');
+                    Route::put('tidings/{tiding}/block', [TidingController::class, 'block'])->name('tidings.block')->middleware('can:block tidings');
+                    Route::post('tidings/{tiding}', [TidingController::class, 'update'])->name('tidings.update')->middleware('can:update tidings');
+                    Route::apiResource('tidings', TidingController::class)->except('update')->middleware('check_permissions');
                 });
-
-                /*categories*/
+                /*Categories*/
                 Route::group([], function () {
-                    Route::put('categories/{category}/block', [CategoryController::class, 'block'])->name(
-                        'categories.block'
-                    );
-                    Route::put('categories/{category}/active', [CategoryController::class, 'active'])->name(
-                        'categories.active'
-                    );
-                    Route::post('categories/{category}', [CategoryController::class, 'update'])->name(
-                        'categories.update'
-                    );
-                    Route::apiResource('categories', CategoryController::class)->except('update');
+                    Route::put('categories/{category}/block', [CategoryController::class, 'block'])->name('categories.block')->middleware('can:block categories');
+                    Route::put('categories/{category}/active', [CategoryController::class, 'active'])->name('categories.active')->middleware('can:active categories');
+                    Route::post('categories/{category}', [CategoryController::class, 'update'])->name('categories.update')->middleware('can:update categories');
+                    Route::apiResource('categories', CategoryController::class)->except('update')->middleware('check_permissions');
                 });
-
-                /*get substauses by status id*/
-                Route::group([], function () {
-                    Route::get('statuses/{status}/substatuses', [StatusController::class, 'subStatuses'])->name(
-                        'subStatuses'
-                    );
+               // /*Blogs*/
+                Route::group([],function () {
+                    Route::put('blogs/{blog}/block', [BlogController::class, 'block'])->name('blogs.block')->middleware('can:block blogs');
+                    Route::put('blogs/{blog}/active', [BlogController::class, 'active'])->name('blogs.active')->middleware('can:active blogs');
+                    Route::post('blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update')->middleware('can:update blogs');
+                    Route::apiResource('blogs', BlogController::class)->except('update')->middleware('check_permissions');
                 });
-
-                /*Follow Order*/
-                Route::group([], function () {
-                    Route::post('orders/follow-order', [OrderController::class, 'followOrder'])->name('followOrder');
+              //  /*Abouts*/
+                Route::group([],function () {
+                    Route::put('abouts/{about}/block', [AboutController::class, 'block'])->name('abouts.block')->middleware('can:block abouts');
+                    Route::put('abouts/{about}/active', [AboutController::class, 'active'])->name('abouts.active')->middleware('can:active abouts');
+                    Route::post('abouts/{about}', [AboutController::class, 'update'])->name('abouts.update')->middleware('can:update abouts');
+                    Route::apiResource('abouts', AboutController::class)->except('update')->middleware('check_permissions');
                 });
-
-                /*Customers*/
-                Route::as('customers.')->prefix('customers')->group(function () {
-                    Route::put('block/{user}', [CustomerController::class, 'block'])->name('block');
-                    Route::put('active/{user}', [CustomerController::class, 'active'])->name('active');
-                    Route::get('all', [CustomerController::class, 'index'])->name('index');
-                    Route::post('store', [CustomerController::class, 'store'])->name('store');
-                    Route::get('show/{user}', [CustomerController::class, 'show'])->name('show');
-                    Route::post('update/{user}', [CustomerController::class, 'update'])->name('update');
-                    Route::delete('delete/{user}', [CustomerController::class, 'destroy'])->name('destroy');
+               // /*Partners*/
+                Route::group([],function () {
+                    Route::put('partners/{partner}/block', [PartnerController::class, 'block'])->name('partners.block')->middleware('can:block partners');
+                    Route::put('partners/{partner}/active', [PartnerController::class, 'active'])->name('partners.active')->middleware('can:active partners');
+                    Route::post('partners/{partner}', [PartnerController::class, 'update'])->name('partners.update')->middleware('can:update partners');
+                    Route::apiResource('partners', PartnerController::class)->except('update')->middleware('check_permissions');
                 });
-
-                /*Blogs*/
-                Route::as('blogs.')->prefix('blogs')->group(function () {
-                    Route::put('block/{blog}', [BlogController::class, 'block'])->name('block');
-                    Route::put('active/{blog}', [BlogController::class, 'active'])->name('active');
-                    Route::get('all', [BlogController::class, 'index'])->name('index');
-                    Route::post('store', [BlogController::class, 'store'])->name('store');
-                    Route::get('show/{blog}', [BlogController::class, 'show'])->name('show');
-                    Route::post('update/{blog}', [BlogController::class, 'update'])->name('update');
-                    Route::delete('delete/{blog}', [BlogController::class, 'destroy'])->name('destroy');
-                });
-
-                /*Abouts*/
-                Route::as('abouts.')->prefix('abouts')->group(function () {
-                    Route::put('block/{about}', [AboutController::class, 'block'])->name('block');
-                    Route::put('active/{about}', [AboutController::class, 'active'])->name('active');
-                    Route::get('all', [AboutController::class, 'index'])->name('index');
-                    Route::post('store', [AboutController::class, 'store'])->name('store');
-                    Route::get('show/{about}', [AboutController::class, 'show'])->name('show');
-                    Route::post('update/{about}', [AboutController::class, 'update'])->name('update');
-                    Route::delete('delete/{about}', [AboutController::class, 'destroy'])->name('destroy');
-                });
-
-                /*Partners*/
-                Route::as('partners.')->prefix('partners')->group(function () {
-                    Route::put('block/{partner}', [PartnerController::class, 'block'])->name('block');
-                    Route::put('active/{partner}', [PartnerController::class, 'active'])->name('active');
-                    Route::get('all', [PartnerController::class, 'index'])->name('index');
-                    Route::post('store', [PartnerController::class, 'store'])->name('store');
-                    Route::get('show/{partner}', [PartnerController::class, 'show'])->name('show');
-                    Route::post('update/{partner}', [PartnerController::class, 'update'])->name('update');
-                    Route::delete('delete/{partner}', [PartnerController::class, 'destroy'])->name('destroy');
-                });
-
                 /*Projects*/
                 Route::group([], function () {
-                    Route::put('projects/{project}/block', [ProjectController::class, 'block'])->name('projects.block');
-                    Route::put('projects/{project}/active', [ProjectController::class, 'active'])->name('projects.active');
-                    Route::post('projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-                    Route::apiResource('projects', ProjectController::class)->except('update');
+                    Route::put('projects/{project}/block', [ProjectController::class, 'block'])->name('projects.block')->middleware('can:block projects');
+                    Route::put('projects/{project}/active', [ProjectController::class, 'active'])->name('projects.active')->middleware('can:active projects');
+                    Route::post('projects/{project}', [ProjectController::class, 'update'])->name('projects.update')->middleware('can:update projects');
+                    Route::apiResource('projects', ProjectController::class)->except('update')->middleware('check_permissions');
                 });
-
                 /*Source*/
                 Route::group([], function () {
-                    Route::put('sources/{source}/block', [SourceController::class, 'block'])->name('sources.block');
-                    Route::put('sources/{source}/active', [SourceController::class, 'active'])->name('sources.active');
-                    Route::post('sources/{source}', [SourceController::class, 'update'])->name('sources.update');
-                    Route::apiResource('sources', SourceController::class)->except('update');
+                    Route::put('sources/{source}/block', [SourceController::class, 'block'])->name('sources.block')->middleware('can:block sources');
+                    Route::put('sources/{source}/active', [SourceController::class, 'active'])->name('sources.active')->middleware('can:active sources');
+                    Route::post('sources/{source}', [SourceController::class, 'update'])->name('sources.update')->middleware('can:update sources');
+                    Route::apiResource('sources', SourceController::class)->except('update')->middleware('check_permissions');
                 });
-
                 /*Branch*/
                 Route::group([], function () {
-                    Route::put('branches/{branch}/block', [BranchController::class, 'block'])->name('branches.block');
-                    Route::put('branches/{branch}/active', [BranchController::class, 'active'])->name('branches.active');
-                    Route::post('branches/{branch}', [BranchController::class, 'update'])->name('branches.update');
-                    Route::apiResource('branches', BranchController::class)->except('update');
+                    Route::put('branches/{branch}/block', [BranchController::class, 'block'])->name('branches.block')->middleware('can:block branches');
+                    Route::put('branches/{branch}/active', [BranchController::class, 'active'])->name('branches.active')->middleware('can:active branches');
+                    Route::post('branches/{branch}', [BranchController::class, 'update'])->name('branches.update')->middleware('can:update branches');
+                    Route::apiResource('branches', BranchController::class)->except('update')->middleware('check_permissions');
                 });
-
+                /*Customers*/
+                Route::as('customers.')->prefix('customers')->group(function () {
+                    Route::put('block/{user}', [CustomerController::class, 'block'])->name('block')->middleware('can:block customers');
+                    Route::put('active/{user}', [CustomerController::class, 'active'])->name('active')->middleware('can:active customers');
+                    Route::get('all', [CustomerController::class, 'index'])->name('index');
+                    Route::post('store', [CustomerController::class, 'store'])->name('store')->middleware('can:create customers');
+                    Route::get('show/{user}', [CustomerController::class, 'show'])->name('show');
+                    Route::post('update/{user}', [CustomerController::class, 'update'])->name('update')->middleware('can:update customers');
+                    Route::delete('delete/{user}', [CustomerController::class, 'destroy'])->name('destroy')->middleware('can:delete customers');
+                });
                 /*Setting*/
-                Route::as('settings.')->group( function () {
-                    Route::post('settings/{setting}/update', [SettingController::class, 'update'])->name('update');
-                    Route::get('settings/{setting}', [SettingController::class,'show'])->name('show');
+                Route::as('settings.')
+                    ->prefix('settings')
+                    ->group(function () {
+                    Route::post('{setting}/update', [SettingController::class, 'update'])->name('update')->middleware('can:update settings');
+                    Route::get('{setting}', [SettingController::class, 'show'])->name('show');
                 });
-
-                Route::get('orders/export', ExportOrdersController::class)->name('orders.export');
-
-                Route::apiResources([
-                    'orders' => OrderController::class,
-                    'statuses' => StatusController::class,
-                    'substatuses' => SubStatusController::class,
-                    'countries' => CountryController::class,
-                ]);
+                /*Orders*/
+                Route::group([],function () {
+                    /*Export Orders in excel sheet*/
+                    Route::get('orders/export', ExportOrdersController::class)->name('orders.export')->middleware('can:show orders');
+                    /*Follow Order*/
+                    Route::post('orders/follow-order', [OrderController::class, 'follow'])->name('orders.follow')->middleware('can:follow orders');
+                    Route::apiResource('orders', OrderController::class)->only(['index','store','show']);
+                });
+                /*statuses*/
+                Route::group([], function (){
+                    /*Get substauses by status id*/
+                    Route::get('statuses/{status}/substatuses', [StatusController::class, 'substatuses'])->name('statuses.substatuses');
+                    Route::apiResource('statuses', StatusController::class)->only(['index','show']);
+                });
+                /*SubStatues*/
+                Route::apiResource('substatuses', SubStatusController::class)->only(['index','show']);
+                /*Countries*/
+                Route::get('countries',CountryController::class)->name('countries');
             });
-
-        //reports
-        Route::as('reports.')->prefix('reports')->group(function () {
-            Route::get('sources', SourcesReportController::class)->name('sources');
-            Route::get('moderators',ModeratorsReportController::class)->name('moderators');
-            Route::get('statuses',StatusesReportController::class)->name('statuses');
+        //Reports
+        Route::as('reports.')
+            ->prefix('reports')
+            ->group(function () {
+            Route::get('sources', SourcesReportController::class)->name('sources')->middleware('can:show sources reports');
+            Route::get('moderators', ModeratorsReportController::class)->name('moderators')->middleware('can:show moderators reports');
+            Route::get('statuses', StatusesReportController::class)->name('statuses')->middleware('can:show statuses reports');
         });
     });

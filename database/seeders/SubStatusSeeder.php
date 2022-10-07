@@ -11,24 +11,12 @@ use Illuminate\Database\Seeder;
 class SubStatusSeeder extends Seeder
 {
     /**
-     * @var Repository|Application|mixed
-     */
-    private $count;
-
-    public function __construct()
-    {
-        $this->count = config('database.seeder_count');
-    }
-
-    /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        //SubStatus::factory()->count($this->count)->for(Status::inRandomOrder()->first())->create();
-
         $status2 = Status::find(2);
         $status2->subStatuses()->createMany([
             [

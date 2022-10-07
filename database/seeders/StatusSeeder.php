@@ -10,16 +10,6 @@ use Illuminate\Database\Seeder;
 class StatusSeeder extends Seeder
 {
     /**
-     * @var Repository|Application|mixed
-     */
-    private $count;
-
-    public function __construct()
-    {
-        $this->count = config('database.seeder_count');
-    }
-
-    /**
      * Run the database seeds.
      *
      * @return void
