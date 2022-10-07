@@ -76,7 +76,7 @@ Route::as('dashboard.')
                     Route::put('doctors/{doctor}/block', [DoctorController::class, 'block'])->name('doctors.block')->middleware('can:block doctors');
                     Route::put('doctors/{doctor}/active', [DoctorController::class, 'active'])->name('doctors.active')->middleware('can:active doctors');
                     Route::post('doctors/{doctor}', [DoctorController::class, 'update'])->name('doctors.update')->middleware('can:update doctors');
-                    Route::apiResource('doctors', DoctorController::class)->except('update')->middleware('check_permissions')->middleware('check_permissions');
+                    Route::apiResource('doctors', DoctorController::class)->except('update')->middleware('check_permissions');
                 });
                 /*Testimonials*/
                 Route::group([], function () {
