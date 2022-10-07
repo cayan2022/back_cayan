@@ -41,7 +41,7 @@ class CheckPermissions
          */
 
         if (in_array($route[1], ['store', 'destroy'])) {
-            $name=$route[1]==="destroy"?:'create';
+            $name=$route[1]==="destroy"?'delete':'create';
             if ($authGuard->user()->hasPermissionTo($name." ".$route[0], 'api')) {
                 return $next($request);
             }
