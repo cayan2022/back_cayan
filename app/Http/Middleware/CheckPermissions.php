@@ -3,9 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
 
 /**
  *
@@ -42,8 +40,9 @@ class CheckPermissions
          * | app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
          */
 
-        if (in_array($route[1], ['create', 'destroy'])) {
-            if ($authGuard->user()->hasPermissionTo($route[1]." ".$route[0], 'api')) {
+        if (in_array($route[1], ['store', 'destroy'])) {
+            $name=$route[1]==="destroy"?:'create';
+            if ($authGuard->user()->hasPermissionTo($name." ".$route[0], 'api')) {
                 return $next($request);
             }
             return $exception(trans('auth.errors.has_no_permission'));
