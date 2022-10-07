@@ -30,9 +30,7 @@ use App\Http\Controllers\Api\Dashboard\{BlogController,
 
 /*permissions middleware
 1-no permission for show or index methods
-2-RoleController has middleware for create and update
-3-OrderController has middleware for create
-4-check the "check_permission" middleware it generates auto permission check for [create and delete] methods in api resource*/
+2-check the "check_permission" middleware it generates auto permission check for [create and delete] methods in api resource*/
 Route::as('dashboard.')
     ->middleware(['auth:sanctum'])
     ->prefix('dashboard')
@@ -53,9 +51,10 @@ Route::as('dashboard.')
 
         //Roles
         Route::group([], function () {
-            Route::post('roles/assign', [RoleController::class, 'assign'])->name('assign')
-                ->middleware('can:assign roles');
-            Route::apiResource('roles', RoleController::class)->except('delete');
+            Route::post('roles/assign', [RoleController::class, 'assign'])->name('assign')->middleware('can:assign roles');
+            Route::post('roles', [RoleController::class, 'store'])->name('roles.store')->middleware('can:create roles');
+            Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update')->middleware('can:update roles');
+            Route::apiResource('roles', RoleController::class)->only(['index','show']);
         });
 
         //Permissions
@@ -179,7 +178,8 @@ Route::as('dashboard.')
                     Route::get('orders/export', ExportOrdersController::class)->name('orders.export')->middleware('can:show orders');
                     /*Follow Order*/
                     Route::post('orders/follow-order', [OrderController::class, 'follow'])->name('orders.follow')->middleware('can:follow orders');
-                    Route::apiResource('orders', OrderController::class)->only(['index','store','show']);
+                    Route::post('orders', [OrderController::class, 'store'])->name('orders.store')->middleware('can:create orders');
+                    Route::apiResource('orders', OrderController::class)->only(['index','show']);
                 });
                 /*statuses*/
                 Route::group([], function (){

@@ -29,8 +29,6 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $this->middleware('permission:create orders');
-
         $order = Order::create($request->validated());
 
         return new OrderResource($order);

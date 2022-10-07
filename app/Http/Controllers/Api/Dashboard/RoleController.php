@@ -27,7 +27,7 @@ class RoleController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return RoleResource::collection(Role::with(['permissions'=>fn($q)=>$q->select(['id','name','type'])])->get(['id','name']));
+        return RoleResource::collection(Role::with(['permissions'=>fn($q)=>$q->select(['id','name','type'])])->latest()->get(['id','name']));
     }
     /**
      *
@@ -36,7 +36,7 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $this->middleware('permission:create roles');
+        $request->user()->can('create roles');
 
         $role = Role::create(['name' => $request->name, 'guard_name' => 'api']);
 
@@ -61,7 +61,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request,Role $role)
     {
-        $this->middleware('permission:update roles');
+        $request->user()->can('update roles');
 
         $role->update(['name' => $request->name]);
 
