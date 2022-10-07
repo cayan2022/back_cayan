@@ -53,7 +53,8 @@ Route::as('dashboard.')
 
         //Roles
         Route::group([], function () {
-            Route::post('assign', [RoleController::class, 'assign'])->name('assign')->middleware('can:assign roles');
+            Route::post('roles/assign', [RoleController::class, 'assign'])->name('assign')
+                ->middleware('can:assign roles');
             Route::apiResource('roles', RoleController::class)->except('delete');
         });
 

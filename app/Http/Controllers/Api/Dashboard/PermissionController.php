@@ -17,7 +17,7 @@ class PermissionController extends Controller
 
     public function types()
     {
-        $permissions_types = Permission::all()->groupBy('type', true);
+        $permissions_types = Permission::all(['id','name','type'])->groupBy('type', true);
 
         return response()->json(['data' => $permissions_types]);
     }
