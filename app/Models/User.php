@@ -26,11 +26,6 @@ class User extends Authenticatable implements HasMedia
     /**
      *
      */
-    public const ADMIN = 'admin';
-
-    /**
-     *
-     */
     public const MODERATOR = 'moderator';
 
     public const PATIENT = 'patient';
@@ -39,7 +34,6 @@ class User extends Authenticatable implements HasMedia
      *
      */
     public const TYPES = [
-        self::ADMIN,
         self::MODERATOR,
         self::PATIENT
     ];
@@ -120,14 +114,6 @@ class User extends Authenticatable implements HasMedia
         $this->tokens()->where('name', $device)->delete();
 
         return $this->createToken($device)->plainTextToken;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAdmin(): bool
-    {
-        return $this->type===self::ADMIN;
     }
 
     /**

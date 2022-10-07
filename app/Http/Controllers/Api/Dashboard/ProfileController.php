@@ -20,7 +20,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::whereIn('type',[User::ADMIN,User::MODERATOR])->filter()->latest()->paginate());
+        return UserResource::collection(User::where('type',User::MODERATOR)->filter()->latest()->paginate());
     }
 
     /**

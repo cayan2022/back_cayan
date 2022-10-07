@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         //create super admin role and user - check auth service provider
         $superAdminRole = Role::query()->firstOrCreate(['name' => 'super-admin', 'guard_name' => 'api']);
         $superAdminRole->syncPermissions(Permission::all()->pluck('id')->toArray());
-        $superAdminUser = User::factory()->create(['email' => 'super-admin@gmail.com']);
+        $superAdminUser = User::factory()->create(['email' => 'super-admin@gmail.com','type'=>User::MODERATOR,'is_block'=>false]);
         $superAdminUser->assignRole($superAdminRole);
     }
 }

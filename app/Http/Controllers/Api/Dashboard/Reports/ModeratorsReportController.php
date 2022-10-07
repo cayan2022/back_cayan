@@ -17,6 +17,6 @@ class ModeratorsReportController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return ModeratorsReportResource::collection(User::whereIn('type',[User::ADMIN,User::MODERATOR])->filter()->latest()->paginate());
+        return ModeratorsReportResource::collection(User::where('type',User::MODERATOR)->filter()->latest()->paginate());
     }
 }
