@@ -26,10 +26,10 @@ php artisan key:generate
 ```
 
 - Dont forget to Put your varibales at env file
--- APP_URL
--- DB_DATABASE
--- DB_USERNAME
--- DB_PASSWORD
+ - - APP_URL
+ - - DB_DATABASE
+ - - DB_USERNAME
+ - - DB_PASSWORD
 
 ```
 php artisan storage:link
