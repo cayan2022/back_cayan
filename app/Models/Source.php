@@ -75,6 +75,6 @@ class Source extends Model implements HasMedia, TranslatableContract
     public function getUrlAttribute(): string
     {
         $identifier=$this->identifier;
-        return config('app.url')."?_source=$identifier";
+        return config('app.domain_url')."?_source=$identifier";
     }
 }

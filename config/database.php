@@ -143,5 +143,5 @@ return [
         ],
 
     ],
-    'seeder_count'=>env('SEEDER_COUNT',35)
+    'seeder_count'=>env('SEEDER_COUNT',4)
 ];
