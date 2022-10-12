@@ -16,7 +16,7 @@ Laravel is a web application framework
 ## How it works
 
 ``` 
-  cp .env.example .env
+cp .env.example .env
 ```
 ```
 composer install
