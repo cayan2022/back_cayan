@@ -16,7 +16,7 @@ Laravel is a web application framework
 ## How it works
 
 ``` 
-  cp .env.example .env
+cp .env.example .env
 ```
 ```
 composer install
@@ -24,28 +24,18 @@ composer install
 ```
 php artisan key:generate
 ```
-- Put your DB env varibales
+
+- Dont forget to Put your varibales at env file
+ - - APP_URL
+ - - DB_DATABASE
+ - - DB_USERNAME
+ - - DB_PASSWORD
+
+```
+php artisan storage:link
+```
 ```
 php artisan migrate:fresh --seed
 ```
-- Run Test:  
-```
-php artisan test
-```
 
-## Todos
 
-[//]: # (- [ ] &#40;for unchecked checkbox&#41;)
-
-[//]: # (- [X] &#40;for checked checkbox&#41;)
-
-### Nasr
-- [X] discus app table in permissions seeder
-- [X] add filters to models not use it
-- [ ] change all is_active to is_block
-- [ ] add HasActivation trait to all models has is_block attribute
-- [ ] translate role and permissions using __() function
-
-### Hisham Tarek
-- [ ] Branches
-- [ ] Settings
