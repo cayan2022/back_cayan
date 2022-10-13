@@ -11,10 +11,11 @@ use App\Http\Resources\RoleResource;
 use App\Helpers\Traits\RespondsWithHttpStatus;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use App\Http\Requests\Dashboard\UpdateRoleRequest;
 use App\Http\Requests\Api\Dashboard\StoreRoleRequest;
+use App\Http\Requests\Api\Dashboard\UpdateRoleRequest;
 use App\Http\Requests\Api\Dashboard\AssignRoleToUserRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
 /**
  *
  */
@@ -55,11 +56,11 @@ class RoleController extends Controller
     }
 
     /**
-     * @param  UpdateRoleRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdateRoleRequest  $request
      * @param  Role  $role
      * @return Application|ResponseFactory|Response
      */
-    public function update(UpdateRoleRequest $request,Role $role)
+    public function update(\App\Http\Requests\Api\Dashboard\UpdateRoleRequest $request,Role $role)
     {
         $request->user()->can('update roles');
 

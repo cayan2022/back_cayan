@@ -30,7 +30,7 @@ class StoreSourceRequest extends FormRequest
         return RuleFactory::make([
                                      '%name%' => ['required', 'string'],
                                      '%short_description%' => ['required', 'string'],
-                                     'identifier' => ['required','regex:/^[a-zA-Z0-9]*$/','max:255'],
+                                     'identifier' => ['required','regex:/^[a-zA-Z0-9]*$/','max:255',Rule::unique('sources','identifier')],
                                      'image' => ['nullable', new SupportedImage()]
                                  ]);
     }

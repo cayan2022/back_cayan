@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Dashboard;
+namespace App\Http\Requests\Api\Dashboard;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;

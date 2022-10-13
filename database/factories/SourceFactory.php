@@ -26,7 +26,7 @@ class SourceFactory extends Factory
                 'name' =>$this->localFaker()->name(),
                 'short_description'=>$this->localFaker()->sentence(),
             ],
-            'identifier'=>$this->faker->word(),
+            'identifier'=>$this->faker->unique()->word(),
             'is_block'=>$this->faker->boolean,
         ];
 

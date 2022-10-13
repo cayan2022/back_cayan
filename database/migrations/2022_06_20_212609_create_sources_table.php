@@ -15,7 +15,7 @@ class CreateSourcesTable extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
-            $table->string('identifier');
+            $table->string('identifier')->unique();
             $table->boolean('is_block')->default(false);
             $table->timestamps();
         });

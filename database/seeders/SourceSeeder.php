@@ -26,6 +26,18 @@ class SourceSeeder extends Seeder
      */
     public function run()
     {
+        Source::factory([
+                            'en' => [
+                                'name' =>'website',
+                                'short_description'=>'coming from website',
+                            ],
+                            'ar' => [
+                                'name' =>'الموقع',
+                                'short_description'=>'من خلال الموقع',
+                            ],
+                            'identifier'=>'website',
+                            'is_block'=>false,
+                        ])->create();
         Source::factory()->count($this->count)->create();
     }
 }
