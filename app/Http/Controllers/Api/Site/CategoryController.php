@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers\Api\Site;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @return AnonymousResourceCollection
      */
-    public function __invoke(): AnonymousResourceCollection
+    public function __invoke()
     {
-        return CategoryResource::collection(Category::whereIsActive()->filter()->latest()->paginate());
+        return  Category::with('services')->whereIsActive()->filter()->latest()->paginate();
     }
 }
