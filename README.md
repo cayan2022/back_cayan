@@ -18,22 +18,34 @@ Laravel is a web application framework
 ``` 
 cp .env.example .env
 ```
+
 ```
 composer install
 ```
+
 ```
 php artisan key:generate
 ```
 
 - Dont forget to Put your varibales at env file
- - - APP_URL
- - - DB_DATABASE
- - - DB_USERNAME
- - - DB_PASSWORD
+-
+    - APP_URL
+-
+    - DB_DATABASE
+-
+    - DB_USERNAME
+-
+    - DB_PASSWORD
 
 ```
 php artisan storage:link
 ```
+
 ```
 php artisan migrate:fresh --seed
 ```
+
+### very important
+
+`` note:first before start you must create on record at each table in same order: categories,services,source,branch,
+``

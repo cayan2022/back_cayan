@@ -30,23 +30,10 @@ class DatabaseSeeder extends Seeder
                 PermissionSeeder::class,
                 RoleSeeder::class,
                 UserSeeder::class,
-                AboutSeeder::class,
-                CategorySeeder::class,
-                ServiceSeeder::class,//need to create one category at least before
                 SettingSeeder::class,
-                OfferSeeder::class,
-                DoctorSeeder::class,
                 SourceSeeder::class,
-                BranchSeeder::class,
                 StatusSeeder::class,
                 SubStatusSeeder::class,
-                OrderSeeder::class, //needs to add [User,Category,Source,Branch] before
-                OrderHistorySeeder::class,//need to create one order at least before
-                TestimonialSeeder::class,
-                TidingSeeder::class,
-                BlogSeeder::class,
-                PartnerSeeder::class,
-                ProjectSeeder::class
             ]
         );
     }

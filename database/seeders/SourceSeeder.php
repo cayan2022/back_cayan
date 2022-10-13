@@ -38,6 +38,5 @@ class SourceSeeder extends Seeder
                             'identifier'=>'website',
                             'is_block'=>false,
                         ])->create();
-        Source::factory()->count($this->count)->create();
     }
 }
