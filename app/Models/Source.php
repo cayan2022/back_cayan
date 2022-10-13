@@ -78,6 +78,6 @@ class Source extends Model implements HasMedia, TranslatableContract
         if ($identifier==='website'){
             return config('app.domain_url');
         }
-        return config('app.domain_url')."?_source=$identifier";
+        return config('app.domain_url')."/?_source=$identifier";
     }
 }
