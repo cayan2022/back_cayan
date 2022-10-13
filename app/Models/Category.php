@@ -18,9 +18,9 @@ class Category extends Model implements HasMedia , TranslatableContract
     use HasFactory , InteractsWithMedia , Translatable , Filterable, HasActivation;
 
     protected $fillable = [
-       'is_block'
+        'is_block'
     ];
-    protected $appends = ['image'];
+
     public $translatedAttributes = ['name','description'];
 
     /**
@@ -67,10 +67,6 @@ class Category extends Model implements HasMedia , TranslatableContract
         return $this->hasMany(Service::class);
     }
 
-    public function getImageAttribute()
-    {
-        return $this->getAvatar();
-    }
     public function canDeleted(): bool
     {
         return $this->orders()->doesntExist() &&
