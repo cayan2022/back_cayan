@@ -31,9 +31,7 @@ class CreateOrderRequest extends FormRequest
             'category_id' => 'required|integer|exists:categories,id',
             'branch_id'=>'required|integer|exists:branches,id',
             'phone'=>['required',Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
-            'email'=>['required', 'email:rfc,dns',Rule::unique('users','email')->where(function ($query)  {
-                return $query->where('phone', '!=',request('phone'));
-            })]
+            'email'=>['required', 'email:rfc,dns']
         ];
     }
 }

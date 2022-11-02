@@ -17,14 +17,24 @@ class OrderController extends Controller
      * @param  CreateOrderRequest  $createOrderRequest
      * @return OrderResource
      */
-    public function __invoke(CreateOrderRequest $createOrderRequest)
+    public function __invoke(CreateOrderRequest $createOrderRequest): OrderResource
     {
-        $user = User::firstOrCreate(['phone' => $createOrderRequest->phone,'email'=>$createOrderRequest->email],
-                                    [
-                                        'country_id' => Country::first()->id,
-                                        'name' => $createOrderRequest->name,
-                                        'type' => User::PATIENT
-                                    ]);
+        $user = User::query()
+            ->where(['phone' => $createOrderRequest->phone, 'email' => $createOrderRequest->email])
+            ->orWhere('phone', $createOrderRequest->phone)
+            ->orWhere('email', $createOrderRequest->email)
+            ->firstOr(function () use ($createOrderRequest) {
+                return User::create([
+                    'phone' => $createOrderRequest->phone,
+                    'email' => $createOrderRequest->email,
+                    'country_id' => Country::first()->id,
+                    'name' => $createOrderRequest->name,
+                    'type' => User::PATIENT
+                ]);
+            });
+
+        $user->update(['phone' => $createOrderRequest->phone, 'email' => $createOrderRequest->email]);
+
         $order = Order::create(
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
             [
