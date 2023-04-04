@@ -16,6 +16,6 @@ class DoctorController extends Controller
      */
     public function __invoke(): AnonymousResourceCollection
     {
-        return DoctorResource::collection(Doctor::whereIsActive()->filter()->latest()->paginate());
+        return DoctorResource::collection(Doctor::whereIsActive()->filter()->latest()->get());
     }
 }
