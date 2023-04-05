@@ -28,6 +28,16 @@ class CustomerController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function all()
+    {
+        return UserResource::collection(User::whereType(User::PATIENT)->filter()->latest()->get());
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  StoreCustomerRequest  $request

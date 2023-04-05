@@ -160,6 +160,7 @@ Route::as('dashboard.')
                     Route::put('block/{user}', [CustomerController::class, 'block'])->name('block')->middleware('can:block customers');
                     Route::put('active/{user}', [CustomerController::class, 'active'])->name('active')->middleware('can:active customers');
                     Route::get('all', [CustomerController::class, 'index'])->name('index');
+                    Route::get('all_customers', [CustomerController::class, 'all'])->name('all');
                     Route::post('store', [CustomerController::class, 'store'])->name('store')->middleware('can:create customers');
                     Route::get('show/{user}', [CustomerController::class, 'show'])->name('show');
                     Route::post('update/{user}', [CustomerController::class, 'update'])->name('update')->middleware('can:update customers');
