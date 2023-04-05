@@ -23,7 +23,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        return DoctorResource::collection(Doctor::filter()->latest()->paginate());
+        return DoctorResource::collection(Doctor::filter()->get());
     }
 
     /**
