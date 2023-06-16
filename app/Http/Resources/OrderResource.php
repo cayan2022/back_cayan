@@ -56,7 +56,7 @@ class OrderResource extends JsonResource
     {
         return [
             'date' => $follow_up_date,
-            'time' => $now->diff($follow_up_date)->format('%Y-%m-%d %H:%I:%S'),
+            'time' => $now->diff($follow_up_date)->format('%Y-%M-%D %H:%I:%S'),
             'time_diff_months' => $now->diff($follow_up_date)->format('%M'),
             'time_diff_days' => $now->diff($follow_up_date)->format('%D'),
             'time_diff_hours' => $now->diff($follow_up_date)->format('%H'),
