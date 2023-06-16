@@ -11,7 +11,6 @@ class StatusFilter extends BaseFilters
      */
     protected $filters = [
         'name',
-        'start_date'
     ];
 
     /**
@@ -27,36 +26,12 @@ class StatusFilter extends BaseFilters
                 ->when(
                     $this->request->filled('name'),
                     function ($query) use ($value) {
-                        $query->whereTranslationLike('name', '%'.$value.'%');
+                        $query->whereTranslationLike('name', '%' . $value . '%');
                     }
                 );
         }
 
         return $this->builder;
     }
-
-    public function startDate($value)
-    {
-        if ($value) {
-            return $this->builder
-                ->when(
-                    $this->request->filled('start_date') && $this->request->filled('end_date'),
-                    function ($query) {
-                        $query->whereHas('orders', function ($query) {
-                            $query->whereBetween(
-                                'created_at',
-                                [
-                                    $this->request->get('start_date'),
-                                    $this->request->get('end_date')
-                                ]
-                            );
-                        });
-                    }
-                );
-        }
-
-        return $this->builder;
-    }
-
 
 }

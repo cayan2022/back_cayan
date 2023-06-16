@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Filters;
+
+use App\Models\OrderHistory;
+use App\Models\User;
 use Carbon\Carbon;
 
 class OrderFilter extends BaseFilters
@@ -24,6 +27,7 @@ class OrderFilter extends BaseFilters
         'this_year',
         'last_year',
         'start_date',
+        'employee'
     ];
 
     /**
@@ -65,7 +69,7 @@ class OrderFilter extends BaseFilters
     protected function user($value)
     {
         if ($value) {
-            $users = \App\Models\User::where('name', 'like', '%'.$value.'%')->pluck('id');
+            $users = \App\Models\User::where('name', 'like', '%' . $value . '%')->pluck('id');
             return $this->builder->whereIn('user_id', $users);
         }
 
@@ -75,7 +79,7 @@ class OrderFilter extends BaseFilters
     protected function today($value)
     {
         if ($value) {
-            return $this->builder->whereDate('created_at', '=' , Carbon::now()->today()->toDateString());
+            return $this->builder->whereDate('created_at', '=', Carbon::now()->today()->toDateString());
         }
 
         return $this->builder;
@@ -84,7 +88,7 @@ class OrderFilter extends BaseFilters
     protected function yesterday($value)
     {
         if ($value) {
-            return $this->builder->whereDate('created_at', '=' , Carbon::now()->yesterday()->toDateString());
+            return $this->builder->whereDate('created_at', '=', Carbon::now()->yesterday()->toDateString());
         }
 
         return $this->builder;
@@ -132,7 +136,8 @@ class OrderFilter extends BaseFilters
     protected function sixMonths($value)
     {
         if ($value) {
-            return $this->builder->whereBetween('created_at',
+            return $this->builder->whereBetween(
+                'created_at',
                 [Carbon::now()->subMonths(6)->toDateString(), Carbon::now()->toDateString()]
             );
         }
@@ -142,11 +147,14 @@ class OrderFilter extends BaseFilters
 
     protected function thisYear($value)
     {
-            if ($value) {
-                return $this->builder->whereBetween('created_at',
-                    [ Carbon::now()->startOfYear()->toDateString(), Carbon::now()->endOfYear()->toDateString(),]
-                );
-            }
+        if ($value) {
+            return $this->builder->whereBetween(
+                'created_at',
+                [
+                    Carbon::now()->startOfYear()->toDateString(), Carbon::now()->endOfYear()->toDateString(),
+                ]
+            );
+        }
 
         return $this->builder;
     }
@@ -154,7 +162,8 @@ class OrderFilter extends BaseFilters
     protected function lastYear($value)
     {
         if ($value) {
-            return $this->builder->whereBetween('created_at',
+            return $this->builder->whereBetween(
+                'created_at',
                 [Carbon::now()->subYear()->toDateString(), Carbon::now()->toDateString()]
             );
         }
@@ -178,6 +187,18 @@ class OrderFilter extends BaseFilters
                         );
                     }
                 );
+        }
+
+        return $this->builder;
+    }
+
+    protected function employee($value)
+    {
+        if ($value) {
+            $user = User::where('name', $value)->first();
+            $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
+
+            return $this->builder->whereIn('id', $order_ids);
         }
 
         return $this->builder;
