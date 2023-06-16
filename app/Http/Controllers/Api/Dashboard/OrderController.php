@@ -9,6 +9,7 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderHistoryResource;
 use App\Http\Requests\Api\Dashboard\StoreOrderRequest;
 use App\Http\Requests\Api\Dashboard\FollowOrderRequest;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -17,9 +18,15 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        return OrderResource::collection(Order::filter()->latest()->paginate());
+        if($request->status == 'متابعة'){
+            $orders = Order::filter()->orderByDesc(OrderHistory::select('order_histories.duration')->whereColumn('order_histories.order_id', 'orders.id')->latest()->take(1))->paginate();
+        }else{
+            $orders = Order::filter()->latest()->paginate();
+        }
+        
+        return OrderResource::collection($orders);
     }
     /**
      * Store a newly created resource in storage.

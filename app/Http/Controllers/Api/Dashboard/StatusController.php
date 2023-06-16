@@ -53,7 +53,7 @@ class StatusController extends Controller
                 },
             ])->get();
         } else {
-            $statuses = Status::filter()->paginate(4);
+            $statuses = Status::filter()->get();
         }
 
         return StatusResource::collection($statuses);
