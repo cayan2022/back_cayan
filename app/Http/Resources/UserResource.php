@@ -18,15 +18,14 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'country' => new CountryResource($this->country), //if not exists null
+            'country' => new CountryResource($this->country),
             'phone' => $this->phone,
             'type' => $this->type,
             'is_block' => $this->is_block,
-            'role_id' => optional($this->roles->first())->id,//if not exists null
+            'role_id' => ['id' => optional($this->roles->first())->id, 'name' => optional($this->roles->first())->name],
             'image' => $this->getAvatar(),
             'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
             'created_at_formatted' => $this->created_at ? $this->created_at->diffForHumans() : null,
         ];
     }
 }
-
