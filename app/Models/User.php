@@ -111,7 +111,7 @@ class User extends Authenticatable implements HasMedia
     {
         $device = $device ?: 'Unknown Device';
 
-        $this->tokens()->where('name', $device)->delete();
+        //$this->tokens()->where('name', $device)->delete();
 
         return $this->createToken($device)->plainTextToken;
     }
