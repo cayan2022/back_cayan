@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\OrderHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -26,7 +28,39 @@ class OrderResource extends JsonResource
             'last_employee' => $this->last_employee,
             'employee_avatar' => $this->employee_avatar,
             'created_at' => $this->created_at->diffForHumans(),
-            'histories'  => OrderHistoryResource::collection($this->histories),
+            'histories' => OrderHistoryResource::collection($this->histories),
+            'followup_date' => $this->FollowUpDate(),
         ];
+    }
+
+    private function FollowUpDate()
+    {
+        if ($this->status_id == 2) {
+            $follow_up_date = $this->histories->duration;
+            $now = Carbon::now();
+            if ($follow_up_date != null) {
+                if ($now->greaterThan($follow_up_date)) {
+                    return [
+                        'status' => 0,
+                        'date' => $follow_up_date,
+                        'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
+                    ];
+                } elseif ($follow_up_date->between($now, $now->addDays(2))) {
+                    return [
+                        'status' => 1,
+                        'date' => $follow_up_date,
+                        'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
+                    ];
+                } else {
+                    return [
+                        'status' => 2,
+                        'date' => $follow_up_date,
+                        'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
+                    ];
+                }
+            }
+        }
+
+        return null;
     }
 }
