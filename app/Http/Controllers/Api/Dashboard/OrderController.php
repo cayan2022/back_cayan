@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if($request->status == 'متابعة'){
-            $orders = Order::filter()->orderByDesc(OrderHistory::select('order_histories.duration')->whereColumn('order_histories.order_id', 'orders.id')->latest()->take(1))->paginate();
+            $orders = Order::filter()->orderByAsc(OrderHistory::select('order_histories.duration')->whereColumn('order_histories.order_id', 'orders.id')->latest()->take(1))->paginate();
         }else{
             $orders = Order::filter()->latest()->paginate();
         }
