@@ -35,7 +35,7 @@ class OrderResource extends JsonResource
 
     private function FollowUpDate()
     {
-        if ($this->status_id == 2 && $this->histories != null) {
+        if ($this->status_id == 2 && $this->histories != null && $this->histories->first() != null) {
             $follow_up_date = new Carbon($this->histories->first()->duration);
             if ($follow_up_date != null) {
                 $now = Carbon::now();
