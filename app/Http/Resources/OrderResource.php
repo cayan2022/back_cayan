@@ -40,27 +40,25 @@ class OrderResource extends JsonResource
             if ($follow_up_date != null) {
                 $now = Carbon::now();
                 if ($now->greaterThan($follow_up_date)) {
-                    return [
-                        'status' => 0,
-                        'date' => $follow_up_date,
-                        'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
-                    ];
+                    return $this->FollowUpDateArray($follow_up_date, $now, 0, '#E9F6E7');
                 } elseif ($follow_up_date->between($now, $now->addDays(2))) {
-                    return [
-                        'status' => 1,
-                        'date' => $follow_up_date,
-                        'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
-                    ];
+                    return $this->FollowUpDateArray($follow_up_date, $now, 1, '#FFF6E5');
                 } else {
-                    return [
-                        'status' => 2,
-                        'date' => $follow_up_date,
-                        'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
-                    ];
+                    return $this->FollowUpDateArray($follow_up_date, $now, 2, '#FBE9E9');
                 }
             }
         }
 
         return null;
+    }
+
+    private function FollowUpDateArray($follow_up_date, $now, $status, $color)
+    {
+        return [
+            'date' => $follow_up_date,
+            'time' => $now->diff($follow_up_date)->format('%H:%I:%S'),
+            'status' => $status,
+            'color' => $color,
+        ];
     }
 }
