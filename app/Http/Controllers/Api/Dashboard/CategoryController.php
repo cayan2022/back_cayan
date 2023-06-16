@@ -17,7 +17,7 @@ use Illuminate\Http\Response;
 class CategoryController extends Controller
 {
 
-      use RespondsWithHttpStatus;
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $schema=request()->filled('page') ? 'paginate':'get';
+        $schema = request()->filled('page') ? 'paginate' : 'get';
         return CategoryResource::collection(Category::filter()->latest()->$schema());
     }
 
@@ -38,9 +38,9 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $category = Category::create($request->validated());
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $category->addMediaFromRequest('image')
-                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
                 ->toMediaCollection(Category::MEDIA_COLLECTION_NAME);
         }
         return $category->getResource();
@@ -69,10 +69,10 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $category->clearMediaCollection(Category::MEDIA_COLLECTION_NAME);
             $category->addMediaFromRequest('image')
-                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
                 ->toMediaCollection(Category::MEDIA_COLLECTION_NAME);
         }
 
@@ -87,12 +87,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if($category->canDeleted()){
-            $category->delete();
-            return $this->success(__('auth.success_operation'));
-        }
-
-        return $this->failure(__('auth.cannot_deleted'));
+        $category->delete();
+        
+        return $this->success(__('auth.success_operation'));
     }
 
     /**
