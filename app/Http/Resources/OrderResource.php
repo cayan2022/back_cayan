@@ -40,11 +40,11 @@ class OrderResource extends JsonResource
             if ($follow_up_date != null) {
                 $now = Carbon::now();
                 if ($now->greaterThan($follow_up_date)) {
-                    return $this->FollowUpDateArray($follow_up_date, $now, 0, '#E9F6E7');
+                    return $this->FollowUpDateArray($follow_up_date, $now, 0, '#d6262d');
                 } elseif ($follow_up_date->between($now, $now->addDays(2))) {
-                    return $this->FollowUpDateArray($follow_up_date, $now, 1, '#FFF6E5');
+                    return $this->FollowUpDateArray($follow_up_date, $now, 1, '#fba706');
                 } else {
-                    return $this->FollowUpDateArray($follow_up_date, $now, 2, '#FBE9E9');
+                    return $this->FollowUpDateArray($follow_up_date, $now, 2, '#29a71a');
                 }
             }
         }
