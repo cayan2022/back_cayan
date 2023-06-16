@@ -20,12 +20,12 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->status == 'متابعة'){
-            $orders = Order::filter()->orderByAsc(OrderHistory::select('order_histories.duration')->whereColumn('order_histories.order_id', 'orders.id')->latest()->take(1))->paginate();
-        }else{
+        if ($request->status == 'متابعة') {
+            $orders = Order::filter()->orderBy(OrderHistory::select('order_histories.duration')->whereColumn('order_histories.order_id', 'orders.id')->latest()->take(1), 'asc')->paginate();
+        } else {
             $orders = Order::filter()->latest()->paginate();
         }
-        
+
         return OrderResource::collection($orders);
     }
     /**
@@ -55,7 +55,7 @@ class OrderController extends Controller
     public function follow(FollowOrderRequest $request)
     {
         return new OrderHistoryResource(
-        //it will observe order to update its status to the current status -> when order history created
+            //it will observe order to update its status to the current status -> when order history created
             OrderHistory::create(
                 $request->validated() + ['user_id' => auth()->user()->id]
             )
