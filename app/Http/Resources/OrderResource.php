@@ -41,7 +41,7 @@ class OrderResource extends JsonResource
                 $now = Carbon::now();
                 if ($now->greaterThan($follow_up_date)) {
                     return $this->FollowUpDateArray($follow_up_date, $now, 0, '#d6262d');
-                } elseif ($follow_up_date->between($now, $now->addDays(2))) {
+                } elseif ($follow_up_date->between($now, Carbon::now()->addDays(2))) {
                     return $this->FollowUpDateArray($follow_up_date, $now, 1, '#fba706');
                 } else {
                     return $this->FollowUpDateArray($follow_up_date, $now, 2, '#29a71a');
