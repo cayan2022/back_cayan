@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->boolean('is_block')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('category_translations', function (Blueprint $table) {

@@ -20,6 +20,7 @@ class CreateBranchesTable extends Migration
             $table->string('map');
             $table->boolean('is_block')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('branch_translations', function (Blueprint $table) {

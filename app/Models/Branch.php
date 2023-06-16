@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Filters\Filterable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use App\Http\Filters\BranchFilter;
 use App\Models\Traits\HasActivation;
@@ -15,7 +16,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 
 class Branch extends Model implements HasMedia, TranslatableContract
 {
-    use HasFactory, InteractsWithMedia, Translatable, Filterable, HasActivation;
+    use HasFactory, InteractsWithMedia, Translatable, Filterable, HasActivation, SoftDeletes;
 
     protected $fillable = [
         'telephone',

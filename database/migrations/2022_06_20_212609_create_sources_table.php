@@ -18,6 +18,7 @@ class CreateSourcesTable extends Migration
             $table->string('identifier')->unique();
             $table->boolean('is_block')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('source_translations', function (Blueprint $table) {

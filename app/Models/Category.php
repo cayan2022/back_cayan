@@ -9,13 +9,14 @@ use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Http\Filters\Filterable;
 use App\Http\Filters\CategoryFilter;
 class Category extends Model implements HasMedia , TranslatableContract
 {
-    use HasFactory , InteractsWithMedia , Translatable , Filterable, HasActivation;
+    use HasFactory , InteractsWithMedia , Translatable , Filterable, HasActivation, SoftDeletes;
 
     protected $fillable = [
         'is_block'

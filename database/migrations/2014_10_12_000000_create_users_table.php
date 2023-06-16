@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_block')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
