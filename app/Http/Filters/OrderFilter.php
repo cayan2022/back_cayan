@@ -69,7 +69,10 @@ class OrderFilter extends BaseFilters
     protected function user($value)
     {
         if ($value) {
-            $users = \App\Models\User::where('name', 'like', '%' . $value . '%')->pluck('id');
+            $users = \App\Models\User::where('name', 'like', '%' . $value . '%')
+                ->orWhere('phone', 'like', '%' . $value . '%')
+                ->orWhere('email', 'like', '%' . $value . '%')
+                ->pluck('id');
             return $this->builder->whereIn('user_id', $users);
         }
 
