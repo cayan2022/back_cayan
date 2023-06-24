@@ -24,7 +24,7 @@ class SettingController extends Controller
      * Handle the incoming request.
      *
      * @param  ClickRegisterRequest  $request
-     * @return boolean
+     * @return \Illuminate\Http\JsonResponse
      */
     public function clickRegister(ClickRegisterRequest $request)
     {
@@ -40,6 +40,6 @@ class SettingController extends Controller
 
         $settings->save();
 
-        return true;
+        return response()->json(['success' => true, 'message' => __('auth.success_operation')]);
     }
 }
