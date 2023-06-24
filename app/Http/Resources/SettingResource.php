@@ -15,8 +15,11 @@ class SettingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'image'=>$this->getAvatar()
+            'id' => $this->id,
+            'whatsapp_clicks_count' => $this->whatsapp_clicks,
+            'phone_clicks_count' => $this->phone_clicks,
+            'mail_clicks_count' => $this->mail_clicks,
+            'image' => $this->getAvatar()
         ];
     }
 }
