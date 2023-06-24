@@ -47,6 +47,8 @@ class OrdersImport implements ToCollection, WithStartRow
 
                 Order::create([
                     'category_id' => $this->getCategoryId($row[0]),
+                    'branch_id' => 1,
+                    'source_id' => 15,
                     'user_id' => $user->id,
                     'status_id' => Order::NEW
                 ]);
