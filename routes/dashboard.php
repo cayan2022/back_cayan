@@ -179,7 +179,7 @@ Route::as('dashboard.')
                     /*Export Orders in excel sheet*/
                     Route::get('orders/export', ExportOrdersController::class)->name('orders.export')->middleware('can:show orders');
                     /*Import Orders in excel sheet*/
-                    Route::get('orders/import', ImportOrdersController::class)->name('orders.import')->middleware('can:show orders');
+                    Route::post('orders/import', ImportOrdersController::class)->name('orders.import')->middleware('can:show orders');
                     /*Follow Order*/
                     Route::post('orders/follow-order', [OrderController::class, 'follow'])->name('orders.follow')->middleware('can:follow orders');
                     Route::post('orders', [OrderController::class, 'store'])->name('orders.store')->middleware('can:create orders');
