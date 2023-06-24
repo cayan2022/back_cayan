@@ -15,6 +15,9 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->integer('whatsapp_clicks')->default(0);
+            $table->integer('phone_clicks')->default(0);
+            $table->integer('mail_clicks')->default(0);
             $table->timestamps();
         });
     }

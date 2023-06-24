@@ -11,7 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
-    protected $fillable=[];
+
+    protected $fillable = [
+        'whatsapp_clicks',
+        'phone_clicks',
+        'mail_clicks',
+    ];
 
     public const MEDIA_COLLECTION_NAME = 'setting_avatar';
     public const MEDIA_COLLECTION_URL = 'images/setting.png';
