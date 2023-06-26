@@ -29,7 +29,7 @@ class OrdersImport implements ToCollection, WithStartRow
     {
         foreach ($rows as $row) {
             if ($this->getCategoryId($row[0])) {
-                $user = User::query()
+                $user = User::query()->withoutTrashed()
                     ->where(['phone' => $row[2], 'email' => $row[3]])
                     ->orWhere('phone', $row[2])
                     ->orWhere('email', $row[3])

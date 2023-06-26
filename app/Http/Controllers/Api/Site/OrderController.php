@@ -19,7 +19,7 @@ class OrderController extends Controller
      */
     public function __invoke(CreateOrderRequest $createOrderRequest): OrderResource
     {
-        $user = User::query()
+        $user = User::query()->withoutTrashed()
             ->where(['phone' => $createOrderRequest->phone, 'email' => $createOrderRequest->email])
             ->orWhere('phone', $createOrderRequest->phone)
             ->orWhere('email', $createOrderRequest->email)
