@@ -124,19 +124,22 @@ class DoctorController extends Controller
         } elseif ($request->order_doctor_id != null) {
             $doctor_order = Doctor::where('id', $request->order_doctor_id)->first();
 
-            $doctor->order = $doctor_order->order;
-            $doctor->save();
-
             if ($doctor_order->order < $doctor->order) {
                 foreach (Doctor::where('order', '>=', $doctor_order->order)->where('order', '<', $doctor->order)->get() as $doctor_data) {
                     $doctor_data->order = $doctor_data->order + 1;
                     $doctor_data->save();
                 }
+
+                $doctor->order = $doctor_order->order - 1;
+                $doctor->save();
             } elseif ($doctor_order->order > $doctor->order) {
                 foreach (Doctor::where('order', '>', $doctor->order)->where('order', '<=', $doctor_order->order)->get() as $doctor_data) {
                     $doctor_data->order = $doctor_data->order - 1;
                     $doctor_data->save();
                 }
+
+                $doctor->order = $doctor_order->order + 1;
+                $doctor->save();
             }
         }
 
