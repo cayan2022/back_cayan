@@ -123,6 +123,11 @@ class DoctorController extends Controller
                 $doctor_data->order = $doctor_data->order + 1;
                 $doctor_data->save();
             }
+        }elseif($doctor_order->id > $doctor->id){
+            foreach (Doctor::where('id', '>', $doctor->id)->where('id', '<=', $doctor_order->id)->get() as $doctor_data) {
+                $doctor_data->order = $doctor_data->order - 1;
+                $doctor_data->save();
+            }
         }
 
         return true;
