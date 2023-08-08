@@ -117,7 +117,7 @@ class DoctorController extends Controller
     private function arrangeDoctors($request, $doctor, $type = null)
     {
         if ($type == 'store' && $request->order_doctor_id == null) {
-            $doctor_order = Doctor::where('id', '!=', $doctor->id)->orderBy('id', 'DESC')->first();
+            $doctor_order = Doctor::where('order', '!=', $doctor->order)->orderBy('order', 'DESC')->first();
 
             $doctor->order = $doctor_order->order + 1;
             $doctor->save();
@@ -127,13 +127,13 @@ class DoctorController extends Controller
             $doctor->order = $doctor_order->order;
             $doctor->save();
 
-            if ($doctor_order->id < $doctor->id) {
-                foreach (Doctor::where('id', '>=', $doctor_order->id)->where('id', '<', $doctor->id)->get() as $doctor_data) {
+            if ($doctor_order->order < $doctor->order) {
+                foreach (Doctor::where('order', '>=', $doctor_order->order)->where('order', '<', $doctor->order)->get() as $doctor_data) {
                     $doctor_data->order = $doctor_data->order + 1;
                     $doctor_data->save();
                 }
-            } elseif ($doctor_order->id > $doctor->id) {
-                foreach (Doctor::where('id', '>', $doctor->id)->where('id', '<=', $doctor_order->id)->get() as $doctor_data) {
+            } elseif ($doctor_order->order > $doctor->order) {
+                foreach (Doctor::where('order', '>', $doctor->order)->where('order', '<=', $doctor_order->order)->get() as $doctor_data) {
                     $doctor_data->order = $doctor_data->order - 1;
                     $doctor_data->save();
                 }
@@ -145,7 +145,7 @@ class DoctorController extends Controller
 
     private function updateArrangeDoctors($doctor)
     {
-        foreach (Doctor::where('id', '>', $doctor->id)->get() as $doctor_data) {
+        foreach (Doctor::where('order', '>', $doctor->order)->get() as $doctor_data) {
             $doctor_data->order = $doctor_data->order - 1;
             $doctor_data->save();
         }
