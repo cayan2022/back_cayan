@@ -118,9 +118,11 @@ class DoctorController extends Controller
         $doctor->order = $doctor_order->order;
         $doctor->save();
 
-        foreach (Doctor::where('id', '>=', $doctor_order->id)->where('id', '!=', $doctor->id)->get() as $doctor_data) {
-            $doctor_data->order = $doctor_data->order + 1;
-            $doctor_data->save;
+        if ($doctor_order->id = $doctor->id) {
+            foreach (Doctor::where('id', '=>', $doctor_order->id)->where('id', '<', $doctor->id)->get() as $doctor_data) {
+                $doctor_data->order = $doctor_data->order + 1;
+                $doctor_data->save;
+            }
         }
 
         return true;
