@@ -41,7 +41,7 @@ class DoctorController extends Controller
                 ->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
         }
 
-        $this->arrangeDoctors($request, $doctor);
+        $this->arrangeDoctors($request, $doctor, 'store');
 
         return $doctor->getResource();
     }
@@ -111,22 +111,29 @@ class DoctorController extends Controller
         return $this->success(__('auth.success_operation'));
     }
 
-    private function arrangeDoctors($request, $doctor)
+    private function arrangeDoctors($request, $doctor, $type = null)
     {
-        $doctor_order = Doctor::where('id', $request->order_doctor_id)->first();
+        if ($type == 'store' && (!$request->has('order_doctor_id') || $request->order_doctor_id == null)) {
+            $doctor_order = Doctor::latest()->first();
 
-        $doctor->order = $doctor_order->order;
-        $doctor->save();
+            $doctor->order = $doctor_order->order + 1;
+            $doctor->save();
+        } elseif ($request->has('order_doctor_id') && $request->order_doctor_id != null) {
+            $doctor_order = Doctor::where('id', $request->order_doctor_id)->first();
 
-        if ($doctor_order->id < $doctor->id) {
-            foreach (Doctor::where('id', '>=', $doctor_order->id)->where('id', '<', $doctor->id)->get() as $doctor_data) {
-                $doctor_data->order = $doctor_data->order + 1;
-                $doctor_data->save();
-            }
-        }elseif($doctor_order->id > $doctor->id){
-            foreach (Doctor::where('id', '>', $doctor->id)->where('id', '<=', $doctor_order->id)->get() as $doctor_data) {
-                $doctor_data->order = $doctor_data->order - 1;
-                $doctor_data->save();
+            $doctor->order = $doctor_order->order;
+            $doctor->save();
+
+            if ($doctor_order->id < $doctor->id) {
+                foreach (Doctor::where('id', '>=', $doctor_order->id)->where('id', '<', $doctor->id)->get() as $doctor_data) {
+                    $doctor_data->order = $doctor_data->order + 1;
+                    $doctor_data->save();
+                }
+            } elseif ($doctor_order->id > $doctor->id) {
+                foreach (Doctor::where('id', '>', $doctor->id)->where('id', '<=', $doctor_order->id)->get() as $doctor_data) {
+                    $doctor_data->order = $doctor_data->order - 1;
+                    $doctor_data->save();
+                }
             }
         }
 
