@@ -23,7 +23,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        return DoctorResource::collection(Doctor::filter()->get());
+        return DoctorResource::collection(Doctor::filter()->orderBy('order', 'ASC')->get());
     }
 
     /**
@@ -88,7 +88,10 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
+        $this->updateArrangeDoctors($doctor);
+
         $doctor->delete();
+
         return $this->success(__('auth.success_operation'));
     }
 
@@ -138,5 +141,13 @@ class DoctorController extends Controller
         }
 
         return true;
+    }
+
+    private function updateArrangeDoctors($doctor)
+    {
+        foreach (Doctor::where('id', '>', $doctor->id)->get() as $doctor_data) {
+            $doctor_data->order = $doctor_data->order - 1;
+            $doctor_data->save();
+        }
     }
 }
