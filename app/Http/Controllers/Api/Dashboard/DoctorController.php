@@ -130,7 +130,7 @@ class DoctorController extends Controller
                     $doctor_data->save();
                 }
 
-                $doctor->order = $doctor_order->order - 1;
+                $doctor->order = $doctor_order->order;
                 $doctor->save();
             } elseif ($doctor_order->order > $doctor->order) {
                 foreach (Doctor::where('order', '>', $doctor->order)->where('order', '<=', $doctor_order->order)->get() as $doctor_data) {
@@ -138,7 +138,7 @@ class DoctorController extends Controller
                     $doctor_data->save();
                 }
 
-                $doctor->order = $doctor_order->order + 1;
+                $doctor->order = $doctor_order->order;
                 $doctor->save();
             }
         }
