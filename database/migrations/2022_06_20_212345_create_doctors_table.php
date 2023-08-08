@@ -17,6 +17,7 @@ class CreateDoctorsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('specialization');
+            $table->integer('order');
             $table->boolean('is_block')->default(false);
             $table->timestamps();
         });

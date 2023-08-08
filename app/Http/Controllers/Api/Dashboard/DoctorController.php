@@ -34,12 +34,15 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request)
     {
-        $doctor=Doctor::create($request->validated());
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        $doctor = Doctor::create($request->validated());
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $doctor->addMediaFromRequest('image')
-                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
                 ->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
         }
+
+        $this->arrangeDoctors($request, $doctor);
+
         return $doctor->getResource();
     }
 
@@ -65,12 +68,14 @@ class DoctorController extends Controller
     {
         $doctor->update($request->validated());
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $doctor->clearMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
             $doctor->addMediaFromRequest('image')
-                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
                 ->toMediaCollection(Doctor::MEDIA_COLLECTION_NAME);
         }
+
+        $this->arrangeDoctors($request, $doctor);
 
         return $doctor->getResource();
     }
@@ -104,5 +109,18 @@ class DoctorController extends Controller
     {
         $doctor->active();
         return $this->success(__('auth.success_operation'));
+    }
+
+    private function arrangeDoctors($request, $doctor)
+    {
+        $doctor_order = Doctor::where('id', $request->order_doctor_id)->first();
+
+        $doctor->order = $doctor_order->order;
+        foreach (Doctor::where('id', '>=', $doctor_order->id)->get() as $doctor_data) {
+            $doctor_data->order = $doctor_data->order + 1;
+            $doctor_data->save;
+        }
+
+        return true;
     }
 }

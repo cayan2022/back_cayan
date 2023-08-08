@@ -18,6 +18,7 @@ class Doctor extends Model implements HasMedia
     protected $fillable = [
         'name',
         'specialization',
+        'order',
         'is_block'
     ];
     protected $casts = [
