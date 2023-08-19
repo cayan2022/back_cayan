@@ -6,8 +6,8 @@ use App\Helpers\Traits\RespondsWithHttpStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PortfolioCategoryResource;
 use App\Models\PortfolioCategory;
-use App\Http\Requests\StorePortfolioCategoryRequest;
-use App\Http\Requests\UpdatePortfolioCategoryRequest;
+use App\Http\Requests\Api\Dashboard\StorePortfolioCategoryRequest;
+use App\Http\Requests\Api\Dashboard\UpdatePortfolioCategoryRequest;
 
 class PortfolioCategoryController extends Controller
 {
@@ -36,7 +36,7 @@ class PortfolioCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePortfolioCategoryRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\StorePortfolioCategoryRequest  $request
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(StorePortfolioCategoryRequest $request)
@@ -76,7 +76,7 @@ class PortfolioCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePortfolioCategoryRequest  $request
+     * @param  \App\Http\Requests\Api\Dashboard\UpdatePortfolioCategoryRequest  $request
      * @param  \App\Models\PortfolioCategory  $portfolio_category
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */

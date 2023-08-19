@@ -23,10 +23,10 @@ class CreatePortfolioCategoriesTable extends Migration
         Schema::create('portfolio_category_translations', function (Blueprint $table) {
             $table->id();
             $table->string('locale')->index();
+            $table->foreignId('portfolio_category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
             $table->longText('description')->nullable();
 
-            $table->foreignId('portfolio_category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->unique(['portfolio_category_id', 'locale']);
         });
     }

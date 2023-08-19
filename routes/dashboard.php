@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\Dashboard\{
     ImportOrdersController,
     ChangePasswordController,
     PortfolioCategoryController,
+    PortfolioController,
     Reports\SourcesReportController,
     Reports\StatusesReportController,
     Reports\ModeratorsReportController
@@ -205,6 +206,14 @@ Route:: as('dashboard.')
                 Route::put('portfolio-categories/{portfolio-category}/active', [PortfolioCategoryController::class, 'active'])->name('portfolio-categories.active')->middleware('can:active portfolio-categories');
                 Route::post('portfolio-categories/{portfolio-category}', [PortfolioCategoryController::class, 'update'])->name('portfolio-categories.update')->middleware('can:update portfolio-categories');
                 Route::apiResource('portfolio-categories', PortfolioCategoryController::class)->except('update')->middleware('check_permissions');
+            });
+
+            /*Portfolios*/
+            Route::group([], function () {
+                Route::put('portfolios/{portfolio}/block', [PortfolioController::class, 'block'])->name('portfolios.block')->middleware('can:block portfolios');
+                Route::put('portfolios/{portfolio}/active', [PortfolioController::class, 'active'])->name('portfolios.active')->middleware('can:active portfolios');
+                Route::post('portfolios/{portfolio}', [PortfolioController::class, 'update'])->name('portfolios.update')->middleware('can:update portfolios');
+                Route::apiResource('portfolios', PortfolioController::class)->except('update')->middleware('check_permissions');
             });
         });
         //Reports

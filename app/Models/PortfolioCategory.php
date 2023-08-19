@@ -43,7 +43,7 @@ class PortfolioCategory extends Model implements HasMedia, TranslatableContract
      */
     protected $filter = PortfolioCategoryFilter::class;
 
-    public const MEDIA_COLLECTION_NAME = 'portfolio_category_avatar';
+    public const MEDIA_COLLECTION_NAME = 'portfolio_category_icon';
     public const MEDIA_COLLECTION_URL = 'images/category.png';
 
     /**
@@ -54,7 +54,7 @@ class PortfolioCategory extends Model implements HasMedia, TranslatableContract
         return new PortfolioCategoryResource($this->fresh());
     }
 
-    public function getAvatar()
+    public function getIcon()
     {
         return $this->getFirstMediaUrl(self::MEDIA_COLLECTION_NAME);
     }
