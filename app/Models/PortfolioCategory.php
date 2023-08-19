@@ -27,6 +27,10 @@ class PortfolioCategory extends Model implements HasMedia, TranslatableContract
         'is_block'
     ];
 
+    public $translationTable = 'p_c_translations';
+
+    public $translationForeignKey = 'p_c_id';
+
     public $translatedAttributes = [
         'name',
         'description'

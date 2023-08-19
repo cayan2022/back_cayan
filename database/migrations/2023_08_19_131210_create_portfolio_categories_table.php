@@ -20,14 +20,15 @@ class CreatePortfolioCategoriesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('portfolio_category_translations', function (Blueprint $table) {
+        Schema::create('p_c_translations', function (Blueprint $table) {
             $table->id();
             $table->string('locale')->index();
-            $table->foreignId('portfolio_category_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->bigInteger('p_c_id')->unsigned();
             $table->string('name');
             $table->longText('description')->nullable();
 
-            $table->unique(['portfolio_category_id', 'locale']);
+            $table->unique(['p_c_id', 'locale']);
+            $table->foreign('p_c_id')->references('id')->on('portfolio_categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
