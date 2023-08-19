@@ -15,7 +15,8 @@ use App\Http\Controllers\Api\Site\{
     SettingController,
     SourceController,
     TestimonialController,
-    TidingController
+    TidingController,
+    PortfolioCategoryController,
 };
 
 
@@ -51,4 +52,5 @@ Route:: as('site.')
         Route::get('settings/{setting}', SettingController::class)->name('settings');
         Route::post('settings/click/register', [SettingController::class, 'clickRegister'])->name('settings.click.register');
         Route::post('order', OrderController::class)->name('order.store');
+        Route::get('portfolio-categories', PortfolioCategoryController::class)->name('portfolio-categories');
     });
