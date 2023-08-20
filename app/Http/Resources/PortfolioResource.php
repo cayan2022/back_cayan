@@ -23,7 +23,8 @@ class PortfolioResource extends JsonResource
             'logo' => $this->getLogo(),
             'cover' => $this->getCover(),
             'is_block' => $this->is_block,
-            'translations' => $this->getTranslationsArray()
+            'translations' => $this->getTranslationsArray(),
+            'portfolio_category' => new PortfolioCategoryResource($this->portfolioCategory),
         ];
     }
 }

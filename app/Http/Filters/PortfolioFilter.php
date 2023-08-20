@@ -11,6 +11,7 @@ class PortfolioFilter extends BaseFilters
      */
     protected $filters = [
         'name',
+        'portfolio_category_id',
     ];
 
     /**
@@ -29,6 +30,21 @@ class PortfolioFilter extends BaseFilters
                         $query->whereTranslationLike('name', '%' . $value . '%');
                     }
                 );
+        }
+
+        return $this->builder;
+    }
+
+    /**
+     * Filter the query by portfolio category id.
+     *
+     * @param  string|int  $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function portfolioCategoryId($value)
+    {
+        if ($value) {
+            return $this->builder->where('portfolio_category_id', $value);
         }
 
         return $this->builder;

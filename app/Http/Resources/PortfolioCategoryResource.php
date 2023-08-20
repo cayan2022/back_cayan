@@ -21,7 +21,6 @@ class PortfolioCategoryResource extends JsonResource
             'is_block' => $this->is_block,
             'translations' => $this->getTranslationsArray(),
             'image' => $this->getIcon(),
-            'portfolios' => PortfolioResource::collection($this->portfolios),
         ];
     }
 }
