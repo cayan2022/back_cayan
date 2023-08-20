@@ -19,7 +19,9 @@ class PortfolioResource extends JsonResource
             'name' => $this->name,
             'short_description' => $this->short_description,
             'full_description' => $this->full_description,
-            'image' => $this->getAvatar(),
+            'url' => $this->url,
+            'logo' => $this->getLogo(),
+            'cover' => $this->getCover(),
             'is_block' => $this->is_block,
             'translations' => $this->getTranslationsArray()
         ];

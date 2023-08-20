@@ -30,7 +30,10 @@ class StorePortfolioRequest extends FormRequest
             '%name%' => ['required', 'string', 'max:255'],
             '%short_description%' => ['required', 'string'],
             '%full_description%' => ['required', 'string'],
-            'image' => ['nullable', new SupportedImage()]
+            'portfolio_category_id' => ['required', 'numeric', 'exists:portfolio_categories,id'],
+            'url' => ['required', 'string'],
+            'logo' => ['nullable', new SupportedImage()],
+            'cover' => ['nullable', new SupportedImage()]
         ]);
     }
 }

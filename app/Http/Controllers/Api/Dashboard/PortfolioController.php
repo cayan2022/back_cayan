@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Helpers\Traits\RespondsWithHttpStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\PortfolioResource;
 use App\Models\Portfolio;
 use App\Http\Requests\Api\Dashboard\StorePortfolioRequest;

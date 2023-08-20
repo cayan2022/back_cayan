@@ -22,7 +22,9 @@ class Portfolio extends Model implements HasMedia, TranslatableContract
     use HasActivation;
 
     protected $fillable = [
-        'is_block'
+        'is_block',
+        'portfolio_category_id',
+        'url',
     ];
 
     protected $casts = [
@@ -33,8 +35,6 @@ class Portfolio extends Model implements HasMedia, TranslatableContract
         'name',
         'short_description',
         'full_description',
-        'portfolio_category_id',
-        'url',
     ];
 
     public const MEDIA_COLLECTION_LOGO_NAME = 'portfolio_logo';
