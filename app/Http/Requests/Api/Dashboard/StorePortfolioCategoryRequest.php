@@ -29,7 +29,7 @@ class StorePortfolioCategoryRequest extends FormRequest
         return RuleFactory::make([
             '%name%' => ['required', 'string', 'max:255'],
             '%description%' => ['nullable', 'string'],
-            'image' => ['nullable', new SupportedImage()],
+            'image' => ['required', new SupportedImage()],
         ]);
     }
 }

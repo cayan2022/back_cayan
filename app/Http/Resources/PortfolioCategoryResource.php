@@ -20,7 +20,7 @@ class PortfolioCategoryResource extends JsonResource
             'description' => $this->description,
             'is_block' => $this->is_block,
             'translations' => $this->getTranslationsArray(),
-            'image' => $this->getAvatar()
+            'image' => $this->getIcon()
         ];
     }
 }

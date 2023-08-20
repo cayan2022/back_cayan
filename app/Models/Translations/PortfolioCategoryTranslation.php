@@ -9,6 +9,8 @@ class PortfolioCategoryTranslation extends Model
 {
     use HasFactory;
 
+    protected $table = 'p_c_translations';
+
     public $timestamps = false;
 
     protected $fillable = ['name', 'description'];

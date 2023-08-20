@@ -202,9 +202,9 @@ Route:: as('dashboard.')
 
             /*Portfolio Categories*/
             Route::group([], function () {
-                Route::put('portfolio-categories/{portfolio-category}/block', [PortfolioCategoryController::class, 'block'])->name('portfolio-categories.block')->middleware('can:block portfolio-categories');
-                Route::put('portfolio-categories/{portfolio-category}/active', [PortfolioCategoryController::class, 'active'])->name('portfolio-categories.active')->middleware('can:active portfolio-categories');
-                Route::post('portfolio-categories/{portfolio-category}', [PortfolioCategoryController::class, 'update'])->name('portfolio-categories.update')->middleware('can:update portfolio-categories');
+                Route::put('portfolio-categories/{portfolio_category}/block', [PortfolioCategoryController::class, 'block'])->name('portfolio-categories.block')->middleware('can:block portfolio-categories');
+                Route::put('portfolio-categories/{portfolio_category}/active', [PortfolioCategoryController::class, 'active'])->name('portfolio-categories.active')->middleware('can:active portfolio-categories');
+                Route::post('portfolio-categories/{portfolio_category}', [PortfolioCategoryController::class, 'update'])->name('portfolio-categories.update')->middleware('can:update portfolio-categories');
                 Route::apiResource('portfolio-categories', PortfolioCategoryController::class)->except('update')->middleware('check_permissions');
             });
 
