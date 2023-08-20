@@ -71,4 +71,9 @@ class Portfolio extends Model implements HasMedia, TranslatableContract
             ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
             ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
     }
+
+    public function portfolioCategory()
+    {
+        return $this->belongsTo(PortfolioCategory::class, 'portfolio_category_id');
+    }
 }
