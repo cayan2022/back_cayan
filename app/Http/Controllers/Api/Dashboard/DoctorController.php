@@ -117,7 +117,7 @@ class DoctorController extends Controller
     private function arrangeDoctors($request, $doctor, $type = null)
     {
         if ($type == 'store' && $request->order_doctor_id == null) {
-            $doctor_order = Doctor::where('order', '!=', $doctor->order)->orderBy('order', 'DESC')->first();
+            $doctor_order = Doctor::where('order', '!=', null)->orderBy('order', 'DESC')->first();
 
             $doctor->order = $doctor_order->order + 1;
             $doctor->save();
