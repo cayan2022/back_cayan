@@ -148,9 +148,11 @@ class DoctorController extends Controller
 
     private function updateArrangeDoctors($doctor)
     {
-        foreach (Doctor::where('order', '>', $doctor->order)->get() as $doctor_data) {
-            $doctor_data->order = $doctor_data->order - 1;
-            $doctor_data->save();
+        if ($doctor->order != null) {
+            foreach (Doctor::where('order', '>', $doctor->order)->get() as $doctor_data) {
+                $doctor_data->order = $doctor_data->order - 1;
+                $doctor_data->save();
+            }
         }
     }
 }
