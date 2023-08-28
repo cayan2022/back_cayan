@@ -121,6 +121,16 @@ class DoctorController extends Controller
 
             $doctor->order = $doctor_order->order + 1;
             $doctor->save();
+        } elseif ($type == 'store' && $request->order_doctor_id != null) {
+            $old_doctor_order = Doctor::where('id', $request->order_doctor_id)->first();
+
+            $doctor->order = $old_doctor_order->order;
+            $doctor->save();
+
+            foreach (Doctor::where('order', '>=', $old_doctor_order->order)->get() as $doctor_data) {
+                $doctor_data->order = $doctor_data->order + 1;
+                $doctor_data->save();
+            }
         } elseif ($request->order_doctor_id != null) {
             $doctor_order = Doctor::where('id', $request->order_doctor_id)->first();
 
