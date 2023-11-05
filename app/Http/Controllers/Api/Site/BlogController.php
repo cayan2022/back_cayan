@@ -18,6 +18,6 @@ class BlogController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return BlogResource::collection(Blog::whereIsActive()->filter()->latest()->paginate());
+        return BlogResource::collection(Blog::whereIsActive()->filter()->latest()->get());
     }
 }
