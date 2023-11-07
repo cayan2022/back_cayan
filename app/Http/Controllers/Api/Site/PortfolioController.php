@@ -18,6 +18,6 @@ class PortfolioController extends Controller
      */
     public function __invoke(Request $request): AnonymousResourceCollection
     {
-        return PortfolioResource::collection(Portfolio::whereIsActive()->filter()->latest()->paginate());
+        return PortfolioResource::collection(Portfolio::whereIsActive()->filter()->latest()->get());
     }
 }
