@@ -47,6 +47,7 @@ Route:: as('site.')
         Route::get('branches', BranchController::class)->name('branches');
         Route::get('testimonials', TestimonialController::class)->name('testimonials');
         Route::get('blogs', BlogController::class)->name('blogs');
+        Route::get('blogs/{slug}', [BlogController::class, 'show'])->name('show-blog');
         Route::get('partners', PartnerController::class)->name('partners');
         Route::get('projects', ProjectController::class)->name('projects');
         Route::get('tidings', TidingController::class)->name('tidings');

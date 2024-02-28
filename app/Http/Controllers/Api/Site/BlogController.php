@@ -10,14 +10,15 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BlogController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  Request  $request
-     * @return AnonymousResourceCollection
-     */
     public function __invoke(Request $request)
     {
         return BlogResource::collection(Blog::whereIsActive()->filter()->latest()->get());
+    }
+
+
+    public function show($slug)
+    {
+        $blog = Blog::Firstwhere('slug', $slug);
+        return BlogResource::make($blog);
     }
 }
