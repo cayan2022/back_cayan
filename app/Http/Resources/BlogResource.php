@@ -22,6 +22,8 @@ class BlogResource extends JsonResource
             'is_block' => $this->is_block,
             'short_description' => $this->short_description,
             'long_description' => $this->long_description,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
             'avatar'=>$this->getAvatar(),
             'translations'=> $this->getTranslationsArray(),
         ];

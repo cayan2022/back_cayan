@@ -25,7 +25,7 @@ class Blog extends Model implements HasMedia,  TranslatableContract
 
     protected $filter=BlogFilter::class;
 
-    public $translatedAttributes = ['title','short_description','long_description'];
+    public $translatedAttributes = ['title','short_description','long_description','meta_title','meta_description'];
 
     protected $casts = [
         'is_block' => 'boolean',

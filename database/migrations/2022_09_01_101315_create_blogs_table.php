@@ -26,6 +26,8 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->text('short_description');
             $table->longText('long_description');
+            $table->text('meta_title');
+            $table->text('meta_description');
             $table->string('locale')->index();
             $table->foreignId('blog_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->unique(['blog_id', 'locale']);

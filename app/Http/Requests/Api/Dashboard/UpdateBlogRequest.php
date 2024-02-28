@@ -27,12 +27,14 @@ class UpdateBlogRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-                                     '%title%' => ['required', 'string', 'max:255'],
-                                     '%short_description%' => ['required', 'string', 'max:255'],
-                                     '%long_description%' => ['required', 'string'],
-                                     'image' => ['nullable', new SupportedImage()],
-                                     'reference_link' => 'nullable|url',
-                                     'date' => 'required|date'
-                                 ]);
+            '%title%' => ['required', 'string', 'max:255'],
+            '%short_description%' => ['required', 'string', 'max:255'],
+            '%long_description%' => ['required', 'string'],
+            '%meta_title%' => ['required', 'string', 'max:255'],
+            '%meta_description%' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', new SupportedImage()],
+            'reference_link' => 'nullable|url',
+            'date' => 'required|date'
+        ]);
     }
 }
