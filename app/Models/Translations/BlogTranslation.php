@@ -9,5 +9,5 @@ class BlogTranslation extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['title','short_description','long_description'];
+    protected $fillable = ['title','short_description','long_description','meta_title','meta_description'];
 }

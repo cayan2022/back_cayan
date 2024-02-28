@@ -17,11 +17,7 @@ class Blog extends Model implements HasMedia,  TranslatableContract
 {
     use HasFactory, InteractsWithMedia, HasActivation, Filterable , Translatable;
 
-    protected $fillable = [
-        'reference_link',
-        'date',
-        'is_block'
-    ];
+    protected $guarded = [];
 
     protected $filter=BlogFilter::class;
 
