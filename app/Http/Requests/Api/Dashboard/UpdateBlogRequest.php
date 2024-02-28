@@ -32,8 +32,10 @@ class UpdateBlogRequest extends FormRequest
             '%long_description%' => ['required', 'string'],
             '%meta_title%' => ['required', 'string', 'max:255'],
             '%meta_description%' => ['required', 'string', 'max:255'],
+            '%alt%' => ['required', 'string', 'max:255'],
             'image' => ['nullable', new SupportedImage()],
             'reference_link' => 'nullable|url',
+            'slug' => 'nullable|string|max:255',
             'date' => 'required|date'
         ]);
     }

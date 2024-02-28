@@ -17,6 +17,7 @@ class BlogResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'slug' => $this->slug,
             'reference_link' => $this->reference_link,
             'date' => $this->date->format('Y-m-d'),
             'is_block' => $this->is_block,
@@ -24,6 +25,7 @@ class BlogResource extends JsonResource
             'long_description' => $this->long_description,
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
+            'alt' => $this->alt,
             'avatar'=>$this->getAvatar(),
             'translations'=> $this->getTranslationsArray(),
         ];

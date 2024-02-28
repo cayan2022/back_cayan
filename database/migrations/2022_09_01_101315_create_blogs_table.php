@@ -16,6 +16,7 @@ class CreateBlogsTable extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->longText('reference_link')->nullable();
+            $table->string('slug')->unique()->nullable();
             $table->date('date')->useCurrent();
             $table->boolean('is_block')->default(false);
             $table->timestamps();
@@ -26,8 +27,9 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->text('short_description');
             $table->longText('long_description');
-            $table->text('meta_title');
-            $table->text('meta_description');
+            $table->text('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->text('alt')->nullable();
             $table->string('locale')->index();
             $table->foreignId('blog_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->unique(['blog_id', 'locale']);
