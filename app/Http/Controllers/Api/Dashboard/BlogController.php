@@ -15,22 +15,12 @@ use Illuminate\Http\Response;
 class BlogController extends Controller
 {
     use RespondsWithHttpStatus;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
+
     public function index()
     {
         return BlogResource::collection(Blog::filter()->latest()->paginate());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\Api\Dashboard\StoreBlogRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreBlogRequest $request)
     {
         $blog= Blog::create($request->validated());
@@ -42,24 +32,12 @@ class BlogController extends Controller
         return $blog->getResource();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Blog  $blog
-     * @return BlogResource
-     */
     public function show(Blog $blog)
     {
         return $blog->getResource();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  UpdateBlogRequest  $request
-     * @param  Blog  $blog
-     * @return BlogResource
-     */
+
     public function update(UpdateBlogRequest $request, Blog $blog)
     {
         $blog->update($request->validated());
@@ -84,10 +62,7 @@ class BlogController extends Controller
 
         return $this->success(__('auth.success_operation'));
     }
-    /**
-     * @param  Blog $blog
-     * @return Application|ResponseFactory|Response
-     */
+
     public function block(Blog $blog)
     {
         $blog->block();

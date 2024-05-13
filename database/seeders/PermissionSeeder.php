@@ -31,6 +31,7 @@ class PermissionSeeder extends Seeder
         permission::create(['name' => 'create orders', 'type' => 'orders', 'guard_name' => 'api']);
         permission::create(['name' => 'show orders', 'type' => 'orders', 'guard_name' => 'api']);
         permission::create(['name' => 'follow orders', 'type' => 'orders', 'guard_name' => 'api']);
+        permission::create(['name' => 'delete orders', 'type' => 'orders', 'guard_name' => 'api']);
 
         permission::create(['name' => 'show sources reports', 'type' => 'reports', 'guard_name' => 'api']);
         permission::create(['name' => 'show moderators reports', 'type' => 'reports', 'guard_name' => 'api']);

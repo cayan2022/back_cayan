@@ -188,6 +188,7 @@ Route:: as('dashboard.')
                 Route::post('orders/follow-order', [OrderController::class, 'follow'])->name('orders.follow')->middleware('can:follow orders');
                 Route::post('orders', [OrderController::class, 'store'])->name('orders.store')->middleware('can:create orders');
                 Route::apiResource('orders', OrderController::class)->only(['index', 'show']);
+                Route::delete('delete/{order}', [OrderController::class, 'destroy'])->name('destroy')->middleware('can:delete orders');
             });
             /*statuses*/
             Route::group([], function () {

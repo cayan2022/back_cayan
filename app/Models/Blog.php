@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Filters\BlogFilter;
 use App\Http\Filters\Filterable;
 use App\Http\Resources\BlogResource;
+use App\Models\Traits\ApiResponse;
 use App\Models\Traits\HasActivation;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
@@ -17,7 +18,12 @@ class Blog extends Model implements HasMedia,  TranslatableContract
 {
     use HasFactory, InteractsWithMedia, HasActivation, Filterable , Translatable;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'reference_link',
+        'date',
+        'is_block',
+        'slug'
+    ];
 
     protected $filter=BlogFilter::class;
 
