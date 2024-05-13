@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Dashboard;
 
+use App\Helpers\Traits\RespondsWithHttpStatus;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    use RespondsWithHttpStatus;
     /**
      * Display a listing of the resource.
      *
