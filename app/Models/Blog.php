@@ -57,4 +57,9 @@ class Blog extends Model implements HasMedia,  TranslatableContract
             ->useFallbackUrl(asset(self::MEDIA_COLLECTION_URL))
             ->useFallbackPath(asset(self::MEDIA_COLLECTION_URL));
     }
+
+    public function tags()
+    {
+        return $this->hasMany(BlogTag::class);
+    }
 }

@@ -28,6 +28,7 @@ class BlogResource extends JsonResource
             'alt' => $this->alt,
             'avatar'=>$this->getAvatar(),
             'translations'=> $this->getTranslationsArray(),
+            'tags'=> $this->tags->pluck('name')
         ];
     }
 }
