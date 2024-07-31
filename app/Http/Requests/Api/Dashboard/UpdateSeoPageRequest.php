@@ -27,7 +27,7 @@ class UpdateSeoPageRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            'page_name' => 'required|string|max:255',
+            'page_name' => 'required|string|max:255|unique:seo_pages,page_name,' . $this->seo_page->id,
             '%meta_name%' => ['required', 'string', 'max:255'],
             '%meta_description%' => ['required', 'string'],
             '%meta_keywords%' => 'required|string|max:255',
