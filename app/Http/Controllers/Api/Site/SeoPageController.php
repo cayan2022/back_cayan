@@ -11,12 +11,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class SeoPageController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @return AnonymousResourceCollection
-     */
-    public function __invoke(): AnonymousResourceCollection
+    public function index()
     {
         return SeoPageResource::collection(SeoPage::filter()->latest()->get());
     }

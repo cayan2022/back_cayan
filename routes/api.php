@@ -58,5 +58,5 @@ Route:: as('site.')
         Route::post('order', OrderController::class)->name('order.store');
         Route::get('portfolio-categories', PortfolioCategoryController::class)->name('portfolio-categories');
         Route::get('portfolios', PortfolioController::class)->name('portfolios');
-        Route::get('seo_pages', [SeoPageController::class])->name('seo-pages');
+        Route::get('seo_pages', [SeoPageController::class,'index'])->name('seo-pages');
     });
