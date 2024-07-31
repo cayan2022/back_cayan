@@ -16,7 +16,6 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         // create permissions
-        Permission::truncate();
         $this->createPermissions();
     }
 
