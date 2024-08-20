@@ -34,20 +34,20 @@ class OrdersImport implements ToCollection, WithStartRow
     {
         foreach ($rows as $row) {
             $user = User::query()->withoutTrashed()
-                ->where(['phone' => $row[8], 'email' => $row[9]])
-                ->orWhere('phone', $row[8])
-                ->orWhere('email', $row[9])
+                ->where(['phone' => $row[7], 'email' => $row[8]])
+                ->orWhere('phone', $row[7])
+                ->orWhere('email', $row[8])
                 ->firstOr(function () use ($row) {
                     return User::create([
-                        'phone' => $row[8],
-                        'email' => $row[9],
+                        'phone' => $row[7],
+                        'email' => $row[8],
                         'country_id' => Country::first()->id,
-                        'name' => $row[7],
+                        'name' => $row[6],
                         'type' => User::PATIENT
                     ]);
                 });
 
-            $user->update(['phone' => $row[8], 'email' => $row[9]]);
+            $user->update(['phone' => $row[7], 'email' => $row[8]]);
 
             $branch = Branch::whereTranslationLike('name', "%$row[2]%")->first();
             if (!$branch) {
