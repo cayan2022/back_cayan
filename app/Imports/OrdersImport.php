@@ -2,9 +2,13 @@
 
 namespace App\Imports;
 
+use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Order;
+use App\Models\OrderHistory;
+use App\Models\Source;
+use App\Models\SubStatus;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -30,27 +34,67 @@ class OrdersImport implements ToCollection, WithStartRow
         foreach ($rows as $row) {
             if ($this->getCategoryId($row[0])) {
                 $user = User::query()->withoutTrashed()
-                    ->where(['phone' => $row[2], 'email' => $row[3]])
-                    ->orWhere('phone', $row[2])
-                    ->orWhere('email', $row[3])
+                    ->where(['phone' => $row[8], 'email' => $row[9]])
+                    ->orWhere('phone', $row[8])
+                    ->orWhere('email', $row[9])
                     ->firstOr(function () use ($row) {
                         return User::create([
                             'phone' => $row[2],
                             'email' => $row[3],
                             'country_id' => Country::first()->id,
-                            'name' => $row[1],
+                            'name' => $row[7],
                             'type' => User::PATIENT
                         ]);
                     });
 
-                $user->update(['phone' => $row[2], 'email' => $row[3]]);
+                $user->update(['phone' => $row[8], 'email' => $row[9]]);
 
-                Order::create([
-                    'category_id' => $this->getCategoryId($row[0]),
-                    'branch_id' => 1,
-                    'source_id' => 15,
+                $branch = Branch::whereTranslationLike('name', "%$row[2]%")->first();
+                if (!$branch) {
+                    $branch = Branch::create([
+                        'name' => $row[2]
+                    ]);
+                }
+
+                $source = Source::whereTranslationLike('name', "%$row[3]%")->first();
+                if (!$source) {
+                    $source = Source::create([
+                        'name' => $row[3]
+                    ]);
+                }
+
+                $category = Category::whereTranslationLike('name', "%$row[4]%")->first();
+                if (!$category) {
+                    $category = Category::create([
+                        'name' => $row[4]
+                    ]);
+                }
+
+                $status = Order::whereTranslationLike('name', "%$row[5]%")->first();
+                if (!$status) {
+                    $status = Order::create([
+                        'name' => $row[5]
+                    ]);
+                }
+
+                $order = Order::create([
+                    'category_id' => $category->id,
+                    'branch_id' => $branch->id,
+                    'source_id' => $source->id,
                     'user_id' => $user->id,
-                    'status_id' => Order::NEW
+                    'status_id' => $status->id,
+                    'created_at' => $row[1]
+                ]);
+
+
+                $sub_status = SubStatus::whereTranslationLike('name', "%$row[10]%")->first();
+
+                OrderHistory::create([
+                    'order_id' => $order->id,
+                    'sub_status_id' => $sub_status->id,
+                    'created_at' => $row[11],
+                    'user_id' => $user->id,
+                    'description' => $row[12]
                 ]);
             }
         }
