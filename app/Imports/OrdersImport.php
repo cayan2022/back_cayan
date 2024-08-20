@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Models\Source;
+use App\Models\Status;
 use App\Models\SubStatus;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -69,9 +70,9 @@ class OrdersImport implements ToCollection, WithStartRow
                 ]);
             }
 
-            $status = Order::whereTranslationLike('name', "%$row[5]%")->first();
+            $status = Status::whereTranslationLike('name', "%$row[5]%")->first();
             if (!$status) {
-                $status = Order::create([
+                $status = Status::create([
                     'name' => $row[5]
                 ]);
             }
