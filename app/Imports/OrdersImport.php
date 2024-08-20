@@ -48,28 +48,28 @@ class OrdersImport implements ToCollection, WithStartRow
 
             $user->update(['phone' => $row[8], 'email' => $row[9]]);
 
-            $branch = Branch::whereTranslationLike('name', "%$row[2]%")->first();
+            $branch = Branch::where('name','like', "%$row[2]%")->first();
             if (!$branch) {
                 $branch = Branch::create([
                     'name' => $row[2]
                 ]);
             }
 
-            $source = Source::whereTranslationLike('name', "%$row[3]%")->first();
+            $source = Source::where('name','like', "%$row[3]%")->first();
             if (!$source) {
                 $source = Source::create([
                     'name' => $row[3]
                 ]);
             }
 
-            $category = Category::whereTranslationLike('name', "%$row[4]%")->first();
+            $category = Category::where('name','like', "%$row[4]%")->first();
             if (!$category) {
                 $category = Category::create([
                     'name' => $row[4]
                 ]);
             }
 
-            $status = Order::whereTranslationLike('name', "%$row[5]%")->first();
+            $status = Order::where('name','like', "%$row[5]%")->first();
             if (!$status) {
                 $status = Order::create([
                     'name' => $row[5]
@@ -86,7 +86,7 @@ class OrdersImport implements ToCollection, WithStartRow
             ]);
 
 
-            $sub_status = SubStatus::whereTranslationLike('name', "%$row[10]%")->first();
+            $sub_status = SubStatus::where('name','like', "%$row[10]%")->first();
 
             OrderHistory::create([
                 'order_id' => $order->id,
