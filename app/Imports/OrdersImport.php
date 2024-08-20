@@ -90,11 +90,14 @@ class OrdersImport implements ToCollection, WithStartRow
 
             $sub_status = SubStatus::whereTranslationLike('name', "%$row[10]%")->first();
 
+            $employee = User::query()->withoutTrashed()
+                ->where('name', $row[9])->first();
+
             OrderHistory::create([
                 'order_id' => $order->id,
                 'sub_status_id' => $sub_status->id,
                 'created_at' => $row[11],
-                'user_id' => $user->id,
+                'user_id' => $employee->id ?? null,
                 'description' => $row[12]
             ]);
 
