@@ -11,7 +11,7 @@ class ModeratorsReportResource extends JsonResource
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
@@ -27,13 +27,14 @@ class ModeratorsReportResource extends JsonResource
             })->get();
         }
 
+        $count = Order::count();
         return [
             'id' => $this->id,
             'name' => $this->name,
             'image' => $this->getAvatar(),
             'type' => $this->type,
-            'total_orders' => (int) $orders->count(),
-            'percentage_to_all_orders' => (float) $orders->count() / Order::count(),
+            'total_orders' => (int)$orders->count(),
+            'percentage_to_all_orders' => $count > 0 ? ((float)$orders->count() / Order::count()) : 0,
             'orders_statuses' => (new StatusReportCollection(Status::all()))->additional(['orders' => $orders]),
         ];
     }
