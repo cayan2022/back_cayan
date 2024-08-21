@@ -19,12 +19,14 @@ class SourcesReportResource extends JsonResource
      */
     public function toArray($request)
     {
+        $count = Order::count();
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'short_description' => $this->short_description,
             'total_orders' =>(int) $this->orders->count(),
-            'percentage_to_all_orders'=>(float) $this->orders->count() / Order::count() ,
+            'percentage_to_all_orders' => $count > 0 ? ((float)$this->orders->count() / Order::count()) : 0,
             'orders_statuses' => (new StatusReportCollection(Status::all()))->additional(['orders'=>$this->orders]),
         ];
     }
