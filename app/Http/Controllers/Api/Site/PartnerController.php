@@ -18,6 +18,7 @@ class PartnerController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return PartnerResource::collection(Partner::whereIsActive()->filter()->latest()->paginate());
+        return PartnerResource::collection(Partner::whereIsActive()->filter()->latest()->get());
+//        return PartnerResource::collection(Partner::whereIsActive()->filter()->latest()->paginate());
     }
 }
