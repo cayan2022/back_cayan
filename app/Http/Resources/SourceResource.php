@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\SourceClicks;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SourceResource extends JsonResource
@@ -14,6 +15,11 @@ class SourceResource extends JsonResource
      */
     public function toArray($request)
     {
+        $clicks = [];
+        $sourceClicks = SourceClicks::where('source_id',$this->id)->get();
+        foreach ($sourceClicks as $key => $sourceClick) {
+            $clicks[$sourceClick->clickable_type] = $sourceClick->clicks;
+        }
         return [
             'id'=>$this->id,
             'name'=>$this->name,
@@ -21,6 +27,7 @@ class SourceResource extends JsonResource
             'is_block'=>$this->is_block,
             'identifier'=>$this->identifier,
             'url'=>$this->url,
+            'clicks' => $clicks,
             'image'=>$this->getAvatar(),
             'translations'=> $this->getTranslationsArray()
         ];

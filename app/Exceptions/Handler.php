@@ -3,8 +3,13 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Throwable;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use function PHPUnit\Framework\isFalse;
 
 class Handler extends ExceptionHandler
 {
@@ -44,5 +49,18 @@ class Handler extends ExceptionHandler
                 return response()->json(['message' => __('auth.errors.has_no_permission')], 403);
             }
         });
+
+        $this->renderable(function (Throwable $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json(['message' => __('supported.server_error')], 500);
+            }
+        });
+    }
+
+    // Helper method to check if the exception is a server error
+    protected function isServerError(Throwable $e): bool
+    {
+        return $e instanceof HttpException &&
+            $e->getStatusCode() === 500;
     }
 }
