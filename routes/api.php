@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Site\{
     TidingController,
     PortfolioCategoryController,
     PortfolioController,
+    SourceClickController
 };
 
 
@@ -59,4 +60,7 @@ Route:: as('site.')
         Route::get('portfolio-categories', PortfolioCategoryController::class)->name('portfolio-categories');
         Route::get('portfolios', PortfolioController::class)->name('portfolios');
         Route::get('seo_pages', [SeoPageController::class,'index'])->name('seo-pages');
+
+        // source clicks
+        Route::post('add_click', [SourceClickController::class,'addClick'])->name('add-click');
     });

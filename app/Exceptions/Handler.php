@@ -8,9 +8,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Throwable;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use function PHPUnit\Framework\isFalse;
-
 class Handler extends ExceptionHandler
 {
     /**
