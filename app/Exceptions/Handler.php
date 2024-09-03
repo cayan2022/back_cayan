@@ -47,11 +47,11 @@ class Handler extends ExceptionHandler
             }
         });
 
-        $this->renderable(function (Throwable $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response()->json(['message' => __('supported.server_error')], 500);
-            }
-        });
+//        $this->renderable(function (Throwable $e, Request $request) {
+//            if ($request->is('api/*')) {
+//                return response()->json(['message' => __('supported.server_error')], 500);
+//            }
+//        });
     }
 
     // Helper method to check if the exception is a server error
