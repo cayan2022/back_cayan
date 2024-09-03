@@ -27,6 +27,6 @@ class SourceClickController extends Controller
             ]
         );
 
-        return $this->success(__('auth.success_operation'));
+        return $this->success("");
     }
 }
