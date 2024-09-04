@@ -20,6 +20,7 @@ class CreateOrderHistoriesTable extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('description');
             $table->dateTime('duration')->nullable();
+            $table->boolean('get_reminder')->default(0);
             $table->timestamps();
         });
     }
