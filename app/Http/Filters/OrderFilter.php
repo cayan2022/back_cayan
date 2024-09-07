@@ -3,6 +3,9 @@
 namespace App\Http\Filters;
 
 use App\Models\OrderHistory;
+use App\Models\Translations\CategoryTranslation;
+use App\Models\Translations\SourceTranslation;
+use App\Models\Translations\StatusTranslation;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -39,7 +42,7 @@ class OrderFilter extends BaseFilters
     protected function category($value)
     {
         if ($value) {
-            $categories = \App\Models\Translations\CategoryTranslation::where('name', 'like', $value)->pluck('category_id');
+            $categories = CategoryTranslation::where('name', 'like', $value)->pluck('category_id');
             return $this->builder->whereIn('category_id', $categories);
         }
 
@@ -49,7 +52,7 @@ class OrderFilter extends BaseFilters
     protected function status($value)
     {
         if ($value) {
-            $statuses = \App\Models\Translations\StatusTranslation::where('name', 'like', $value)->pluck('status_id');
+            $statuses = StatusTranslation::where('name', 'like', $value)->pluck('status_id');
             return $this->builder->whereIn('status_id', $statuses);
         }
 
@@ -59,8 +62,8 @@ class OrderFilter extends BaseFilters
     protected function source($value)
     {
         if ($value) {
-            $souces = \App\Models\Translations\SourceTranslation::where('name', 'like', $value)->pluck('source_id');
-            return $this->builder->whereIn('source_id', $souces);
+            $source = SourceTranslation::where('name', 'like', $value)->pluck('source_id');
+            return $this->builder->whereIn('source_id', $source);
         }
 
         return $this->builder;
@@ -69,7 +72,7 @@ class OrderFilter extends BaseFilters
     protected function user($value)
     {
         if ($value) {
-            $users = \App\Models\User::where('name', 'like', '%' . $value . '%')
+            $users = User::where('name', 'like', '%' . $value . '%')
                 ->orWhere('phone', 'like', '%' . $value . '%')
                 ->orWhere('email', 'like', '%' . $value . '%')
                 ->pluck('id');
