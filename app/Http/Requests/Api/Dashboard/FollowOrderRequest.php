@@ -28,7 +28,7 @@ class FollowOrderRequest extends FormRequest
             'order_id' => 'required|integer|exists:orders,id',
             'sub_status_id' => 'required|integer|exists:sub_statuses,id',
             'description' => 'required|string',
-            'duration' => 'nullable|date_format:Y-m-d H:i:s',
+            'duration' => 'required|date_format:Y-m-d H:i:s',
         ];
     }
 }

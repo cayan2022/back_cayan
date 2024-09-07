@@ -9,7 +9,7 @@ class OrderHistory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['order_id','sub_status_id','user_id','description','duration'];
+    protected $fillable = ['order_id','sub_status_id','user_id','description','duration','get_reminder'];
 
 
     public function employee()
