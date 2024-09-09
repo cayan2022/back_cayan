@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\App;
  */
 trait Filterable
 {
-    /**
-     * Apply all relevant thread filters.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \App\Http\Filters\BaseFilters $filters
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeFilter($query, BaseFilters $filters = null)
     {
         if (! $filters) {

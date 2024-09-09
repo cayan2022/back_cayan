@@ -53,7 +53,7 @@ class StatusController extends Controller
                 'orders' => function ($query) use ($order_ids) {
                     $query->whereIn('id', $order_ids);
                 },
-            ])->get();
+            ])->filter()->get();
         } elseif (!$request->filled('start_date') && !$request->filled('end_date') && !$request->filled('employee') && $request->filled('source')) {
             $source = Source::where('identifier', $request->get('source'))->first();
             $order_ids = Order::where('source_id', $source->id)->pluck('id');
@@ -61,7 +61,8 @@ class StatusController extends Controller
                 'orders' => function ($query) use ($order_ids) {
                     $query->whereIn('id', $order_ids);
                 },
-            ])->get();
+            ])->filter()->get();
+
         } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee') && $request->filled('source')) {
             $source = Source::where('identifier', $request->get('source'))->first();
             $user = User::where('name', $request->get('employee'))->first();
@@ -70,7 +71,7 @@ class StatusController extends Controller
                 'orders' => function ($query) use ($order_ids, $source) {
                     $query->whereIn('id', $order_ids)->where('source_id', $source->id);
                 },
-            ])->get();
+            ])->filter()->get();
         } else {
             $statuses = Status::filter()->get();
         }
