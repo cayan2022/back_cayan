@@ -55,7 +55,7 @@ class StatusController extends Controller
                 },
             ])->get();
         } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('source')) {
-            $source = Source::where('name', $request->get('source'))->first();
+            $source = Source::whereTranslationLike('name', "%$request->get('source')%")->first();
             $order_ids = Order::where('source_id', $source->id)->pluck('id');
             $statuses = Status::withCount([
                 'orders' => function ($query) use ($order_ids) {
