@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\Dashboard;
 
+use App\Models\Order;
 use App\Models\OrderHistory;
+use App\Models\Source;
 use App\Models\Status;
 use App\Models\SubStatus;
 use App\Http\Controllers\Controller;
@@ -52,10 +54,17 @@ class StatusController extends Controller
                     $query->whereIn('id', $order_ids);
                 },
             ])->get();
+        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('source')) {
+            $source = Source::where('name', $request->get('source'))->first();
+            $order_ids = Order::where('source_id', $source->id)->pluck('id');
+            $statuses = Status::withCount([
+                'orders' => function ($query) use ($order_ids) {
+                    $query->whereIn('id', $order_ids);
+                },
+            ])->get();
         } else {
             $statuses = Status::filter()->get();
         }
-
         return StatusResource::collection($statuses);
     }
 
