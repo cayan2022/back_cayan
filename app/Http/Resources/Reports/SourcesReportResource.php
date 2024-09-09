@@ -34,6 +34,7 @@ class SourcesReportResource extends JsonResource
             'short_description' => $this->short_description,
             'total_orders' =>(int) $this->orders->count(),
             'clicks' => $clicks,
+            'identifier'=>$this->identifier,
             'percentage_to_all_orders' => $count > 0 ? ((float)$this->orders->count() / Order::count()) : 0,
             'orders_statuses' => (new StatusReportCollection(Status::all()))->additional(['orders'=>$this->orders]),
         ];
