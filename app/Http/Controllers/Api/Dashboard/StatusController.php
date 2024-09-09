@@ -46,7 +46,7 @@ class StatusController extends Controller
                     );
                 },
             ])->filter()->get();
-        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee')) {
+        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee') && !$request->filled('source')) {
             $user = User::where('name', $request->get('employee'))->first();
             $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
             $statuses = Status::withCount([
@@ -54,12 +54,21 @@ class StatusController extends Controller
                     $query->whereIn('id', $order_ids);
                 },
             ])->get();
-        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('source')) {
+        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && !$request->filled('employee') && $request->filled('source')) {
             $source = Source::where('identifier', $request->get('source'))->first();
             $order_ids = Order::where('source_id', $source->id)->pluck('id');
             $statuses = Status::withCount([
                 'orders' => function ($query) use ($order_ids) {
                     $query->whereIn('id', $order_ids);
+                },
+            ])->get();
+        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee') && $request->filled('source')) {
+            $source = Source::where('identifier', $request->get('source'))->first();
+            $user = User::where('name', $request->get('employee'))->first();
+            $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
+            $statuses = Status::withCount([
+                'orders' => function ($query) use ($order_ids, $source) {
+                    $query->whereIn('id', $order_ids)->where('source_id', $source->id);
                 },
             ])->get();
         } else {
