@@ -20,10 +20,11 @@ class WhatsappService
                 'json' => [
                     'session_uuid' => '9d01c371-4fa1-47d5-850c-ee543817edda',
                     'chat_id' => $to,
+                    'schedule_at' => '2022-08-01 00:00:00',
                     'type' => 'TEXT',
                     'urgency' => '2',
                     'message' => $message,
-                    'image' => 'https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png',
+//                    'image' => 'https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png',
                 ],
             ]
         );
