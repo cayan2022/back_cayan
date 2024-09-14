@@ -26,7 +26,7 @@ class WhatsappService
                     'type' => 'TEXT',
                     'urgency' => '2',
                     'message' => $message,
-                    'image' => 'https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png',
+//                    'image' => 'https://static.facebook.com/images/whatsapp/www/whatsapp-promo.png',
                 ],
             ]
         );
