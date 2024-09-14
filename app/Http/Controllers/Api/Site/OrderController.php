@@ -8,6 +8,7 @@ use App\Http\Resources\OrderResource;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\User;
+use App\Services\WhatsappService;
 
 class OrderController extends Controller
 {
@@ -42,6 +43,10 @@ class OrderController extends Controller
                 'status_id' => Order::NEW
             ]
         );
+
+        // TODO: Send Whatsapp Message to this user
+        $message = 'Thank you for your order. Your order number is #'.$order->id;
+        WhatsappService::sendMessage($createOrderRequest->phone,$message);
 
         return new OrderResource($order);
     }
