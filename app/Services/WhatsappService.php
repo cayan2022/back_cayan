@@ -22,7 +22,7 @@ class WhatsappService
                 'json' => [
                     'session_uuid' => '9d01c371-4fa1-47d5-850c-ee543817edda',
                     'chat_id' => $to,
-                    'schedule_at' => Carbon::now(),
+                    'schedule_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'type' => 'TEXT',
                     'urgency' => '2',
                     'message' => $message,
@@ -31,6 +31,6 @@ class WhatsappService
             ]
         );
         $body = $response->getBody();
-        dump(json_decode((string)$body));
+        print_r(json_decode((string)$body));
     }
 }
