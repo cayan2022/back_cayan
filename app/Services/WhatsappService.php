@@ -4,7 +4,7 @@ namespace App\Services;
 
 class WhatsappService
 {
-    public function sendMessage($to, $message)
+    public static function sendMessage($to, $message)
     {
         $client = new \GuzzleHttp\Client();
         $url = 'https://cloudwa.net/api/v2/messages/send-message';
