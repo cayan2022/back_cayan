@@ -45,7 +45,7 @@ class OrderController extends Controller
         );
 
         $message = 'مرحبا بكم في شركة كيان للتسويق الإلكتروني والحلول البرمجية
-تم تسجيل طلبكم بنجاح باسم ' . $createOrderRequest->name . ' وهي بخصوص خدمة ' . $createOrderRequest->category->name . ' سيتم التواصل معكم من فريقنا التقني';
+تم تسجيل طلبكم بنجاح باسم ' . $createOrderRequest?->name . ' وهي بخصوص خدمة ' . $createOrderRequest->category?->name . ' سيتم التواصل معكم من فريقنا التقني';
         WhatsappService::sendMessage($createOrderRequest->phone, $message);
         return new OrderResource($order);
     }
