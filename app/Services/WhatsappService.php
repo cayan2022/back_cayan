@@ -14,10 +14,10 @@ class WhatsappService
             $url,
             [
                 'headers' => [
-                    'Authorization' => 'Bearer 579584|x13XSXogBfBgKv1YR8dcTB1ttQd2aK2jhpSftX0a4a52b3d2',
+                    'Authorization' => 'Bearer ' . env('WHATSAPP_API_KEY'),
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Accept-Language' => 'en',
+                    'Accept-Language' => 'ar',
                 ],
                 'json' => [
                     'session_uuid' => '9d01c371-4fa1-47d5-850c-ee543817edda',

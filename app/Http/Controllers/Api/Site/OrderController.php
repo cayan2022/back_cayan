@@ -15,7 +15,7 @@ class OrderController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  CreateOrderRequest  $createOrderRequest
+     * @param CreateOrderRequest $createOrderRequest
      * @return OrderResource
      */
     public function __invoke(CreateOrderRequest $createOrderRequest): OrderResource
@@ -45,9 +45,13 @@ class OrderController extends Controller
         );
 
         // TODO: Send Whatsapp Message to this user
-        $message = 'Thank you for your order. Your order number is #'.$order->id;
-        WhatsappService::sendMessage($createOrderRequest->phone,$message);
-
+        try {
+            $message = 'مرحبا بكم في شركة كيان للتسويق الإلكتروني والحلول البرمجية
+تم تسجيل طلبكم بنجاح باسم ' . $createOrderRequest->name . ' وهي بخصوص خدمة ' . $createOrderRequest->category->name . ' سيتم التواصل معكم من فريقنا التقني';
+            WhatsappService::sendMessage($createOrderRequest->phone, $message);
+        } catch (\Exception $e) {
+            // TODO: Handle exception
+        }
         return new OrderResource($order);
     }
 }
