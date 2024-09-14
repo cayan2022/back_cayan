@@ -14,7 +14,7 @@ class WhatsappService
             $url,
             [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . env('WHATSAPP_API_KEY'),
+                    'Authorization' => 'Bearer 579584|x13XSXogBfBgKv1YR8dcTB1ttQd2aK2jhpSftX0a4a52b3d2',
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                     'Accept-Language' => 'ar',
