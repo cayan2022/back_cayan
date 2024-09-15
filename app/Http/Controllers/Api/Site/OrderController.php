@@ -50,9 +50,22 @@ class OrderController extends Controller
             ]
         );
 
+        // send whatsapp message to the clint
         $message = 'مرحبا بكم في شركة كيان للتسويق الإلكتروني والحلول البرمجية
 تم تسجيل طلبكم بنجاح باسم ' . $createOrderRequest?->name . ' وهي بخصوص خدمة ' . $order->category?->name . ' سيتم التواصل معكم من فريقنا التقني';
         WhatsappService::sendMessage($phone, $message);
+
+        //send whatsapp message to admin
+        $admin_phones = ['966567275203', '966554441038', '96653792794'];
+        $admin_message = 'جاء طلب جديد في لوحة التحكم
+يرجي متابعة العميل ' . $createOrderRequest?->name . ' يستفسر بخصوص خدمة ' . $order->category?->name . ' مرسل الطلب برقم جوال ' . $phone . '
+يمكنك متابعة الطلب عن طريق هذا الرابط ' . env("APP_DASH") . 'order/' . $order->id . '/request \n
+نشكركم علي مجهودكم';
+
+        foreach ($admin_phones as $admin_phone) {
+            WhatsappService::sendMessage($admin_phone, $admin_message);
+        }
+
         return new OrderResource($order);
     }
 }
