@@ -59,7 +59,7 @@ class OrderController extends Controller
         $admin_phones = ['966567275203', '966554441038', '96653792794','201010529966','201007425819'];
         $admin_message = 'جاء طلب جديد في لوحة التحكم
 يرجي متابعة العميل ' . $createOrderRequest?->name . ' يستفسر بخصوص خدمة ' . $order->category?->name . ' مرسل الطلب برقم جوال ' . $phone . '
-يمكنك متابعة الطلب عن طريق هذا الرابط ' . env("APP_DASH") . 'order/' . $order->id . '/request \n
+يمكنك متابعة الطلب عن طريق هذا الرابط ' . env("APP_DASH") . 'orders/' . $order->id . '/request
 نشكركم علي مجهودكم';
 
         foreach ($admin_phones as $admin_phone) {
