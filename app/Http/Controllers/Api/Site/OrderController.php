@@ -20,13 +20,17 @@ class OrderController extends Controller
      */
     public function __invoke(CreateOrderRequest $createOrderRequest): OrderResource
     {
+        $phone = $createOrderRequest->phone;
+        if (preg_match("~^0\d+$~", $createOrderRequest->phone)) {
+            $phone = '966' . substr($createOrderRequest->phone, 1);
+        }
         $user = User::query()->withoutTrashed()
-            ->where(['phone' => $createOrderRequest->phone, 'email' => $createOrderRequest->email])
-            ->orWhere('phone', $createOrderRequest->phone)
+            ->where(['phone' => $phone, 'email' => $createOrderRequest->email])
+            ->orWhere('phone', $phone)
             ->orWhere('email', $createOrderRequest->email)
-            ->firstOr(function () use ($createOrderRequest) {
+            ->firstOr(function () use ($createOrderRequest, $phone) {
                 return User::create([
-                    'phone' => $createOrderRequest->phone,
+                    'phone' => $phone,
                     'email' => $createOrderRequest->email,
                     'country_id' => Country::first()->id,
                     'name' => $createOrderRequest->name,
@@ -34,7 +38,7 @@ class OrderController extends Controller
                 ]);
             });
 
-        $user->update(['phone' => $createOrderRequest->phone, 'email' => $createOrderRequest->email]);
+        $user->update(['phone' => $phone, 'email' => $createOrderRequest->email]);
 
         $order = Order::create(
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
@@ -46,7 +50,7 @@ class OrderController extends Controller
 
         $message = 'مرحبا بكم في شركة كيان للتسويق الإلكتروني والحلول البرمجية
 تم تسجيل طلبكم بنجاح باسم ' . $createOrderRequest?->name . ' وهي بخصوص خدمة ' . $order->category?->name . ' سيتم التواصل معكم من فريقنا التقني';
-        WhatsappService::sendMessage($createOrderRequest->phone, $message);
+        WhatsappService::sendMessage($phone, $message);
         return new OrderResource($order);
     }
 }
