@@ -23,6 +23,8 @@ class OrderController extends Controller
         $phone = $createOrderRequest->phone;
         if (preg_match("~^0\d+$~", $createOrderRequest->phone)) {
             $phone = '966' . substr($createOrderRequest->phone, 1);
+        } elseif (preg_match("~^5\d+$~", $createOrderRequest->phone)) {
+            $phone = '966' . $createOrderRequest->phone;
         }
         $user = User::query()->withoutTrashed()
             ->where(['phone' => $phone, 'email' => $createOrderRequest->email])
