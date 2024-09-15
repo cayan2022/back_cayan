@@ -56,10 +56,11 @@ class OrderController extends Controller
         WhatsappService::sendMessage($phone, $message);
 
         //send whatsapp message to admin
-        $admin_phones = ['966567275203', '966554441038', '96653792794', '201010529966', '201007425819'];
+//        $admin_phones = ['966567275203', '966554441038', '96653792794', '201010529966', '201007425819'];
+        $admin_phones = [ '201010529966', '201007425819'];
         $admin_message = 'جاء طلب جديد في لوحة التحكم
 يرجي متابعة العميل ' . $createOrderRequest?->name . ' يستفسر بخصوص خدمة ' . $order->category?->name . ' مرسل الطلب برقم جوال ' . $phone . '
-يمكنك متابعة الطلب عن طريق هذا الرابط ' . env("APP_DASH") . 'orders/' . $order->id . '/request
+يمكنك متابعة الطلب عن طريق هذا الرابط ' . 'https://dash.cayan.co/orders/' . $order->id . '/request
 نشكركم علي مجهودكم';
 
         foreach ($admin_phones as $admin_phone) {
