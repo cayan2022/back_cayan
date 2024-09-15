@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Dashboard\{
     DoctorController,
     SourceController,
     BranchController,
+    CampaignController,
     StatusController,
     TidingController,
     CountryController,
@@ -161,6 +162,14 @@ Route:: as('dashboard.')
                     Route::post('branches/{branch}', [BranchController::class, 'update'])->name('branches.update')->middleware('can:update branches');
                     Route::apiResource('branches', BranchController::class)->except('update')->middleware('check_permissions');
                 });
+
+                /*Campaigns*/
+                Route::group([], function () {
+                    Route::apiResource('campaigns', CampaignController::class)->except('update')->middleware('check_permissions');
+                    Route::post('campaigns/{campaign}', [CampaignController::class, 'update'])->name('campaigns.update')->middleware('can:update campaigns');
+                    Route::post('campaigns/send/{campaign}', [CampaignController::class, 'send'])->name('campaigns.send')->middleware('can:send campaigns');
+                });
+
                 /*Seo Page*/
                 Route::group([], function () {
                     Route::post('seoPages/{seo_page}', [SeoPageController::class, 'update'])->name('seoPages.update')->middleware('can:update seoPages');
