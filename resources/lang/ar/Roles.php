@@ -41,8 +41,9 @@ return [
     'doctors' => 'الدكاترة',
     'testimonials' => 'الشهادات',
     'offers' => 'العروض',
-    'about' => 'عنا',
+    'abouts' => 'عنا',
     'services' => 'الخدمات',
     'partners' => 'الشركاء',
     'customers' => 'العملاء',
+    'profiles' => 'الملف الشخصي',
 ];

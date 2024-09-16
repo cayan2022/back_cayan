@@ -41,8 +41,9 @@ return [
     'doctors' => 'Doctors',
     'testimonials' => 'Testimonials',
     'offers' => 'Offers',
-    'about' => 'About Us',
+    'abouts' => 'About Us',
     'services' => 'Services',
     'partners' => 'Partners',
     'customers' => 'Customers',
+    'profile' => 'Profile',
 ];
