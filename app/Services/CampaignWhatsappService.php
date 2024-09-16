@@ -37,6 +37,6 @@ class CampaignWhatsappService
             ]
         );
         $body = $response->getBody();
-        print_r(json_decode((string)$body));
+//        print_r(json_decode((string)$body));
     }
 }
