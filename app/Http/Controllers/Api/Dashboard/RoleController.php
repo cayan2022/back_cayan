@@ -56,11 +56,11 @@ class RoleController extends Controller
     }
 
     /**
-     * @param  \App\Http\Requests\Api\Dashboard\UpdateRoleRequest  $request
+     * @param UpdateRoleRequest $request
      * @param  Role  $role
      * @return Application|ResponseFactory|Response
      */
-    public function update(\App\Http\Requests\Api\Dashboard\UpdateRoleRequest $request,Role $role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
         $request->user()->can('update roles');
 
