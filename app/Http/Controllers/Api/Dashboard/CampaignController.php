@@ -72,7 +72,7 @@ class CampaignController extends Controller
     public function send(Campaign $campaign)
     {
         $message = 'Cayan';
-        CampaignWhatsappService::sendCampaign($campaign->name, $campaign->description, $message, $campaign->getAvatar(), $campaign->users->pluck('phone')->toArray());
+        CampaignWhatsappService::sendCampaign($campaign->name, $campaign->description, $message,$campaign->starting_time, $campaign->ending_time, $campaign->getAvatar(), $campaign->users->pluck('phone')->toArray());
         return $this->success(__('auth.success_operation'));
     }
 }

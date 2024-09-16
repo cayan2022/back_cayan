@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 class CampaignWhatsappService
 {
-    public static function sendCampaign($campaign_name, $campaign_desc, $message, $image = null, $to = [])
+    public static function sendCampaign($campaign_name, $campaign_desc, $message, $start, $end, $image = null, $to = [])
     {
         $client = new \GuzzleHttp\Client();
         $url = 'https://cloudwa.net/api/v2/campaigns/create';
@@ -14,7 +14,7 @@ class CampaignWhatsappService
             $url,
             [
                 'headers' => [
-                    'Authorization' => 'Bearer {YOUR_AUTH_KEY}',
+                    'Authorization' => 'Bearer 579584|x13XSXogBfBgKv1YR8dcTB1ttQd2aK2jhpSftX0a4a52b3d2',
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                     'Accept-Language' => 'ar',
@@ -25,8 +25,8 @@ class CampaignWhatsappService
                     'session_uuid' => '9d01c371-4fa1-47d5-850c-ee543817edda',
                     'phones' => $to,
                     'type' => 'IMAGE',
-                    'starting_time' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'ending_time' => Carbon::now()->addDay()->format('Y-m-d H:i:s'),
+                    'starting_time' => $start,
+                    'ending_time' => $end,
                     'typing_duration' => 13,
                     'daily_limit' => 7,
                     'message_interval' => 'qui',
