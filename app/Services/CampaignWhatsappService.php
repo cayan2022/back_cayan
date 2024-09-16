@@ -21,7 +21,7 @@ class CampaignWhatsappService
                 ],
                 'json' => [
                     'name' => $campaign_name,
-                    'description' => $campaign_desc,
+                    'description' => strip_tags($campaign_desc),
                     'session_uuid' => '9d01c371-4fa1-47d5-850c-ee543817edda',
                     'phones' => $to,
                     'type' => 'IMAGE',
