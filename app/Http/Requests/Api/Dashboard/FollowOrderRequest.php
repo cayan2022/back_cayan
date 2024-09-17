@@ -26,23 +26,22 @@ class FollowOrderRequest extends FormRequest
      */
     public function rules()
     {
+        // Fetch the 'Following' status and related sub-status IDs
         $follow = Status::whereTranslationLike('name', '%Following%')->first();
-        $follow_sub_status = SubStatus::whereHas('status', function ($query) use ($follow) {
-            $query->where('id', $follow->id);
-        })->get()->pluck('id');
+        $follow_sub_status = $follow
+            ? SubStatus::where('status_id', $follow->id)->pluck('id')->toArray()
+            : [];
 
-
-        if (request()->has('sub_status_id') && !in_array(request()->sub_status_id, $follow_sub_status->toArray())) {
-            $duration = 'nullable|date_format:Y-m-d H:i:s';
-        } else {
-            $duration = 'required|date_format:Y-m-d H:i:s';
-        }
+        // Set the duration rule dynamically based on sub_status_id
+        $duration_rule = request()->has('sub_status_id') && !in_array(request()->sub_status_id, $follow_sub_status)
+            ? 'nullable|date_format:Y-m-d H:i:s'
+            : 'required|date_format:Y-m-d H:i:s';
 
         return [
             'order_id' => 'required|integer|exists:orders,id',
             'sub_status_id' => 'required|integer|exists:sub_statuses,id',
             'description' => 'required|string',
-            'duration' => $duration,
+            'duration' => $duration_rule,
         ];
     }
 }
