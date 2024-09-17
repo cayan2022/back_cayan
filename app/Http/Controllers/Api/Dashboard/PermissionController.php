@@ -19,6 +19,8 @@ class PermissionController extends Controller
     {
         $permissions_types = Permission::all(['id', 'name', 'type'])->groupBy('type');
         foreach ($permissions_types as &$type) {
+            dd($type,$permissions_types['type']);
+
             $type[$permissions_types['type']]['type'] = __('Roles.' . $type->type);
         }
 
