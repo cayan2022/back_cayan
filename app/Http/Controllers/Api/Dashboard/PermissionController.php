@@ -17,10 +17,17 @@ class PermissionController extends Controller
 
     public function types()
     {
+        $types = [];
         $permissions_types = Permission::all(['id','name','type'])->groupBy('type');
 
-        dd($permissions_types);
-
+        foreach ($permissions_types as $permissions_type) {
+            dd($permissions_type);
+            $types[] = [
+                'id' => $permissions_type->id,
+                'type' => $permissions_type->type,
+                'permissions' => $permissions_type
+            ];
+        }
         return response()->json(['data' => $permissions_types]);
     }
 
