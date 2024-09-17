@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Api\Dashboard;
 
+use App\Models\Status;
+use App\Models\SubStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +26,12 @@ class FollowOrderRequest extends FormRequest
      */
     public function rules()
     {
+        $follow_sub_status = SubStatus::whereHas('status', function ($query) use ($follow) {
+            $query->where('name', 'Following');
+        })->get()->pluck('id');
+
+        dd($follow_sub_status);
+
         return [
             'order_id' => 'required|integer|exists:orders,id',
             'sub_status_id' => 'required|integer|exists:sub_statuses,id',
