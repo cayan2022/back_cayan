@@ -28,7 +28,7 @@ class FollowOrderRequest extends FormRequest
     {
         $follow = Status::whereTranslationLike('name','%Following%')->first();
         $follow_sub_status = SubStatus::whereHas('status', function ($query) use ($follow) {
-            $follow->where('name', 'Following');
+            $query->where('id', $follow->id);
         })->get()->pluck('id');
 
         dd($follow_sub_status);
