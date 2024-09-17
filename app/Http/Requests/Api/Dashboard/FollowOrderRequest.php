@@ -26,12 +26,12 @@ class FollowOrderRequest extends FormRequest
      */
     public function rules()
     {
+        $follow = Status::where('name','Following')->first();
         $follow_sub_status = SubStatus::whereHas('status', function ($query) use ($follow) {
-            $query->where('name', 'Following');
+            $follow->where('name', 'Following');
         })->get()->pluck('id');
 
         dd($follow_sub_status);
-
         return [
             'order_id' => 'required|integer|exists:orders,id',
             'sub_status_id' => 'required|integer|exists:sub_statuses,id',
