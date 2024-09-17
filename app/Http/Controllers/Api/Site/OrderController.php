@@ -40,7 +40,7 @@ class OrderController extends Controller
                 ]);
             });
 
-        $user->update(['phone' => $phone, 'email' => $createOrderRequest->email]);
+//        $user->update(['phone' => $phone, 'email' => $createOrderRequest->email]);
 
         $order = Order::create(
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
