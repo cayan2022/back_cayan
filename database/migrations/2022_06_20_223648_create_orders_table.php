@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('status_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('branch_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 
+            $table->string('type')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
