@@ -12,13 +12,7 @@ class Order extends Model
 {
     use HasFactory , Filterable, SoftDeletes;
 
-    protected $fillable = [
-        'user_id',
-        'category_id',
-        'source_id',
-        'status_id',
-        'branch_id'
-    ];
+    protected $guarded = [];
 
     protected $appends = ['last_employee','employee_avatar'];
 
