@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Helpers\Traits\RespondsWithHttpStatus;
+use App\Http\Resources\SaasOrderResource;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     use RespondsWithHttpStatus;
+
     /**
      * Display a listing of the resource.
      *
@@ -23,17 +25,29 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         if ($request->status == 'متابعة') {
-            $orders = Order::filter()->orderBy(OrderHistory::select('order_histories.duration')->whereColumn('order_histories.order_id', 'orders.id')->latest()->take(1), 'asc')->paginate();
+            $orders = Order::filter()->orderBy(OrderHistory::select('order_histories.duration')
+                ->whereColumn('order_histories.order_id', 'orders.id')
+                ->where('type', 1)
+                ->latest()->take(1), 'asc')->paginate();
         } else {
-            $orders = Order::filter()->latest()->paginate();
+            $orders = Order::filter()
+                ->where('type', 1)->latest()->paginate();
         }
 
         return OrderResource::collection($orders);
     }
+
+
+    public function getSaasOrders(Request $request)
+    {
+        $orders = Order::filter()->where('type', 2)->latest()->paginate();
+        return SaasOrderResource::collection($orders);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return OrderResource
      */
     public function store(StoreOrderRequest $request)
@@ -46,7 +60,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  Order  $order
+     * @param Order $order
      * @return OrderResource
      */
     public function show(Order $order)
@@ -57,7 +71,7 @@ class OrderController extends Controller
     public function follow(FollowOrderRequest $request)
     {
         return new OrderHistoryResource(
-            //it will observe order to update its status to the current status -> when order history created
+        //it will observe order to update its status to the current status -> when order history created
             OrderHistory::create(
                 $request->validated() + ['user_id' => auth()->user()->id]
             )
