@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\WhatsappService;
+use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
@@ -41,7 +42,7 @@ class OrderController extends Controller
             });
 
 //        $user->update(['phone' => $phone, 'email' => $createOrderRequest->email]);
-
+        Http::post('https://api-misare.cayan.llc/api/site/order',$createOrderRequest->all());
         $order = Order::create(
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
             [
