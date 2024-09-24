@@ -41,6 +41,7 @@ class OrderController extends Controller
                     'company_name' => $createOrderRequest->company_name ?? null,
                     'company_spec' => $createOrderRequest->company_spec ?? null,
                     'domain' => $createOrderRequest->domain ?? null,
+                    'password' => bcrypt($createOrderRequest->password),
                 ]);
             });
         if ($createOrderRequest->type == 2) {

@@ -36,6 +36,7 @@ class CreateOrderRequest extends FormRequest
             'company_name' => 'nullable|string|max:255',
             'company_spec' => 'nullable|string|max:255',
             'domain' => 'nullable|string|max:255',
+            'password' => 'nullable|min:3'
         ];
     }
 }
