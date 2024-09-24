@@ -43,7 +43,7 @@ class OrderController extends Controller
 
 //        $user->update(['phone' => $phone, 'email' => $createOrderRequest->email]);
 
-        dd(Http::post('https://api-misare.cayan.llc/api/site/order',$createOrderRequest->all()));
+        Http::post('https://api-misare.cayan.llc/api/site/order',$createOrderRequest->all());
         $order = Order::create(
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
             [
