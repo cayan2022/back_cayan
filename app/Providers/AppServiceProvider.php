@@ -55,10 +55,10 @@ class AppServiceProvider extends ServiceProvider
                     ];
 
                     // Dispatch the email (you can also use a job here)
-                    if ($order->histories->last()->get_reminder == 0) {
-                        \Mail::to($details['email'])->send(new ReminderEmail($details));
-                        $order->histories->last()->update(['get_reminder' => 1]);
-                    }
+//                    if ($order->histories->last()->get_reminder == 0) {
+//                        \Mail::to($details['email'])->send(new ReminderEmail($details));
+//                        $order->histories->last()->update(['get_reminder' => 1]);
+//                    }
                 }
             }
 

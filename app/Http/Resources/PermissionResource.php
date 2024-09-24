@@ -6,18 +6,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PermissionResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
     public function toArray($request)
     {
+        $name = explode(' ', trim($this->name));
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'type'=>$this->type
+            'id' => $this->id,
+            'name' => __('Roles.' . $name[0]),
+            'type' => __('Roles.' . $this->type)
         ];
     }
 }

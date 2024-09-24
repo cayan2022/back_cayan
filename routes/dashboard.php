@@ -167,7 +167,7 @@ Route:: as('dashboard.')
                 Route::group([], function () {
                     Route::apiResource('campaigns', CampaignController::class)->except('update')->middleware('check_permissions');
                     Route::post('campaigns/{campaign}', [CampaignController::class, 'update'])->name('campaigns.update')->middleware('can:update campaigns');
-                    Route::post('campaigns/send/{campaign}', [CampaignController::class, 'send'])->name('campaigns.send')->middleware('can:send campaigns');
+                    Route::get('campaigns/send/{campaign}', [CampaignController::class, 'send'])->name('campaigns.send')->middleware('can:send campaigns');
                 });
 
                 /*Seo Page*/
