@@ -33,6 +33,9 @@ class CreateOrderRequest extends FormRequest
             'phone'=>['required',Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
             'email'=>['required', 'email:rfc,dns'],
             'type' => 'required|in:1,2',
+            'company_name' => 'nullable|string|max:255',
+            'company_spec' => 'nullable|string|max:255',
+            'domain' => 'nullable|string|max:255',
         ];
     }
 }

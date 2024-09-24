@@ -37,12 +37,12 @@ class OrderController extends Controller
                     'email' => $createOrderRequest->email,
                     'country_id' => Country::first()->id,
                     'name' => $createOrderRequest->name,
-                    'type' => User::PATIENT
+                    'type' => User::PATIENT,
+                    'company_name' => $createOrderRequest->company_name ?? null,
+                    'company_spec' => $createOrderRequest->company_spec ?? null,
+                    'domain' => $createOrderRequest->domain ?? null,
                 ]);
             });
-
-//        $user->update(['phone' => $phone, 'email' => $createOrderRequest->email]);
-
         if ($createOrderRequest->type == 2) {
             Http::post('https://api-misare.cayan.llc/api/site/order', $createOrderRequest->all());
         }
@@ -50,7 +50,8 @@ class OrderController extends Controller
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
             [
                 'user_id' => $user->id,
-                'status_id' => Order::NEW
+                'status_id' => Order::NEW,
+                'type' => $createOrderRequest->type ?? 1
             ]
         );
 
