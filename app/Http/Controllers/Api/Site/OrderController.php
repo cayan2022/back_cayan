@@ -44,9 +44,6 @@ class OrderController extends Controller
                     'password' => bcrypt($createOrderRequest->password),
                 ]);
             });
-        if ($createOrderRequest->type == 2) {
-            Http::post('https://api-misare.cayan.llc/api/site/order', $createOrderRequest->all());
-        }
         $order = Order::create(
             $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
             [
@@ -72,6 +69,12 @@ class OrderController extends Controller
             foreach ($admin_phones as $admin_phone) {
                 WhatsappService::sendMessage($admin_phone, $admin_message);
             }
+        }
+
+
+        // create tenant
+        if ($createOrderRequest->type == 2) {
+            Http::post('https://api-misare.cayan.llc/api/site/create-tenant', $createOrderRequest->all());
         }
 
         return new OrderResource($order);
