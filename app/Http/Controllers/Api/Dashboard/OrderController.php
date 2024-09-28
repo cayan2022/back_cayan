@@ -30,8 +30,8 @@ class OrderController extends Controller
 //                ->where('type', 1)
                 ->latest()->take(1), 'asc')->paginate();
         } else {
-            $orders = Order::filter()
-                ->where('type', 1)->latest()->paginate();
+            $orders = Order::filter()->latest()->paginate();
+//                ->where('type', 1)->latest()->paginate();
         }
 
         return OrderResource::collection($orders);
