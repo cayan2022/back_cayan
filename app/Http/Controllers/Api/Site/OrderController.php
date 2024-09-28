@@ -40,7 +40,7 @@ class OrderController extends Controller
                     'type' => User::PATIENT,
                     'company_name' => $createOrderRequest->company_name ?? null,
                     'company_spec' => $createOrderRequest->company_spec ?? null,
-                    'tenant_id' => $createOrderRequest->domain ?? null,
+                    'domain' => $createOrderRequest->domain ?? null,
                     'password' => bcrypt($createOrderRequest->password),
                 ]);
             });
