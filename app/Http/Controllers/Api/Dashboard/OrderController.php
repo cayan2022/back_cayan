@@ -27,7 +27,7 @@ class OrderController extends Controller
         if ($request->status == 'متابعة') {
             $orders = Order::filter()->orderBy(OrderHistory::select('order_histories.duration')
                 ->whereColumn('order_histories.order_id', 'orders.id')
-                ->where('type', 1)
+//                ->where('type', 1)
                 ->latest()->take(1), 'asc')->paginate();
         } else {
             $orders = Order::filter()
