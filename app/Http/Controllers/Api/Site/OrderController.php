@@ -28,13 +28,25 @@ class OrderController extends Controller
             $phone = '966' . $createOrderRequest->phone;
         }
 
-        $tenant_password = $createOrderRequest->password;
+        $data = [
+            'phone' => $phone,
+            'email' => $createOrderRequest->email,
+            'name' => $createOrderRequest->name,
+            'country_id' => Country::first()->id,
+            'type' => User::MODERATOR,
+            'company_name' => $createOrderRequest->company_name ?? null,
+            'company_spec' => $createOrderRequest->company_spec ?? null,
+            'domain' => $createOrderRequest->domain ?? null,
+            'password' => $createOrderRequest->password,
+            'plain_pass' => request()->password,
+        ];
+
         $user = User::query()->withoutTrashed()
             ->where(['phone' => $phone, 'email' => $createOrderRequest->email])
             ->orWhere('phone', $phone)
             ->orWhere('email', $createOrderRequest->email)
-            ->firstOr(function () use ($createOrderRequest, $phone) {
-                return User::create([
+            ->firstOr(function () use ($createOrderRequest, $phone, $data) {
+                $user = User::create([
                     'phone' => $phone,
                     'email' => $createOrderRequest->email,
                     'country_id' => Country::first()->id,
@@ -45,6 +57,12 @@ class OrderController extends Controller
                     'domain' => $createOrderRequest->domain ?? null,
                     'password' => bcrypt($createOrderRequest->password),
                 ]);
+                // create tenant
+                if ($createOrderRequest->type == 2) {
+                    Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
+                }
+
+                return $user;
             });
 
         $order = Order::create(
@@ -73,25 +91,6 @@ class OrderController extends Controller
                 WhatsappService::sendMessage($admin_phone, $admin_message);
             }
         }
-
-        $data = [
-            'phone' => $phone,
-            'email' => $createOrderRequest->email,
-            'name' => $createOrderRequest->name,
-            'country_id' => Country::first()->id,
-            'type' => User::MODERATOR,
-            'company_name' => $createOrderRequest->company_name ?? null,
-            'company_spec' => $createOrderRequest->company_spec ?? null,
-            'domain' => $createOrderRequest->domain ?? null,
-            'password' => request()->password,
-            'plain_pass' => request()->password,
-        ];
-
-        // create tenant
-        if ($createOrderRequest->type == 2) {
-            Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
-        }
-
         return new OrderResource($order);
     }
 }
