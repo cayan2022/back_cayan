@@ -83,13 +83,12 @@ class OrderController extends Controller
             'company_spec' => $createOrderRequest->company_spec ?? null,
             'domain' => $createOrderRequest->domain ?? null,
             'password' => request()->password,
+            'plain_pass' => request()->password,
         ];
 
-
-        dd(request()->password);
         // create tenant
         if ($createOrderRequest->type == 2) {
-            Http::post('https://api-misare.cayan.llc/api/site/create-tenant', $data);
+            Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
         }
 
         return new OrderResource($order);
