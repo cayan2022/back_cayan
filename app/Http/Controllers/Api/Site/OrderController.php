@@ -46,14 +46,14 @@ class OrderController extends Controller
                     'password' => bcrypt($createOrderRequest->password),
                 ]);
             });
-        $order = Order::create(
-            $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
-            [
-                'user_id' => $user->id,
-                'status_id' => Order::NEW,
-                'type' => $createOrderRequest->type ?? 1
-            ]
-        );
+//        $order = Order::create(
+//            $createOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
+//            [
+//                'user_id' => $user->id,
+//                'status_id' => Order::NEW,
+//                'type' => $createOrderRequest->type ?? 1
+//            ]
+//        );
 
         if ($createOrderRequest->type == 1) {
             // send whatsapp message to the clint
@@ -84,6 +84,9 @@ class OrderController extends Controller
             'domain' => $createOrderRequest->domain ?? null,
             'password' => request()->password,
         ];
+
+
+        dd(request()->password);
         // create tenant
         if ($createOrderRequest->type == 2) {
             Http::post('https://api-misare.cayan.llc/api/site/create-tenant', $data);
