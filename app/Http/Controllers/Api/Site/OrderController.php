@@ -27,6 +27,8 @@ class OrderController extends Controller
         } elseif (preg_match("~^5\d+$~", $createOrderRequest->phone)) {
             $phone = '966' . $createOrderRequest->phone;
         }
+
+        $tenant_password = $createOrderRequest->password;
         $user = User::query()->withoutTrashed()
             ->where(['phone' => $phone, 'email' => $createOrderRequest->email])
             ->orWhere('phone', $phone)
@@ -71,10 +73,20 @@ class OrderController extends Controller
             }
         }
 
-
+        $data = [
+            'phone' => $phone,
+            'email' => $createOrderRequest->email,
+            'name' => $createOrderRequest->name,
+            'country_id' => Country::first()->id,
+            'type' => User::MODERATOR,
+            'company_name' => $createOrderRequest->company_name ?? null,
+            'company_spec' => $createOrderRequest->company_spec ?? null,
+            'domain' => $createOrderRequest->domain ?? null,
+            'password' => request()->password,
+        ];
         // create tenant
         if ($createOrderRequest->type == 2) {
-            Http::post('https://api-misare.cayan.llc/api/site/create-tenant', $createOrderRequest->all());
+            Http::post('https://api-misare.cayan.llc/api/site/create-tenant', $data);
         }
 
         return new OrderResource($order);
