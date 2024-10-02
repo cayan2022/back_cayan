@@ -52,13 +52,18 @@ class OrderController extends Controller
                     'country_id' => Country::first()->id,
                     'name' => $createOrderRequest->name,
                     'type' => User::PATIENT,
-                    'company_name' => $createOrderRequest->company_name ?? null,
-                    'company_spec' => $createOrderRequest->company_spec ?? null,
-                    'domain' => $createOrderRequest->domain ?? null,
                     'password' => bcrypt($createOrderRequest->password),
                 ]);
                 // create tenant
                 if ($createOrderRequest->type == 2) {
+
+                    $user->tenant()->create([
+                        'company_name' => $createOrderRequest->company_name ?? null,
+                        'company_spec' => $createOrderRequest->company_spec ?? null,
+                        'domain' => $createOrderRequest->domain ?? null,
+                        'expired_at' => now()->addDays(7),
+                        'is_paid' => 0,
+                    ]);
                     Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
                 }
 

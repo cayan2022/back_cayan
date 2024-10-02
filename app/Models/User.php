@@ -161,4 +161,10 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsToMany(Order::class,'order_histories','user_id','order_id');
     }
+
+
+    public function tenant()
+    {
+        return $this->hasOne(UserTenant::class);
+    }
 }
