@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\WhatsappService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
@@ -61,7 +62,7 @@ class OrderController extends Controller
                         'company_name' => $createOrderRequest->company_name ?? null,
                         'company_spec' => $createOrderRequest->company_spec ?? null,
                         'domain' => $createOrderRequest->domain ?? null,
-                        'expired_at' => now()->addDays(7),
+                        'expired_at' => Carbon::now()->addDays(7),
                         'is_paid' => 0,
                     ]);
                     Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
