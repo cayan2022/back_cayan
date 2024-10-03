@@ -20,7 +20,7 @@ class SaasOrderResource extends JsonResource
             'company_spec' => $this->user?->tenant?->company_spec,
             'domain' => $this->user?->tenant?->domain,
             'is_paid' => (boolean)$this->user?->tenant?->is_paid,
-            'expired_at' => $this->user?->tenant?->expired_at
+            'expired_at' => $this->user?->tenant?->expired_at,
         ];
     }
 }

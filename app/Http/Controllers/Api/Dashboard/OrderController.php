@@ -11,7 +11,10 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderHistoryResource;
 use App\Http\Requests\Api\Dashboard\StoreOrderRequest;
 use App\Http\Requests\Api\Dashboard\FollowOrderRequest;
+use App\Models\UserTenant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
@@ -46,6 +49,34 @@ class OrderController extends Controller
 
     public function showSaasOrder(Order $order)
     {
+        return SaasOrderResource::make($order);
+    }
+
+    public function renewSaasOrder(Request $request)
+    {
+        $user_tenant = UserTenant::where('user_id', $request->user_id)->first();
+        $order = Order::where('user_id', $request->user_id)->where('type', 2)->first();
+        $user_tenant->update([
+            'is_paid' => 1,
+            'amount' => $request->amount,
+            'invoice_number' => $request->invoice_number,
+            'expired_at' => Carbon::now()->addYear(),
+        ]);
+
+        $user_tenant->user->update([
+            'is_block' => 0,
+        ]);
+
+
+        $data = [
+            'user_id' => $request->user_id,
+            'amount' => $request->amount,
+            'invoice_number' => $request->invoice_number,
+            'domain' => $user_tenant->domain,
+        ];
+
+        //make the same api in cayan med
+        Http::post('https://api.cayan.llc/api/site/update-tenant', $data);
         return SaasOrderResource::make($order);
     }
 
