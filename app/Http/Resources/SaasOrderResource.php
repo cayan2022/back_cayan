@@ -22,7 +22,7 @@ class SaasOrderResource extends JsonResource
             'is_paid' => (boolean)$this->user?->tenant?->is_paid,
             'expired_at' => $this->user?->tenant?->expired_at,
             'status' => !$this->user->is_block,
-            'password' => Crypt::decrypt($this->user?->tenant?->tenant_pass) ?? '*******'
+            'password' => $this->user?->tenant?->tenant_pass ? Crypt::decrypt($this->user?->tenant?->tenant_pass) : '******'
         ];
     }
 }
