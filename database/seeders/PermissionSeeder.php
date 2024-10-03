@@ -39,6 +39,11 @@ class PermissionSeeder extends Seeder
 
         permission::create(['name' => 'send campaigns', 'type' => 'campaigns', 'guard_name' => 'api']);
 
+        permission::create(['name' => 'list saas', 'type' => 'orders', 'guard_name' => 'api']);
+        permission::create(['name' => 'show saas', 'type' => 'orders', 'guard_name' => 'api']);
+        permission::create(['name' => 'renew saas', 'type' => 'orders', 'guard_name' => 'api']);
+        permission::create(['name' => 'cancel saas', 'type' => 'orders', 'guard_name' => 'api']);
+
         $items = ['profiles', 'doctors', 'testimonials', 'offers', 'services', 'tidings', 'categories', 'blogs', 'abouts', 'partners', 'projects', 'sources', 'branches','seoPages', 'customers', 'portfolio-categories', 'portfolios','campaigns'];
         foreach ($items as $item) {
             permission::create(['name' => "show $item", 'type' => $item, 'guard_name' => 'api']);

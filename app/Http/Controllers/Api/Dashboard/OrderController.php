@@ -59,6 +59,7 @@ class OrderController extends Controller
             'user_id' => 'required|exists:users,id',
             'amount' => 'required|gt:0',
             'invoice_number' => 'required',
+            'duration' => 'required|gt:0',
         ]);
         $user_tenant = UserTenant::where('user_id', $request->user_id)->first();
         $order = Order::where('user_id', $request->user_id)->where('type', 2)->first();
@@ -66,7 +67,7 @@ class OrderController extends Controller
             'is_paid' => 1,
             'amount' => $request->amount,
             'invoice_number' => $request->invoice_number,
-            'expired_at' => Carbon::now()->addYear(),
+            'expired_at' => Carbon::now()->addMonths($request->duration),
         ]);
         $user_tenant->user->update([
             'is_block' => 0,
@@ -78,6 +79,7 @@ class OrderController extends Controller
             'amount' => $request->amount,
             'invoice_number' => $request->invoice_number,
             'domain' => $user_tenant->domain,
+            'duration' => 'required|gt:0',
         ];
         Http::post('https://api.cayan.llc/api/site/update-tenant', $data);
 
