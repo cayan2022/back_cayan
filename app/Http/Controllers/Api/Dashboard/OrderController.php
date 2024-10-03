@@ -94,10 +94,11 @@ class OrderController extends Controller
         ]);
 
         // call api in cayan med to update user data tenant
-        Http::get('https://api.cayan.llc/api/site/change-status-tenant',[
-            'domain' => $order->user->tenant->domain,
-        ]);
-
+        if ($order->user->tenant?->domain) {
+            Http::get('https://api.cayan.llc/api/site/change-status-tenant', [
+                'domain' => $order->user->tenant?->domain,
+            ]);
+        }
         return SaasOrderResource::make($order);
     }
 
