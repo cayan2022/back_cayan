@@ -46,7 +46,7 @@ class OrderController extends Controller
 
     public function showSaasOrder(Order $order)
     {
-        return SaasOrderResource::collection($order);
+        return SaasOrderResource::make($order);
     }
 
     /**
