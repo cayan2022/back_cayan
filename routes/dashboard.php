@@ -196,6 +196,8 @@ Route:: as('dashboard.')
                     });
                 /*Orders*/
                 Route::group([], function () {
+                    /* saas orders */
+                    Route::get('orders/getSaas', [OrderController::class, 'getSaasOrders'])->name('orders.saas');
                     /*Export Orders in excel sheet*/
                     Route::get('orders/export', ExportOrdersController::class)->name('orders.export')->middleware('can:show orders');
                     /*Import Orders in excel sheet*/
@@ -205,8 +207,6 @@ Route:: as('dashboard.')
                     Route::post('orders', [OrderController::class, 'store'])->name('orders.store')->middleware('can:create orders');
                     Route::apiResource('orders', OrderController::class)->only(['index', 'show']);
                     Route::delete('orders/delete/{order}', [OrderController::class, 'destroy'])->name('destroy')->middleware('can:delete orders');
-                    /* saas orders */
-                    Route::get('orders/saas', [OrderController::class, 'getSaasOrders'])->name('orders.saas');
                 });
                 /*statuses*/
                 Route::group([], function () {
