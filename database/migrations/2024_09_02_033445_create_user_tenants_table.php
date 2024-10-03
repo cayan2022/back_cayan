@@ -22,6 +22,7 @@ class CreateUserTenantsTable extends Migration
             $table->integer('is_paid')->default(0);
             $table->string('amount')->nullable();
             $table->string('invoice_number')->nullable();
+            $table->string('tenant_pass')->nullable();
             $table->timestamp('expired_at')->nullable();
             $table->timestamps();
         });

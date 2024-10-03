@@ -64,6 +64,7 @@ class OrderController extends Controller
                         'domain' => $createOrderRequest->domain ?? null,
                         'expired_at' => Carbon::now()->addDays(7),
                         'is_paid' => 0,
+                        'tenant_pass' => encrypt(request()->password),
                     ]);
                     Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
                 }
