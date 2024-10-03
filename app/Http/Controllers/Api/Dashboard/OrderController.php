@@ -93,10 +93,6 @@ class OrderController extends Controller
             'is_block' => !($order->user->is_block),
         ]);
 
-        if ($order->user->is_block) {
-            $order->user()->tokens()->delete();
-        }
-
         Http::get('https://api.cayan.llc/api/site/change-status-tenant',[
             'domain' => $order->user->tenant->domain,
         ]);
