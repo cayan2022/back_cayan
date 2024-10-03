@@ -79,7 +79,7 @@ class OrderController extends Controller
             'amount' => $request->amount,
             'invoice_number' => $request->invoice_number,
             'domain' => $user_tenant->domain,
-            'duration' => 'required|gt:0',
+            'duration' => $request->duration,
         ];
         Http::post('https://api.cayan.llc/api/site/renew-tenant', $data);
 
