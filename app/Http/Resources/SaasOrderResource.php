@@ -12,6 +12,7 @@ class SaasOrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user_id' => $this->user_id ?? $this->user->id,
             'user_name' => $this->user->name,
             'user_phone' => $this->user->phone,
             'user_avatar' => $this->user->getAvatar(),
