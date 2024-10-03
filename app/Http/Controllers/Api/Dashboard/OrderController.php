@@ -54,6 +54,12 @@ class OrderController extends Controller
 
     public function renewSaasOrder(Request $request)
     {
+        // make validation
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'amount' => 'required|gt:0',
+            'invoice_number' => 'required',
+        ]);
         $user_tenant = UserTenant::where('user_id', $request->user_id)->first();
         $order = Order::where('user_id', $request->user_id)->where('type', 2)->first();
         $user_tenant->update([
@@ -62,21 +68,20 @@ class OrderController extends Controller
             'invoice_number' => $request->invoice_number,
             'expired_at' => Carbon::now()->addYear(),
         ]);
-
         $user_tenant->user->update([
             'is_block' => 0,
         ]);
 
-
+        // call api in cayan med to update user data tenant
         $data = [
             'user_id' => $request->user_id,
             'amount' => $request->amount,
             'invoice_number' => $request->invoice_number,
             'domain' => $user_tenant->domain,
         ];
-
-        //make the same api in cayan med
         Http::post('https://api.cayan.llc/api/site/update-tenant', $data);
+
+
         return SaasOrderResource::make($order);
     }
 
