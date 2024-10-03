@@ -92,12 +92,10 @@ class OrderController extends Controller
         $order->user->update([
             'is_block' => !($order->user->is_block),
         ]);
-
+        $domain = $order->user->tenant?->domain;
         // call api in cayan med to update user data tenant
-        if ($order->user->tenant?->domain) {
-            Http::get('https://api.cayan.llc/api/site/change-status-tenant', [
-                'domain' => $order->user->tenant?->domain,
-            ]);
+        if ($domain) {
+            Http::get('https://api.cayan.llc/api/site/change-status-tenant/' . $domain);
         }
         return SaasOrderResource::make($order);
     }
