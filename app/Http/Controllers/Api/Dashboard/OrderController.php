@@ -81,18 +81,26 @@ class OrderController extends Controller
             'domain' => $user_tenant->domain,
             'duration' => 'required|gt:0',
         ];
-        Http::post('https://api.cayan.llc/api/site/update-tenant', $data);
+        Http::post('https://api.cayan.llc/api/site/renew-tenant', $data);
 
 
         return SaasOrderResource::make($order);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return OrderResource
-     */
+    public function changeSaasOrderStatus(Order $order)
+    {
+        $order->user->update([
+            'is_block' => !($order->user->is_block),
+        ]);
+        $order->user->tokens()->delete();
+
+        Http::get('https://api.cayan.llc/api/site/change-status-tenant',[
+            'domain' => $order->user->tenant->domain,
+        ]);
+
+        return SaasOrderResource::make($order);
+    }
+
     public function store(StoreOrderRequest $request)
     {
         $order = Order::create($request->validated());

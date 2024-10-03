@@ -200,6 +200,7 @@ Route:: as('dashboard.')
                     Route::get('orders/getSaasOrders', [OrderController::class, 'getSaasOrders'])->name('orders.saas.get');
                     Route::get('orders/showSaasOrder/{order}', [OrderController::class, 'showSaasOrder'])->name('orders.saas.show');
                     Route::post('orders/renewSaasOrder', [OrderController::class, 'renewSaasOrder'])->name('orders.saas.renew');
+                    Route::get('orders/changeSaasOrderStatus/{order}', [OrderController::class, 'changeSaasOrderStatus'])->name('orders.saas.changeStatus');
                     /*Export Orders in excel sheet*/
                     Route::get('orders/export', ExportOrdersController::class)->name('orders.export')->middleware('can:show orders');
                     /*Import Orders in excel sheet*/
