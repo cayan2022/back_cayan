@@ -2,8 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\OrderHistory;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SaasOrderResource extends JsonResource
@@ -23,7 +22,7 @@ class SaasOrderResource extends JsonResource
             'is_paid' => (boolean)$this->user?->tenant?->is_paid,
             'expired_at' => $this->user?->tenant?->expired_at,
             'status' => !$this->user->is_block,
-            'password' => decrypt($this->user?->tenant?->tenant_pass)
+            'password' => Crypt::decrypt($this->user?->tenant?->tenant_pass)
         ];
     }
 }
