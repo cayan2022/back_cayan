@@ -197,7 +197,8 @@ Route:: as('dashboard.')
                 /*Orders*/
                 Route::group([], function () {
                     /* saas orders */
-                    Route::get('orders/getSaas', [OrderController::class, 'getSaasOrders'])->name('orders.saas');
+                    Route::get('orders/getSaasOrders', [OrderController::class, 'getSaasOrders'])->name('orders.saas.get');
+                    Route::get('orders/showSaasOrder/{order}', [OrderController::class, 'showSaasOrder'])->name('orders.saas.show');
                     /*Export Orders in excel sheet*/
                     Route::get('orders/export', ExportOrdersController::class)->name('orders.export')->middleware('can:show orders');
                     /*Import Orders in excel sheet*/

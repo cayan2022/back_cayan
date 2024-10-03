@@ -43,6 +43,12 @@ class OrderController extends Controller
         return SaasOrderResource::collection($orders);
     }
 
+
+    public function showSaasOrder(Order $order)
+    {
+        return SaasOrderResource::collection($order);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
