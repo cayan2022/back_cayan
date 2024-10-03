@@ -9,6 +9,7 @@ class SaasOrderResource extends JsonResource
 {
     public function toArray($request)
     {
+        dd($this->user?->tenant?->tenant_pass);
         return [
             'id' => $this->id,
             'user_id' => $this->user_id ?? $this->user->id,
@@ -22,7 +23,7 @@ class SaasOrderResource extends JsonResource
             'is_paid' => (boolean)$this->user?->tenant?->is_paid,
             'expired_at' => $this->user?->tenant?->expired_at,
             'status' => !$this->user->is_block,
-            'password' => Crypt::decrypt($this->user?->tenant?->tenant_pass)
+//            'password' => Crypt::decrypt()
         ];
     }
 }
