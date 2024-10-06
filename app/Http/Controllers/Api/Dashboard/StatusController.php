@@ -73,7 +73,9 @@ class StatusController extends Controller
                 },
             ])->filter()->get();
         } else {
-            $statuses = Status::filter()->get();
+            $statuses = Status::whereHas('orders',function ($query){
+                $query->where('type',1);
+            })->filter()->get();
         }
         return StatusResource::collection($statuses);
     }
