@@ -72,6 +72,7 @@ Route::post('getSessionIdMyFatoorah', function () {
     $response = Http::withToken($token, 'Bearer')
         ->post('https://apitest.myfatoorah.com/v2/InitiateSession', [
             'CustomerIdentifier' => request()->CustomerIdentifier,
+            "CountryCode" => "KWT"
         ]);
     if ($response->successful()) {
         return $response->json();
