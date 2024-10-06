@@ -26,7 +26,7 @@ class StatusesReportController extends Controller
             $statuses = Status::withCount([
                 'orders' => function ($query) use ($request, $order_ids) {
                     $query->whereBetween('created_at', [$request->get('start_date'), $request->get('end_date')])
-                        ->whereIn('id', $order_ids);
+                        ->whereIn('id', $order_ids)->where('type',1);
                 },
             ])->filter()->get();
 
@@ -39,7 +39,7 @@ class StatusesReportController extends Controller
                             $request->get('start_date'),
                             $request->get('end_date'),
                         ]
-                    );
+                    )->where('type',1);
                 },
             ])->filter()->get();
         } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee')) {
@@ -47,11 +47,15 @@ class StatusesReportController extends Controller
             $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
             $statuses = Status::withCount([
                 'orders' => function ($query) use ($order_ids) {
-                    $query->whereIn('id', $order_ids);
+                    $query->whereIn('id', $order_ids)->where('type',1);
                 },
             ])->get();
         } else {
-            $statuses = Status::filter()->get();
+            $statuses = Status::withCount([
+                'orders' => function ($query) {
+                    $query->where('type', 1);
+                }
+            ])->filter()->get();
         }
 
         return StatusResource::collection($statuses);
