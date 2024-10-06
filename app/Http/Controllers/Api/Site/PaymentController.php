@@ -32,8 +32,8 @@ class PaymentController extends Controller
             ->post('https://apitest.myfatoorah.com/v2/ExecutePayment', [
                 'SessionId' => $request->sessionId,
                 'InvoiceValue' => $request->invoiceValue,
-                'CallBackUrl' => 'http://localhost:39222/checkout/status',
-                'ErrorUrl' => 'http://localhost:39222/checkout/status',
+                'CallBackUrl' => 'http://localhost:39222/checkout/status/success',
+                'ErrorUrl' => 'http://localhost:39222/checkout/status/failed',
             ]);
         if ($response->successful()) {
             return $response->json();
