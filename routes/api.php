@@ -62,12 +62,15 @@ Route:: as('site.')
 
         // source clicks
         Route::post('add_click', [SourceClickController::class, 'addClick'])->name('add-click');
+
+        // update tenant
+        Route::post('renewUserTenant', [PaymentController::class,'renewTenant']);
     });
 
 
 Route::post('getSessionIdMyFatoorah', [PaymentController::class,'getSessionId']);
 Route::post('getInvoice', [PaymentController::class,'getInvoice']);
-Route::post('renewUserTenant', [PaymentController::class,'renewTenant']);
+
 
 
 
