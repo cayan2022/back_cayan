@@ -67,3 +67,7 @@ Route:: as('site.')
 
 Route::post('getSessionIdMyFatoorah', [PaymentController::class,'getSessionId']);
 Route::post('getInvoice', [PaymentController::class,'getInvoice']);
+Route::post('renewUserTenant', [PaymentController::class,'renewTenant']);
+
+
+

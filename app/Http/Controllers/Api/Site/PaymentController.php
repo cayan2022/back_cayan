@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Site;
 
 use App\Models\Tiding;
 use App\Http\Controllers\Controller;
+use App\Models\UserTenant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Resources\TidingResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -40,5 +42,21 @@ class PaymentController extends Controller
         }
 
         abort($response->status(), 'Error during request.');
+    }
+
+    public function renewTenant(Request $request)
+    {
+        $user_tenant = UserTenant::where('user_id', $request->domain)->first();
+        $user_tenant->update([
+            'is_paid' => 1,
+            'amount' => $request->amount,
+            'invoice_number' => $request->invoice_number,
+            'expired_at' => Carbon::now()->addMonths($request->duration),
+        ]);
+        $user_tenant->user->update([
+            'is_block' => 0,
+        ]);
+
+        return true;
     }
 }
