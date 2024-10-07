@@ -46,7 +46,7 @@ class PaymentController extends Controller
 
     public function renewTenant(Request $request)
     {
-        $user_tenant = UserTenant::where('user_id', $request->domain)->first();
+        $user_tenant = UserTenant::where('domain', $request->domain)->first();
         $user_tenant->update([
             'is_paid' => 1,
             'amount' => $request->amount,
