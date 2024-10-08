@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
+class OrdersExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize
 {
     public function headings(): array
     {
@@ -31,6 +31,7 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
             'Delayed Hours',
         ];
     }
+
     use Exportable;
 
     public function query()
@@ -59,7 +60,7 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
             optional($order->histories->last())->substatus->name ?? '',
             optional($order->histories->last())->created_at ?? '',
             optional($order->histories->last())->description ?? '',
-            $order_duration ? Carbon::now()->floatDiffInHours(Carbon::parse($order_duration)) : '',
+            $order_duration ? Carbon::parse($order_duration)->diffInHours(Carbon::now()) : '',
         ];
     }
 }
