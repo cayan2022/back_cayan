@@ -14,7 +14,6 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
 {
     public function headings(): array
     {
-        $order_duration = optional($order->histories->last())->duration;
         return [
             '# ID',
             'Created at',
