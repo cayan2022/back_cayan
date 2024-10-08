@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Site\CreateOrderRequest;
+use App\Http\Requests\Api\Site\CreateSaasOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\User;
 use App\Services\WhatsappService;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
@@ -99,5 +101,60 @@ class OrderController extends Controller
             }
         }
         return new OrderResource($order);
+    }
+
+
+    public function storeSaasOrder(CreateSaasOrderRequest $createSaasOrderRequest)
+    {
+        $phone = $createSaasOrderRequest->phone;
+        if (preg_match("~^0\d+$~", $createSaasOrderRequest->phone)) {
+            $phone = '966' . substr($createSaasOrderRequest->phone, 1);
+        } elseif (preg_match("~^5\d+$~", $createSaasOrderRequest->phone)) {
+            $phone = '966' . $createSaasOrderRequest->phone;
+        }
+
+        $data = [
+            'phone' => $phone,
+            'email' => $createSaasOrderRequest->email,
+            'name' => $createSaasOrderRequest->name,
+            'country_id' => Country::first()->id,
+            'type' => User::MODERATOR,
+            'company_name' => $createSaasOrderRequest->company_name ?? null,
+            'company_spec' => $createSaasOrderRequest->company_spec ?? null,
+            'domain' => $createSaasOrderRequest->domain ?? null,
+            'password' => $createSaasOrderRequest->password,
+            'plain_pass' => request()->password,
+        ];
+
+        $user = User::create([
+            'phone' => $phone,
+            'email' => $createSaasOrderRequest->email,
+            'country_id' => Country::first()->id,
+            'name' => $createSaasOrderRequest->name,
+            'type' => User::PATIENT,
+            'password' => bcrypt($createSaasOrderRequest->password),
+        ]);
+
+        $user->tenant()->create([
+            'company_name' => $createSaasOrderRequest->company_name ?? null,
+            'company_spec' => $createSaasOrderRequest->company_spec ?? null,
+            'domain' => $createSaasOrderRequest->domain ?? null,
+            'expired_at' => Carbon::now()->addDays(7),
+            'is_paid' => 0,
+            'tenant_pass' => encrypt(request()->password),
+        ]);
+        Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
+
+        $order = Order::create(
+            $createSaasOrderRequest->only(['source_id', 'category_id', 'branch_id']) +
+            [
+                'user_id' => $user->id,
+                'status_id' => Order::NEW,
+                'type' => 2
+            ]
+        );
+
+        return new OrderResource($order);
+
     }
 }

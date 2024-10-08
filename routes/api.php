@@ -56,6 +56,7 @@ Route:: as('site.')
         Route::get('settings/{setting}', SettingController::class)->name('settings');
         Route::post('settings/click/register', [SettingController::class, 'clickRegister'])->name('settings.click.register');
         Route::post('order', OrderController::class)->name('order.store');
+        Route::post('saas_order', [OrderController::class, 'storeSaasOrder'])->name('saas_order.store');
         Route::get('portfolio-categories', PortfolioCategoryController::class)->name('portfolio-categories');
         Route::get('portfolios', PortfolioController::class)->name('portfolios');
         Route::get('seo_pages', [SeoPageController::class, 'index'])->name('seo-pages');
