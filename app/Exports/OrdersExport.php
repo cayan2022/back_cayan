@@ -46,6 +46,15 @@ class OrdersExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
     public function map($order): array
     {
         $order_duration = optional($order->histories->last())->duration;
+        $startTime = Carbon::now();
+        $endTime = Carbon::parse($order_duration);
+        $diffInHours = 0;
+        if ($order_duration) {
+            $diffInHours = $endTime->diffInHours($startTime);
+            if ($startTime->greaterThan($endTime)) {
+                $diffInHours = -$diffInHours;
+            }
+        }
         return [
             $order->id,
             $order->created_at,
@@ -60,7 +69,7 @@ class OrdersExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
             optional($order->histories->last())->substatus->name ?? '',
             optional($order->histories->last())->created_at ?? '',
             optional($order->histories->last())->description ?? '',
-            $order_duration ? Carbon::parse($order_duration)->diffInHours(Carbon::now()) : '',
+            $diffInHours,
         ];
     }
 }
