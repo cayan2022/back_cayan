@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -13,6 +14,7 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
 {
     public function headings(): array
     {
+        $order_duration = optional($order->histories->last())->duration;
         return [
             '# ID',
             'Created at',
@@ -26,7 +28,8 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
             'Employee',
             'Last Action',
             'Last Action Time',
-            'Last Action Note'
+            'Last Action Note',
+            'Delayed Hours',
         ];
     }
     use Exportable;
@@ -42,6 +45,7 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
      */
     public function map($order): array
     {
+        $order_duration = optional($order->histories->last())->duration;
         return [
             $order->id,
             $order->created_at,
@@ -56,6 +60,7 @@ class OrdersExport implements FromQuery, WithHeadings,WithMapping,ShouldAutoSize
             optional($order->histories->last())->substatus->name ?? '',
             optional($order->histories->last())->created_at ?? '',
             optional($order->histories->last())->description ?? '',
+            $order_duration ? Carbon::now()->floatDiffInHours(Carbon::parse($order_duration)) : '',
         ];
     }
 }
