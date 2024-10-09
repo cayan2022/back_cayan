@@ -75,7 +75,7 @@ class StatusController extends Controller
     private function getOrderIdsBySource($sourceIdentifier) {
         $source = Source::where('identifier', $sourceIdentifier)->first();
         return $source ? Order::where('source_id', $source->id)
-            ->where('type', 1)  // Apply 'type = 1' only in the Order query
+            ->groupBy('order_id')
             ->pluck('id') : collect();
     }
 
