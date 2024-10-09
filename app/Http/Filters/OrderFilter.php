@@ -63,10 +63,10 @@ class OrderFilter extends BaseFilters
     protected function source($value)
     {
         if ($value) {
-            $source = Source::with('translations')
-                ->where('identifier', $value)
-                ->orWhereTranslation('name','like','%' . $value . '%')
-                ->pluck('id');
+            $source = Source::where('identifier', $value)
+                ->orWhereHas('translation', function ($query) use ($query,$value) {
+                    $query->where('name', 'like', '%' . $value . '%');
+                })->pluck('id');
             return $this->builder->whereIn('source_id', $source);
         }
 
