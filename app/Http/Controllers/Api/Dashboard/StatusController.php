@@ -25,6 +25,7 @@ class StatusController extends Controller
     {
         $statusesQuery = Status::query();
 
+        dd($request->filled('source'));
         // Handle date range filtering
         if ($request->filled('start_date') && $request->filled('end_date')) {
             $statusesQuery->withCount(['orders' => function ($query) use ($request) {
@@ -74,7 +75,6 @@ class StatusController extends Controller
 // Helper function to get order IDs based on source identifier (type condition applied here)
     private function getOrderIdsBySource($sourceIdentifier) {
         $source = Source::where('identifier', $sourceIdentifier)->first();
-        dd($source);
         return $source ? Order::where('source_id', $source->id)
             ->pluck('id') : collect();
     }
