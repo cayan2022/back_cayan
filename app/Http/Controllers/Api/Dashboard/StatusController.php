@@ -29,7 +29,7 @@ class StatusController extends Controller
         if ($request->filled('start_date') && $request->filled('end_date')) {
             $statusesQuery->withCount(['orders' => function ($query) use ($request) {
                 $query->whereBetween('created_at', [$request->get('start_date'), $request->get('end_date')])
-                    ->where('type', 1);  // Ensure 'type = 1' is applied
+                    ->where('type', 1);  // Apply 'type = 1' only in the Order query
             }]);
         }
 
@@ -38,7 +38,7 @@ class StatusController extends Controller
             $order_ids = $this->getOrderIdsByEmployee($request->get('employee'));
             $statusesQuery->withCount(['orders' => function ($query) use ($order_ids) {
                 $query->whereIn('id', $order_ids)
-                    ->where('type', 1);  // Ensure 'type = 1' is applied
+                    ->where('type', 1);  // Apply 'type = 1' only in the Order query
             }]);
         }
 
@@ -47,14 +47,14 @@ class StatusController extends Controller
             $order_ids = $this->getOrderIdsBySource($request->get('source'));
             $statusesQuery->withCount(['orders' => function ($query) use ($order_ids) {
                 $query->whereIn('id', $order_ids)
-                    ->where('type', 1);  // Ensure 'type = 1' is applied
+                    ->where('type', 1);  // Apply 'type = 1' only in the Order query
             }]);
         }
 
         // Default case where no filters are applied
         if (!$request->filled('start_date') && !$request->filled('end_date') && !$request->filled('employee') && !$request->filled('source')) {
             $statusesQuery->withCount(['orders' => function ($query) {
-                $query->where('type', 1);  // Ensure 'type = 1' is applied
+                $query->where('type', 1);  // Apply 'type = 1' only in the Order query
             }]);
         }
 
@@ -64,21 +64,18 @@ class StatusController extends Controller
     }
 
 // Helper function to get order IDs based on employee name with type condition
-    private function getOrderIdsByEmployee($employeeName)
-    {
+    private function getOrderIdsByEmployee($employeeName) {
         $user = User::where('name', $employeeName)->first();
         return $user ? OrderHistory::where('user_id', $user->id)
-            ->where('type', 1)  // Ensure 'type = 1' is applied
             ->groupBy('order_id')
             ->pluck('order_id') : collect();
     }
 
-// Helper function to get order IDs based on source identifier with type condition
-    private function getOrderIdsBySource($sourceIdentifier)
-    {
+// Helper function to get order IDs based on source identifier (type condition applied here)
+    private function getOrderIdsBySource($sourceIdentifier) {
         $source = Source::where('identifier', $sourceIdentifier)->first();
         return $source ? Order::where('source_id', $source->id)
-            ->where('type', 1)  // Ensure 'type = 1' is applied
+            ->where('type', 1)  // Apply 'type = 1' only in the Order query
             ->pluck('id') : collect();
     }
 
