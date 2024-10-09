@@ -33,7 +33,7 @@ class FollowOrderRequest extends FormRequest
             : [];
 
         // Set the duration rule dynamically based on sub_status_id
-        $duration_rule = request()->has('sub_status_id') && !in_array(request()->sub_status_id, $follow_sub_status)
+        $duration_rule = request()?->has('sub_status_id') && !in_array(request()->sub_status_id, $follow_sub_status, true)
             ? 'nullable|date_format:Y-m-d H:i:s'
             : 'required|date_format:Y-m-d H:i:s';
 
