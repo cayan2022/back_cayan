@@ -29,9 +29,9 @@ class CreateOrderRequest extends FormRequest
             'name' => 'required|string|max:255',
             'source_id' => 'required|integer|exists:sources,id',
             'category_id' => 'required|integer|exists:categories,id',
-            'branch_id'=>'required|integer|exists:branches,id',
-            'phone'=>['required',Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
-            'email'=>['required', 'email:rfc,dns'],
+            'branch_id' => 'required|integer|exists:branches,id',
+            'phone' => ['required', Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
+            'email' => ['required', 'email:rfc,dns'],
             'type' => 'required|in:1,2',
         ];
     }

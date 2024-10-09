@@ -53,6 +53,8 @@ class OrdersExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSi
             $diffInHours = $endTime->diffInHours($startTime);
             if ($startTime->greaterThan($endTime)) {
                 $diffInHours = -$diffInHours;
+            } else {
+                $diffInHours = 0;
             }
         }
         return [
