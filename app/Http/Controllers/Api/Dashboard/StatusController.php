@@ -23,65 +23,63 @@ class StatusController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->filled('start_date') && $request->filled('end_date') && $request->filled('employee')) {
-            $user = User::where('name', $request->get('employee'))->first();
-            $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
+        $statusesQuery = Status::query();
 
-            $statuses = Status::withCount([
-                'orders' => function ($query) use ($request, $order_ids) {
-                    $query->whereBetween('created_at', [$request->get('start_date'), $request->get('end_date')])
-                        ->whereIn('id', $order_ids)->where('type', 1);
-                },
-            ])->filter()->get();
-
-        } elseif ($request->filled('start_date') && $request->filled('end_date') && !$request->filled('employee')) {
-            $statuses = Status::withCount([
-                'orders' => function ($query) use ($request) {
-                    $query->whereBetween(
-                        'created_at',
-                        [
-                            $request->get('start_date'),
-                            $request->get('end_date'),
-                        ]
-                    )->where('type', 1);
-                },
-            ])->filter()->get();
-        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee') && !$request->filled('source')) {
-            $user = User::where('name', $request->get('employee'))->first();
-            $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
-            $statuses = Status::withCount([
-                'orders' => function ($query) use ($order_ids) {
-                    $query->whereIn('id', $order_ids)->where('type', 1);
-                },
-            ])->filter()->get();
-        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && !$request->filled('employee') && $request->filled('source')) {
-            $source = Source::where('identifier', $request->get('source'))->first();
-            $order_ids = Order::where('source_id', $source->id)->pluck('id');
-            $statuses = Status::withCount([
-                'orders' => function ($query) use ($order_ids) {
-                    $query->whereIn('id', $order_ids)->where('type', 1);
-                },
-            ])->filter()->get();
-
-        } elseif (!$request->filled('start_date') && !$request->filled('end_date') && $request->filled('employee') && $request->filled('source')) {
-            $source = Source::where('identifier', $request->get('source'))->first();
-            $user = User::where('name', $request->get('employee'))->first();
-            $order_ids = OrderHistory::where('user_id', $user->id)->groupBy('order_id')->pluck('order_id');
-            $statuses = Status::withCount([
-                'orders' => function ($query) use ($order_ids, $source) {
-                    $query->whereIn('id', $order_ids)
-                        ->where('source_id', $source->id)
-                        ->where('type', 1);
-                },
-            ])->filter()->get();
-        } else {
-            $statuses = Status::withCount([
-                'orders' => function ($query) {
-                    $query->where('type', 1);
-                }
-            ])->filter()->get();
+        // Handle date range filtering
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $statusesQuery->withCount(['orders' => function ($query) use ($request) {
+                $query->whereBetween('created_at', [$request->get('start_date'), $request->get('end_date')])
+                    ->where('type', 1);  // Ensure 'type = 1' is applied
+            }]);
         }
+
+        // Handle employee filtering
+        if ($request->filled('employee')) {
+            $order_ids = $this->getOrderIdsByEmployee($request->get('employee'));
+            $statusesQuery->withCount(['orders' => function ($query) use ($order_ids) {
+                $query->whereIn('id', $order_ids)
+                    ->where('type', 1);  // Ensure 'type = 1' is applied
+            }]);
+        }
+
+        // Handle source filtering
+        if ($request->filled('source')) {
+            $order_ids = $this->getOrderIdsBySource($request->get('source'));
+            $statusesQuery->withCount(['orders' => function ($query) use ($order_ids) {
+                $query->whereIn('id', $order_ids)
+                    ->where('type', 1);  // Ensure 'type = 1' is applied
+            }]);
+        }
+
+        // Default case where no filters are applied
+        if (!$request->filled('start_date') && !$request->filled('end_date') && !$request->filled('employee') && !$request->filled('source')) {
+            $statusesQuery->withCount(['orders' => function ($query) {
+                $query->where('type', 1);  // Ensure 'type = 1' is applied
+            }]);
+        }
+
+        $statuses = $statusesQuery->filter()->get();
+
         return StatusResource::collection($statuses);
+    }
+
+// Helper function to get order IDs based on employee name with type condition
+    private function getOrderIdsByEmployee($employeeName)
+    {
+        $user = User::where('name', $employeeName)->first();
+        return $user ? OrderHistory::where('user_id', $user->id)
+            ->where('type', 1)  // Ensure 'type = 1' is applied
+            ->groupBy('order_id')
+            ->pluck('order_id') : collect();
+    }
+
+// Helper function to get order IDs based on source identifier with type condition
+    private function getOrderIdsBySource($sourceIdentifier)
+    {
+        $source = Source::where('identifier', $sourceIdentifier)->first();
+        return $source ? Order::where('source_id', $source->id)
+            ->where('type', 1)  // Ensure 'type = 1' is applied
+            ->pluck('id') : collect();
     }
 
     /**
