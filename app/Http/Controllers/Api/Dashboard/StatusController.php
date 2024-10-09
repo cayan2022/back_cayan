@@ -24,8 +24,6 @@ class StatusController extends Controller
     public function index(Request $request)
     {
         $statusesQuery = Status::query();
-
-        dd($request->filled('source'));
         // Handle date range filtering
         if ($request->filled('start_date') && $request->filled('end_date')) {
             $statusesQuery->withCount(['orders' => function ($query) use ($request) {

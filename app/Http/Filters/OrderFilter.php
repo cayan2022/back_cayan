@@ -3,6 +3,7 @@
 namespace App\Http\Filters;
 
 use App\Models\OrderHistory;
+use App\Models\Source;
 use App\Models\Translations\CategoryTranslation;
 use App\Models\Translations\SourceTranslation;
 use App\Models\Translations\StatusTranslation;
@@ -62,7 +63,10 @@ class OrderFilter extends BaseFilters
     protected function source($value)
     {
         if ($value) {
-            $source = SourceTranslation::where('name', 'like', $value)->pluck('source_id');
+            $source = Source::with('translations')
+                ->where('identifier', $value)
+                ->orWhereTranslation('name','like','%value%')
+                ->pluck('id');
             return $this->builder->whereIn('source_id', $source);
         }
 
