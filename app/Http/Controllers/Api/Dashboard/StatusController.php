@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Dashboard;
 
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Models\Source;
@@ -10,6 +11,7 @@ use App\Models\SubStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StatusResource;
 use App\Http\Resources\SubStatusResource;
+use App\Models\Translations\CategoryTranslation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -50,6 +52,16 @@ class StatusController extends Controller
             }]);
         }
 
+
+        // Handle category filtering
+        if ($request->filled('category')) {
+            $order_ids = $this->getOrderIdsByCategory($request->get('category'));
+            $statusesQuery->withCount(['orders' => function ($query) use ($order_ids) {
+                $query->whereIn('id', $order_ids)
+                    ->where('type', 1);
+            }]);
+        }
+
         // Default case where no filters are applied
         if (!$request->filled('start_date') && !$request->filled('end_date') && !$request->filled('employee') && !$request->filled('source')) {
             $statusesQuery->withCount(['orders' => function ($query) {
@@ -74,6 +86,12 @@ class StatusController extends Controller
     private function getOrderIdsBySource($sourceIdentifier) {
         $source = Source::where('identifier', $sourceIdentifier)->first();
         return $source ? Order::where('source_id', $source->id)
+            ->pluck('id') : collect();
+    }
+
+    private function getOrderIdsByCategory($categoryName) {
+        $category = CategoryTranslation::where('name', 'like', $categoryName)->first();
+        return $category ? Order::where('category_id', $category->id)
             ->pluck('id') : collect();
     }
 
