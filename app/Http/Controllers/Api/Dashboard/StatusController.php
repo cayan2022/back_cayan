@@ -47,7 +47,7 @@ class StatusController extends Controller
             $order_ids = $this->getOrderIdsBySource($request->get('source'));
             $statusesQuery->withCount(['orders' => function ($query) use ($order_ids) {
                 $query->whereIn('id', $order_ids)
-                    ->where('type', 1);  // Apply 'type = 1' only in the Order query
+                    ->where('type', 1);
             }]);
         }
 
@@ -74,8 +74,8 @@ class StatusController extends Controller
 // Helper function to get order IDs based on source identifier (type condition applied here)
     private function getOrderIdsBySource($sourceIdentifier) {
         $source = Source::where('identifier', $sourceIdentifier)->first();
+        dd($source);
         return $source ? Order::where('source_id', $source->id)
-            ->groupBy('order_id')
             ->pluck('id') : collect();
     }
 
