@@ -91,6 +91,7 @@ class StatusController extends Controller
 
     private function getOrderIdsByCategory($categoryName) {
         $category = CategoryTranslation::where('name', 'like', $categoryName)->first();
+        dd($category);
         return $category ? Order::where('category_id', $category->id)
             ->pluck('id') : collect();
     }
