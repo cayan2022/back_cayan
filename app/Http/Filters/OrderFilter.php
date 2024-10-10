@@ -4,8 +4,8 @@ namespace App\Http\Filters;
 
 use App\Models\OrderHistory;
 use App\Models\Source;
+use App\Models\Translations\BranchTranslation;
 use App\Models\Translations\CategoryTranslation;
-use App\Models\Translations\SourceTranslation;
 use App\Models\Translations\StatusTranslation;
 use App\Models\User;
 use Carbon\Carbon;
@@ -20,6 +20,7 @@ class OrderFilter extends BaseFilters
     protected $filters = [
         'user',
         'category',
+        'branch',
         'status',
         'source',
         'today',
@@ -45,6 +46,16 @@ class OrderFilter extends BaseFilters
         if ($value) {
             $categories = CategoryTranslation::where('name', 'like', $value)->pluck('category_id');
             return $this->builder->whereIn('category_id', $categories);
+        }
+
+        return $this->builder;
+    }
+
+    protected function branch($value)
+    {
+        if ($value) {
+            $branches= BranchTranslation::where('name', 'like', $value)->pluck('branch_id');
+            return $this->builder->whereIn('branch_id', $branches);
         }
 
         return $this->builder;
