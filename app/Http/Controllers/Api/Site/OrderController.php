@@ -112,20 +112,6 @@ class OrderController extends Controller
         } elseif (preg_match("~^5\d+$~", $createSaasOrderRequest->phone)) {
             $phone = '966' . $createSaasOrderRequest->phone;
         }
-
-        $data = [
-            'phone' => $phone,
-            'email' => $createSaasOrderRequest->email,
-            'name' => $createSaasOrderRequest->name,
-            'country_id' => Country::first()->id,
-            'type' => User::MODERATOR,
-            'company_name' => $createSaasOrderRequest->company_name ?? null,
-            'company_spec' => $createSaasOrderRequest->company_spec ?? null,
-            'domain' => $createSaasOrderRequest->domain ?? null,
-            'password' => $createSaasOrderRequest->password,
-            'plain_pass' => request()->password,
-        ];
-
         $user = User::create([
             'phone' => $phone,
             'email' => $createSaasOrderRequest->email,
@@ -143,6 +129,18 @@ class OrderController extends Controller
             'is_paid' => 0,
             'tenant_pass' => encrypt(request()->password),
         ]);
+
+
+        $data = [
+            'phone' => $phone,
+            'email' => $createSaasOrderRequest->email,
+            'name' => $createSaasOrderRequest->name,
+            'company_name' => $createSaasOrderRequest->company_name ?? null,
+            'company_spec' => $createSaasOrderRequest->company_spec ?? null,
+            'domain' => $createSaasOrderRequest->domain ?? null,
+            'password' => $createSaasOrderRequest->password,
+            'plain_pass' => request()->password,
+        ];
         Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
 
         $order = Order::create(
@@ -153,8 +151,6 @@ class OrderController extends Controller
                 'type' => 2
             ]
         );
-
         return new OrderResource($order);
-
     }
 }

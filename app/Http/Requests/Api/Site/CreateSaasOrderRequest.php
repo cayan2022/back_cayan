@@ -30,7 +30,7 @@ class CreateSaasOrderRequest extends FormRequest
             'source_id' => 'required|integer|exists:sources,id',
             'category_id' => 'required|integer|exists:categories,id',
             'branch_id' => 'required|integer|exists:branches,id',
-            'phone' => ['required', Rule::phone()->country(Country::query()->pluck('iso_code')->toArray()), Rule::unique('users')->whereNull('deleted_at')],
+            'phone' => ['required', Rule::phone()->country(Country::query()->pluck('iso_code')->toArray())],
             'email' => ['required', 'email:rfc,dns', Rule::unique('users')->whereNull('deleted_at')],
             'type' => 'required|in:1,2',
             'company_name' => 'nullable|string|max:255|unique:user_tenants,company_name',
