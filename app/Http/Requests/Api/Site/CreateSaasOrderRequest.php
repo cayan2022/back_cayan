@@ -39,4 +39,17 @@ class CreateSaasOrderRequest extends FormRequest
             'password' => 'nullable|min:3|confirmed'
         ];
     }
+
+    public function prepareForValidation()
+    {
+        $phone = $this->input('phone');
+        if (preg_match("~^0\d+$~", $phone)) {
+            $phone = '966' . substr($phone, 1);
+        } elseif (preg_match("~^5\d+$~", $phone)) {
+            $phone = '966' . $phone;
+        }
+        $this->merge([
+            'phone' => $phone,
+        ]);
+    }
 }
