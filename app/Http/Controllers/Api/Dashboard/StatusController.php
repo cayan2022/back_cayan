@@ -14,7 +14,6 @@ use App\Http\Resources\SubStatusResource;
 use App\Models\Translations\BranchTranslation;
 use App\Models\Translations\CategoryTranslation;
 use App\Models\User;
-use App\Scopes\ActiveScope;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -81,7 +80,7 @@ class StatusController extends Controller
             }]);
         }
 
-        $statuses = $statusesQuery->withoutGlobalScope(new ActiveScope())->filter()->get();
+        $statuses = $statusesQuery->filter()->get();
 
         return StatusResource::collection($statuses);
     }
