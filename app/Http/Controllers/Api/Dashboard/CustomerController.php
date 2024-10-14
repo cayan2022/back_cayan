@@ -17,6 +17,7 @@ use Illuminate\Http\Response;
 class CustomerController extends Controller
 {
     use RespondsWithHttpStatus;
+
     /**
      * Display a listing of the resource.
      *
@@ -40,16 +41,17 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreCustomerRequest  $request
+     * @param StoreCustomerRequest $request
      * @return Response
      */
     public function store(StoreCustomerRequest $request)
     {
-        $user = User::create($request->validated()+['type'=>User::PATIENT]);
+        $data = collect($request->validated())->except(['image'])->toArray();
+        $user = User::create($data + ['type' => User::PATIENT]);
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $user->addMediaFromRequest('image')
-                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
                 ->toMediaCollection(User::MEDIA_COLLECTION_NAME);
         }
         return $user->getResource();
@@ -58,7 +60,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  User $user
+     * @param User $user
      * @return UserResource
      */
     public function show(User $user)
@@ -69,18 +71,19 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateCustomerRequest  $request
-     * @param  User  $user
+     * @param UpdateCustomerRequest $request
+     * @param User $user
      * @return UserResource
      */
     public function update(UpdateCustomerRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $data = collect($request->validated())->except(['image'])->toArray();
+        $user->update($data);
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $user->clearMediaCollection(User::MEDIA_COLLECTION_NAME);
             $user->addMediaFromRequest('image')
-                ->sanitizingFileName(fn($fileName)=>updateFileName($fileName))
+                ->sanitizingFileName(fn($fileName) => updateFileName($fileName))
                 ->toMediaCollection(User::MEDIA_COLLECTION_NAME);
         }
 
@@ -90,7 +93,7 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  User $user
+     * @param User $user
      * @return Application|ResponseFactory|Response
      */
     public function destroy(User $user)
@@ -100,7 +103,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
      * @return Application|ResponseFactory|Response
      */
     public function block(User $user)
@@ -109,8 +112,9 @@ class CustomerController extends Controller
         $user->tokens()->delete();
         return $this->success(__('auth.success_operation'));
     }
+
     /**
-     * @param  User  $user
+     * @param User $user
      * @return Application|ResponseFactory|Response
      */
     public function active(User $user)
