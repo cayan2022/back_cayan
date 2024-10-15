@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Site\CreateOrderRequest;
 use App\Http\Requests\Api\Site\CreateSaasOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Jobs\SendWhatsappMessage;
 use App\Models\Country;
 use App\Models\Order;
 use App\Models\User;
@@ -84,21 +85,18 @@ class OrderController extends Controller
         );
 
         if ($createOrderRequest->type == 1) {
-            // send whatsapp message to the clint
-            $message = 'مرحبا بكم في شركة كيان للتسويق الإلكتروني والحلول البرمجية
-تم تسجيل طلبكم بنجاح باسم            ' . $createOrderRequest?->name . ' وهي بخصوص خدمة ' . $order->category?->name . ' سيتم التواصل معكم من فريقنا التقني';
-            WhatsappService::sendMessage($phone, $message);
-
-            //send whatsapp message to admin
-            $admin_phones = ['966567275203', '966554441038', '96653792794'];
+            $message = 'مرحبا بكم في شركة كيان للتسويق الإلكتروني والحلول البرمجية .. تم تسجيل طلبكم بنجاح باسم ' . $createOrderRequest->name . ' بخصوص خدمة ' . $order->category->name . ' سيقوم فريقنا بالتواصل معكم قريبا';
             $admin_message = 'جاء طلب جديد في لوحة التحكم
 يرجي متابعة العميل             ' . $createOrderRequest?->name . ' يستفسر بخصوص خدمة ' . $order->category?->name . ' مرسل الطلب برقم جوال ' . $phone . '
 يمكنك متابعة الطلب عن طريق هذا الرابط             ' . env('APP_DASH') . '/orders/' . $order->id . '/request
 نشكركم علي مجهودكم             ';
 
-            foreach ($admin_phones as $admin_phone) {
-                WhatsappService::sendMessage($admin_phone, $admin_message);
-            }
+            $messageData = [
+                'phone' => $phone,
+                'message' => $message,
+                'admin_message' => $admin_message
+            ];
+            SendWhatsappMessage::dispatch($messageData);
         }
         return new OrderResource($order);
     }
