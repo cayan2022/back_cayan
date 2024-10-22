@@ -25,7 +25,7 @@ class PaymentController extends Controller
         $this->live_token = $live_token;
         $this->test_token = $test_token;
         $this->live_url = 'https://api-sa.myfatoorah.com/v2';
-        $this->test_url = 'https://apitest.myfatoorah.com/';
+        $this->test_url = 'https://apitest.myfatoorah.com';
     }
 
     public function getSessionId(Request $request)
