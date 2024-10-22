@@ -32,7 +32,8 @@ class PaymentController extends Controller
         $response = \Http::withToken('rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn', 'Bearer')
             ->post('https://apitest.myfatoorah.com/InitiateSession', [
                 'CustomerIdentifier' => $request->CustomerIdentifier,
-                "CountryCode" => "SAU"
+                "CountryCode" => "KWT"
+//                "CountryCode" => "SAU"
             ]);
         if ($response->successful()) {
             return $response->json();
