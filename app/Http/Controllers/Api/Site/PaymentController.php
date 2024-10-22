@@ -24,8 +24,10 @@ class PaymentController extends Controller
         $test_token = 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn';
         $this->live_token = $live_token;
         $this->test_token = $test_token;
-        $this->live_url = 'https://api-sa.myfatoorah.com/v2';
-        $this->test_url = 'https://apitest.myfatoorah.com';
+        $live_url = 'https://api-sa.myfatoorah.com/v2';
+        $test_url = 'https://apitest.myfatoorah.com';
+        $this->test_url = $test_url;
+        $this->live_url = $live_url;
     }
 
     public function getSessionId(Request $request)
