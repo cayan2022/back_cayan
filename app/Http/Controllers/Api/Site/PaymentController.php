@@ -14,26 +14,30 @@ class PaymentController extends Controller
 {
     protected $live_token;
     protected $test_token;
+    protected $live_url;
+    protected $test_url;
 
     public function __construct()
     {
         $live_token = 'fUIACWCgJMv7pc60Yc7mMDVSaUhRTZ8WAIv8lEJgrNb6W2Fg-i0fyZ6_56q_jXWx0rRjkih_8faMUFJ9HNKr9EjLkM1Ax3cS5i3ekDJFR3JIMHVI4JtUplmnjf4cCwOibVdym_j9R1hYZA4QraH7iuZmNgg8i1qgtAAE8HCdW0wTJnAAOAhBQMs_4QRjBXOYgL8mwz9lL_vumhXIU6T37xOmXJvbVqESwqjLQ6P9gjUrajCf7VcTsXBqC9oFHoN5toIJHshKzK8ngdtpJULt21mLAqsFf1DCQQ9A4zZZA2fT9ElYuqMyq2zLM5_yNrTBkK_n6wb4t9hnUHusy2JkIM_zVVQBteveWOR0ltWMonsHoN7SIprfxK8A9wdkapRlMDIxG-fATOMyWlElnq4ARS7wuI9DBjBtdxIwN8838h4CXco15fOEhFnF2oq0trjZOWtbg-0DF4sGqsqxEbw7f2byo0pE4aj4kc6ky3JKUkTy4bldnpEfFX41ew0a-yZ4DFY48GiCP27SnnWV3qtQbjSAxm9XfMhE9fztJuYLFEOgZgdSvqPETkEzzT2bnG1SQ-qjm0ozALmi2HBd7Ga2Fr1c7pBiDzPH9zm_D4zVtHiZmaVS2Ul86F1FgXkeOr4bAo-XeX7VQZDnnHcXZFsS5farPutkCQELVlSR-LQeF5F6tCv0CNkF48J5FJEDKAPOKcRXoy6zrmKbOYfYzVd5RDHTGkOyydotRQmNzp2gJpYHsw0t';
-        $test_token = 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn';
+        $test_token = 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL';
         $this->live_token = $live_token;
         $this->test_token = $test_token;
-//        $live_url = 'https://api-sa.myfatoorah.com/v2';
-//        $test_url = 'https://apitest.myfatoorah.com';
+        $live_url = 'https://api-sa.myfatoorah.com/v2';
+        $test_url = 'https://apitest.myfatoorah.com/v2';
+        $this->live_url = $live_url;
+        $this->test_url = $test_url;
 
     }
 
     public function getSessionId(Request $request)
     {
         $token = $this->test_token;
-        $response = \Http::withToken('rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn', 'Bearer')
-            ->post('https://apitest.myfatoorah.com/InitiateSession', [
+        $response = \Http::withToken($token, 'Bearer')
+            ->post($this->test_url . '/InitiateSession', [
                 'CustomerIdentifier' => $request->CustomerIdentifier,
-                "CountryCode" => "KWT"
 //                "CountryCode" => "SAU"
+                "CountryCode" => "KWT"
             ]);
         if ($response->successful()) {
             return $response->json();
@@ -45,8 +49,8 @@ class PaymentController extends Controller
     public function getInvoice(Request $request)
     {
         $token = $this->test_token;
-        $response = \Http::withToken('rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn', 'Bearer')
-            ->post('https://apitest.myfatoorah.com/ExecutePayment', [
+        $response = \Http::withToken($token, 'Bearer')
+            ->post($this->test_url . '/ExecutePayment', [
                 'SessionId' => $request->sessionId,
                 'InvoiceValue' => $request->invoiceValue,
                 'CallBackUrl' => 'http://localhost:39222/checkout/status/success',
