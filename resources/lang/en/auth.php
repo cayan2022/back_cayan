@@ -25,7 +25,8 @@ return [
         'user_is_blocked'=>'This User Has Been Blocked!',
         'not_login'=>'User Is not Login!',
         'wrong_route'=>'Route Is not Correct!',
-        'has_no_permission'=>'Sorry, You have No Permission!'
+        'has_no_permission'=>'Sorry, You have No Permission!',
+        'wrong_otp'=>'Wrong OTP!'
     ],
     'attributes'=>[
         'email'=>'Email Address',

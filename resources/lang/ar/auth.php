@@ -25,7 +25,8 @@ return [
         'user_is_blocked'=>'هذا المستخدم محظور!',
         'not_login'=>'المستخدم غير مسجل دخول!',
         'wrong_route'=>'مسار الوصول غير صحيح!',
-        'has_no_permission'=>'عذرا، ليس لديك صلاحية!'
+        'has_no_permission'=>'عذرا، ليس لديك صلاحية!',
+        'wrong_otp' => 'كود التحقق غير صحيح'
     ],
     'attributes'=>[
         'email'=>'البريد الالكترونى',
