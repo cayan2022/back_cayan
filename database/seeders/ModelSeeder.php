@@ -82,10 +82,6 @@ class ModelSeeder extends Seeder
                 'name_en' => 'doctors',
             ],
             [
-                'name' => '',
-                'name_en' => '',
-            ],
-            [
                 'name' => 'صحفات محرك البحث',
                 'name_en' => 'seoPages',
             ],
