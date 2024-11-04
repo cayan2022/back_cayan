@@ -14,7 +14,7 @@ class ModelSeeder extends Seeder
         // Step 2: Seed data
         \DB::table('models')->insert([
             [
-                'name' => 'الصلاحيات',
+                'name' => 'الادوار والصلاحيات',
                 'name_en' => 'roles',
             ],
             [
@@ -45,7 +45,61 @@ class ModelSeeder extends Seeder
                 'name' => 'المقالات',
                 'name_en' => 'blogs',
             ],
-
+            [
+                'name' => 'الخدمات',
+                'name_en' => 'services',
+            ],
+            [
+                'name' => 'الشهادات',
+                'name_en' => 'testimonials',
+            ],
+            [
+                'name' => 'العروض',
+                'name_en' => 'offers',
+            ],
+            [
+                'name' => 'الاخبار',
+                'name_en' => 'tidings',
+            ],
+            [
+                'name' => 'الملف الشخصي',
+                'name_en' => 'profiles',
+            ],
+            [
+                'name' => 'المصادر',
+                'name_en' => 'sources',
+            ],
+            [
+                'name' => 'الفروع',
+                'name_en' => 'branches',
+            ],
+            [
+                'name' => 'شركاء النجاح',
+                'name_en' => 'partners',
+            ],
+            [
+                'name' => 'الموظفين',
+                'name_en' => 'doctors',
+            ],
+            [
+                'name' => '',
+                'name_en' => '',
+            ],
+            [
+                'name' => 'صحفات محرك البحث',
+                'name_en' => 'seoPages',
+            ],
+            [
+                'name' => 'العملاء',
+                'name_en' => 'customers',
+            ],
+            [
+                'name' => 'اقسام المحافظ',
+                'name_en' => 'portfolio-categories',
+            ],[
+                'name' => 'المحافظ',
+                'name_en' => 'portfolios',
+            ]
         ]);
     }
 }

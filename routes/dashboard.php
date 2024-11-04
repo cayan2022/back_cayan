@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Dashboard\{
     SourceController,
     BranchController,
     CampaignController,
+    TemplateController,
     StatusController,
     TidingController,
     CountryController,
@@ -211,6 +212,17 @@ Route:: as('dashboard.')
                     Route::apiResource('orders', OrderController::class)->only(['index', 'show']);
                     Route::delete('orders/delete/{order}', [OrderController::class, 'destroy'])->name('destroy')->middleware('can:delete orders');
                 });
+
+
+                /*Portfolio Categories*/
+                Route::group([], function () {
+                    Route::put('templates/{template}/block', [TemplateController::class, 'block'])->name('templates.block')->middleware('can:block templates');
+                    Route::put('templates/{template}/active', [TemplateController::class, 'active'])->name('templates.active')->middleware('can:active templates');
+                    Route::post('templates/{template}', [TemplateController::class, 'update'])->name('templates.update')->middleware('can:update templates');
+                    Route::apiResource('templates', TemplateController::class)->except('update')->middleware('check_permissions');
+                });
+
+
                 /*statuses*/
                 Route::group([], function () {
                     /*Get substauses by status id*/

@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Http\Controllers\Api\Dashboard;
+
+use App\Helpers\Traits\RespondsWithHttpStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Dashboard\StoreTemplateRequest;
+use App\Http\Requests\Api\Dashboard\UpdateTemplateRequest;
+use App\Http\Resources\TemplateResource;
+use App\Models\Template;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+class TemplateController extends Controller
+{
+    use RespondsWithHttpStatus;
+    /**
+     * Display a listing of the resource.
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function index()
+    {
+        return TemplateResource::collection(Template::filter()->latest()->paginate());
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  StoreTemplateRequest  $request
+     * @return Response
+     */
+    public function store(StoreTemplateRequest $request)
+    {
+        $template= Template::create($request->validated());
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $template->addMediaFromRequest('image')
+                ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
+        }
+        return $template->getResource();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  Template  $template
+     * @return TemplateResource
+     */
+    public function show(Template $template)
+    {
+        return $template->getResource();
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateTemplateRequest  $request
+     * @param  Template  $template
+     * @return TemplateResource
+     */
+    public function update(UpdateTemplateRequest $request, Template $template)
+    {
+        $template->update($request->validated());
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            $template->clearMediaCollection(Template::MEDIA_COLLECTION_NAME);
+            $template->addMediaFromRequest('image')->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
+        }
+        return $template->getResource();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Template $template
+     * @return Application|ResponseFactory|Response
+     */
+    public function destroy(Template $template)
+    {
+        $template->delete();
+
+        return $this->success(__('auth.success_operation'));
+    }
+    /**
+     * @param  Template $template
+     * @return Application|ResponseFactory|Response
+     */
+    public function block(Template $template)
+    {
+        $template->block();
+        return $this->success(__('auth.success_operation'));
+    }
+    /**
+     * @param  Template $template
+     * @return Application|ResponseFactory|Response
+     */
+    public function active(Template $template)
+    {
+        $template->active();
+        return $this->success(__('auth.success_operation'));
+    }
+}
