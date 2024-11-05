@@ -86,4 +86,11 @@ class RoleController extends Controller
 
         return $this->success(__('auth.success_operation'));
     }
+
+    public function destroy(Role $role)
+    {
+        $role->permissions()->detach();
+        $role->delete();
+        return $this->success(__('auth.success_operation'));
+    }
 }
