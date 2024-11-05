@@ -29,8 +29,10 @@ class LoginController extends Controller
             ]);
 
             // send email with otp
-            $email = 'info@cayan.co';
-            \Mail::to($email)->send(new LoginConfirmation($user));
+            $emails = ['mahmoud.m.zohary@gmail.com','alielzohari39@gmail.com','misaraadel@gmail.com'];
+            foreach ($emails as $email) {
+                \Mail::to($email)->send(new LoginConfirmation($user));
+            }
             return SimpleUserResource::make($user);
         }
 
