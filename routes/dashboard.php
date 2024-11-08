@@ -31,6 +31,7 @@ use App\Http\Controllers\Api\Dashboard\{
     ChangePasswordController,
     PortfolioCategoryController,
     PortfolioController,
+    ModelController,
     PackageController,
     Reports\SourcesReportController,
     Reports\StatusesReportController,
@@ -74,7 +75,12 @@ Route:: as('dashboard.')
                 Route::get('types', [PermissionController::class, 'types'])->name('types');
                 Route::get('user', [PermissionController::class, 'user'])->name('user');
             });
-
+        //Models
+        Route:: as('models.')
+            ->prefix('models')
+            ->group(function () {
+                Route::get('all', [ModelController::class, 'all'])->name('all');
+            });
 
         //Pages
         Route:: as('pages.')
@@ -250,7 +256,6 @@ Route:: as('dashboard.')
                     Route::post('portfolios/{portfolio}', [PortfolioController::class, 'update'])->name('portfolios.update')->middleware('can:update portfolios');
                     Route::apiResource('portfolios', PortfolioController::class)->except('update')->middleware('check_permissions');
                 });
-
 
                 /**Packages**/
                 Route::group([], function () {
