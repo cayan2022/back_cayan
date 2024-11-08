@@ -21,7 +21,7 @@ class CreatePackagesTable extends Migration
             $table->text('price');
             $table->text('annual_price')->nullable();
             $table->boolean('is_block')->default(false);
-            $table->json('modules')->nullable();
+            $table->json('models')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

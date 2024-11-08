@@ -20,6 +20,6 @@ class Package extends Model
 
     public function models()
     {
-        return Model::whereIn('id', $this->models)->select('id', 'name')->get();
+        return AppModel::whereIn('id', $this->models)->select('id', 'name')->get();
     }
 }

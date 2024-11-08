@@ -32,8 +32,8 @@ class UpdatePackageRequest extends FormRequest
             'full_description' => ['required', 'string'],
             'price' => ['required', 'string', 'gt:0'],
             'annual_price' => ['nullable', 'string', 'gt:0'],
-            'modules' => ['required', 'array'],
-            'modules.*' => ['required', 'exists:modules,id'],
+            'models' => ['required', 'array'],
+            'models.*' => ['required', 'exists:models,id'],
         ]);
     }
 }
