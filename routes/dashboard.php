@@ -31,6 +31,7 @@ use App\Http\Controllers\Api\Dashboard\{
     ChangePasswordController,
     PortfolioCategoryController,
     PortfolioController,
+    PackageController,
     Reports\SourcesReportController,
     Reports\StatusesReportController,
     Reports\ModeratorsReportController
@@ -249,6 +250,16 @@ Route:: as('dashboard.')
                     Route::post('portfolios/{portfolio}', [PortfolioController::class, 'update'])->name('portfolios.update')->middleware('can:update portfolios');
                     Route::apiResource('portfolios', PortfolioController::class)->except('update')->middleware('check_permissions');
                 });
+
+
+                /**Packages**/
+                Route::group([], function () {
+                    Route::put('packages/{package}/block', [PackageController::class, 'block'])->name('packages.block')->middleware('can:block packages');
+                    Route::put('packages/{package}/active', [PackageController::class, 'active'])->name('packages.active')->middleware('can:active packages');
+                    Route::post('packages/{package}', [PackageController::class, 'update'])->name('packages.update')->middleware('can:update packages');
+                    Route::apiResource('packages', PackageController::class)->except('update')->middleware('check_permissions');
+                });
+
             });
         //Reports
         Route:: as('reports.')
