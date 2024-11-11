@@ -37,7 +37,9 @@ class TemplateController extends Controller
      */
     public function store(StoreTemplateRequest $request)
     {
-        $template = Template::create($request->validated());
+        $data = collect($request->validated())->except(['image'])->toArray();
+
+        $template = Template::create($data);
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $template->addMediaFromRequest('image')
                 ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
@@ -71,7 +73,8 @@ class TemplateController extends Controller
      */
     public function update(UpdateTemplateRequest $request, Template $template)
     {
-        $template->update($request->validated());
+        $data = collect($request->validated())->except(['image'])->toArray();
+        $template->update($data);
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $template->clearMediaCollection(Template::MEDIA_COLLECTION_NAME);
             $template->addMediaFromRequest('image')->toMediaCollection(Template::MEDIA_COLLECTION_NAME);

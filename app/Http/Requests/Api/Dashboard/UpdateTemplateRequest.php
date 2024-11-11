@@ -28,12 +28,12 @@ class UpdateTemplateRequest extends FormRequest
     {
         return RuleFactory::make([
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:templates,slug'.$this->template->id],
+            'slug' => ['required', 'string', 'max:255', 'unique:templates,slug' . $this->template->id],
             'description' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:255'],
             'is_free' => ['nullable', 'boolean'],
             'is_default' => ['nullable', 'boolean'],
-            'price' => ['nullable', 'required_if:is_free,0', 'gt:0'],
+            'price' => ['nullable', 'required_if:is_free,0', 'gte:0'],
             'price_after' => ['nullable', 'string', 'max:255', 'lt:price'],
             'image' => ['nullable', new SupportedImage()]
         ]);
