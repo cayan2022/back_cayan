@@ -69,8 +69,9 @@ class TemplateController extends Controller
      * @param Template $template
      * @return TemplateResource
      */
-    public function update(UpdateTemplateRequest $request, Template $template)
+    public function update(UpdateTemplateRequest $request, $id)
     {
+        $template = Template::findOrFail($id);
         $data = collect($request->validated())->except(['image'])->toArray();
         $template->update($data);
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
