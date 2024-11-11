@@ -33,7 +33,7 @@ class StoreTemplateRequest extends FormRequest
             'type' => ['required', 'string', 'max:255'],
             'is_free' => ['nullable', 'boolean'],
             'is_default' => ['nullable', 'boolean'],
-            'price' => ['nullable', 'required_if:is_free,0', 'gt:0'],
+            'price' => ['nullable', 'required_if:is_free,0', 'gte:0'],
             'price_after' => ['nullable', 'string', 'max:255', 'lt:price'],
             'image' => ['nullable', new SupportedImage()]
         ]);
