@@ -71,6 +71,7 @@ class PaymentController extends Controller
             'amount' => $request->amount,
             'invoice_number' => $request->invoice_number,
             'expired_at' => Carbon::now()->addMonths($request->duration),
+            'package_id' => $request->package_id ?? null
         ]);
         $user_tenant->user->update([
             'is_block' => 0,

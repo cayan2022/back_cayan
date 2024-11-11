@@ -11,6 +11,10 @@ class UserTenant extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'active_models' => 'array',
+        'templates' => 'array',
+    ];
 
     public function user()
     {
