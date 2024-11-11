@@ -80,7 +80,7 @@ class TemplateController extends Controller
         }
 
         // store the template in saas db
-        Http::post('https://api.cayan.llc/api/site/update-template/' . $template, $request->validated());
+        Http::post('https://api.cayan.llc/api/site/update-template/' . $id, $request->validated());
 
         return $template->getResource();
     }
