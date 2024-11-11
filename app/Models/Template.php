@@ -11,8 +11,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Template extends Model implements HasMedia
 {
-    use InteractsWithMedia,Filterable;
+    use InteractsWithMedia, Filterable;
 
+    protected $guarded = [];
     protected $filter = TemplateFilter::class;
 
     protected $casts = [
