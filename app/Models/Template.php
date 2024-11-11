@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Http\Filters\Filterable;
 use App\Http\Filters\TemplateFilter;
 use App\Http\Resources\TemplateResource;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
