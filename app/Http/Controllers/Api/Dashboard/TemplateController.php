@@ -39,40 +39,42 @@ class TemplateController extends Controller
      */
     public function store(StoreTemplateRequest $request)
     {
-        // Validate and prepare data for local storage
+        // Step 1: Store data in local DB
         $data = collect($request->validated())->except(['image'])->toArray();
-
-        // Create the template locally
         $template = Template::create($data);
 
-        // If there is an image, add it to the media collection
+        // Step 2: Handle image if provided
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $template->addMediaFromRequest('image')
                 ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
         }
 
-        // Prepare data for the external API request
+        // Step 3: Attempt external API request with error handling
         $externalData = $request->validated();
-
-        // Attempt to send the data to the external API
         try {
             $response = Http::post('https://api.cayan.llc/api/site/create-template', $externalData);
 
-            // Check if the response indicates success
+            // Log response data for debugging
+            \Log::info('External API Response', [
+                'status' => $response->status(),
+                'response_body' => $response->json()
+            ]);
+
             if ($response->successful()) {
                 return response()->json([
                     'message' => 'Template stored successfully in local DB and external API',
                     'data' => $template->getResource()
                 ], 201);
             } else {
-                // Handle non-success response from external API
                 return response()->json([
                     'message' => 'Template stored in local DB, but external API request failed',
-                    'error' => $response->json()
+                    'error' => $response->json() ?? 'Unknown error'
                 ], $response->status());
             }
         } catch (\Exception $e) {
-            // Handle any exceptions during the HTTP request
+            // Log exception details if the request completely fails
+            \Log::error('External API Exception', ['error' => $e->getMessage()]);
+
             return response()->json([
                 'message' => 'Template stored in local DB, but external API request failed',
                 'error' => $e->getMessage()
