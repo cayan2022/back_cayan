@@ -37,15 +37,14 @@ class TemplateController extends Controller
      */
     public function store(StoreTemplateRequest $request)
     {
-//        $data = collect($request->validated())->except(['image'])->toArray();
-//
-//        $template = Template::create($data);
-//        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-//            $template->addMediaFromRequest('image')
-//                ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
-//        }
+        $data = collect($request->validated())->except(['image'])->toArray();
 
-        dd($request->validated());
+        $template = Template::create($data);
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $template->addMediaFromRequest('image')
+                ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
+        }
+
         // store the template in saas db
         Http::post('https://api.cayan.llc/api/site/create-template', $request->validated());
 
