@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Dashboard\StoreTemplateRequest;
 use App\Http\Requests\Api\Dashboard\UpdateTemplateRequest;
 use App\Http\Resources\TemplateResource;
+use App\Models\Country;
 use App\Models\Template;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Foundation\Application;
@@ -45,9 +47,19 @@ class TemplateController extends Controller
                 ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
         }
 
+        $template_data = [
+            'name' => $template->name,
+            'slug' => $template->slug,
+            'description' => $template->description,
+            'type' => $template->type,
+            'is_free' => $template->is_free,
+            'is_default' => $template->is_default,
+            'price' => $template->price,
+            'price_after' => $template->price_after,
+            'image' => $request->image ?? null,
+        ];
         // store the template in saas db
-        Http::post('https://api.cayan.llc/api/site/create-template', $request->all());
-
+        Http::post('https://api.cayan.llc/api/site/create-template', $template_data);
 
         return $template->getResource();
     }
