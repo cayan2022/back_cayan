@@ -20,7 +20,7 @@ class AddPackageToUserTenantTable extends Migration
     public function down()
     {
         Schema::table('user_tenants', function (Blueprint $table) {
-            $table->dropUnique(['package_id', 'active_models', 'templates']);
+            $table->dropColumn(['package_id', 'active_models', 'templates','template_id', 'active_template']);
         });
     }
 }
