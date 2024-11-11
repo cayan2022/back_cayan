@@ -12,6 +12,7 @@ use App\Models\Package;
 use App\Models\Portfolio;
 use App\Http\Requests\Api\Dashboard\StorePortfolioRequest;
 use App\Http\Requests\Api\Dashboard\UpdatePortfolioRequest;
+use Illuminate\Support\Facades\Http;
 
 class PackageController extends Controller
 {
@@ -25,16 +26,25 @@ class PackageController extends Controller
     public function store(StorePackageRequest $request)
     {
         $package = Package::create($request->validated());
+
+        // store package in saas db
+        Http::post('https://api.cayan.llc/api/site/create-package', $request->validated());
         return $package->getResource();
     }
+
     public function show(Package $package)
     {
         return $package->getResource();
     }
 
-    public function update(UpdatePackageRequest $request, Package $package)
+    public function update(UpdatePackageRequest $request, $id)
     {
+        $package = Package::findOrFail($id);
         $package->update($request->validated());
+
+        // store the template in saas db
+        Http::post('https://api.cayan.llc/api/site/update-package/' . $id, $request->validated());
+
         return $package->getResource();
     }
 

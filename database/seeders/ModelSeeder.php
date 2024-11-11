@@ -42,6 +42,15 @@ class ModelSeeder extends Seeder
                 'name_en' => 'categories',
             ],
             [
+                'name' => 'من نحن',
+                'name_en' => 'abouts',
+            ],
+            [
+                'name' => 'الصفحات',
+                'name_en' => 'pages',
+            ],
+
+            [
                 'name' => 'المقالات',
                 'name_en' => 'blogs',
             ],
@@ -95,6 +104,10 @@ class ModelSeeder extends Seeder
             ],[
                 'name' => 'المحافظ',
                 'name_en' => 'portfolios',
+            ],
+            [
+                'name' => 'سجل النشاط',
+                'name_en' => 'activity_logs',
             ]
         ]);
     }
