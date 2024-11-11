@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Filters\Filterable;
 use App\Http\Filters\TemplateFilter;
 use App\Http\Resources\TemplateResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Template extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia,Filterable;
 
     protected $filter = TemplateFilter::class;
 
