@@ -27,7 +27,7 @@ class UpdatePackageRequest extends FormRequest
     public function rules()
     {
         return RuleFactory::make([
-            'name' => ['required', 'string', 'max:255', 'unique:packages,name,' . $this->package->id],
+            'name' => ['required', 'string', 'max:255', 'unique:packages,name,' . $this->route('package')],
             'short_description' => ['required', 'string'],
             'full_description' => ['required', 'string'],
             'price' => ['required', 'string', 'gt:0'],
