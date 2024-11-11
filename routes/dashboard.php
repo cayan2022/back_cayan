@@ -221,7 +221,7 @@ Route:: as('dashboard.')
                 });
 
 
-                /*Portfolio Categories*/
+                /*Templates*/
                 Route::group([], function () {
                     Route::put('templates/{template}/block', [TemplateController::class, 'block'])->name('templates.block')->middleware('can:block templates');
                     Route::put('templates/{template}/active', [TemplateController::class, 'active'])->name('templates.active')->middleware('can:active templates');
