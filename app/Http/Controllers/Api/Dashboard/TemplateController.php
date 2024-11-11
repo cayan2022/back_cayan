@@ -46,7 +46,7 @@ class TemplateController extends Controller
         }
 
         // store the template in saas db
-        Http::post('https://api.cayan.llc/api/site/create-template', $request->validated());
+        Http::post('https://api.cayan.llc/api/site/create-template', $request->all());
 
 
         return $template->getResource();
