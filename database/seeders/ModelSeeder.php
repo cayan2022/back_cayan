@@ -34,7 +34,7 @@ class ModelSeeder extends Seeder
                 'name_en' => 'campaigns',
             ],
             [
-                'name' => 'المشاريع',
+                'name' => 'صور قبل وبعد',
                 'name_en' => 'projects',
             ],
             [
@@ -108,6 +108,18 @@ class ModelSeeder extends Seeder
             [
                 'name' => 'سجل النشاط',
                 'name_en' => 'activity_logs',
+            ],
+            [
+                'name' => 'القسم الرئيسي',
+                'name_en' => 'hero_section'
+            ],
+            [
+                'name' => 'بيانات التواصل',
+                'name_en' => 'contact_info'
+            ],
+            [
+                'name' => 'ادوات التسويق',
+                'name_en' => 'marketing_tools'
             ]
         ]);
     }
