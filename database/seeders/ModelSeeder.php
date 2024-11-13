@@ -111,7 +111,7 @@ class ModelSeeder extends Seeder
             ],
             [
                 'name' => 'القسم الرئيسي',
-                'name_en' => 'hero_section'
+                'name_en' => 'hero_sections'
             ],
             [
                 'name' => 'بيانات التواصل',
@@ -120,6 +120,10 @@ class ModelSeeder extends Seeder
             [
                 'name' => 'ادوات التسويق',
                 'name_en' => 'marketing_tools'
+            ],
+            [
+                'name' => 'الصفحات',
+                'name_en' => 'custom_pages'
             ]
         ]);
     }
