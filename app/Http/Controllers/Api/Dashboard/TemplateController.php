@@ -44,7 +44,7 @@ class TemplateController extends Controller
                 ->toMediaCollection(Template::MEDIA_COLLECTION_NAME);
         }
         // store the template in saas db
-        Http::post('https://api.cayan.llc/api/site/create-template', $request->validated());
+        Http::post('https://api.cayan.llc/api/site/create-template', $request->all());
 
 
         return $template->getResource();
