@@ -13,6 +13,8 @@ class PackageResource extends JsonResource
             'name' => $this->name,
             'short_description' => $this->short_description,
             'full_description' => $this->full_description,
+            'is_free' => (bool)$this->is_free,
+            'is_common' => (bool)$this->is_common,
             'type' => $this->type,
             'price' => $this->price,
             'annual_price' => $this->annual_price,
