@@ -30,6 +30,7 @@ class StorePackageRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'short_description' => ['required', 'string'],
             'full_description' => ['required', 'string'],
+            'type' => ['required', 'string'],
             'price' => ['required', 'string', 'gt:0'],
             'annual_price' => ['nullable', 'string', 'gt:0'],
             'models' => ['required', 'array'],

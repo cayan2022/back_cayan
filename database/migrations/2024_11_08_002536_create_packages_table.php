@@ -18,6 +18,7 @@ class CreatePackagesTable extends Migration
             $table->string('name');
             $table->text('short_description')->nullable();
             $table->text('full_description')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('is_free')->default(0);
             $table->text('price');
             $table->text('annual_price')->nullable();

@@ -30,6 +30,7 @@ class UpdatePackageRequest extends FormRequest
             'name' => ['required', 'string', 'max:255', 'unique:packages,name,' . $this->route('package')],
             'short_description' => ['required', 'string'],
             'full_description' => ['required', 'string'],
+            'type' => ['required', 'string'],
             'price' => ['required', 'string', 'gt:0'],
             'annual_price' => ['nullable', 'string', 'gt:0'],
             'models' => ['required', 'array'],
