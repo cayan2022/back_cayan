@@ -9,6 +9,7 @@ use App\Http\Resources\OrderResource;
 use App\Jobs\SendWhatsappMessage;
 use App\Models\Country;
 use App\Models\Order;
+use App\Models\Package;
 use App\Models\User;
 use App\Services\WhatsappService;
 use Carbon\Carbon;
@@ -32,6 +33,8 @@ class OrderController extends Controller
             $phone = '966' . $createOrderRequest->phone;
         }
 
+        $free_package = Package::where('is_free', 1)->first();
+
         $data = [
             'phone' => $phone,
             'email' => $createOrderRequest->email,
@@ -43,13 +46,14 @@ class OrderController extends Controller
             'domain' => $createOrderRequest->domain ?? null,
             'password' => $createOrderRequest->password,
             'plain_pass' => request()->password,
+            'package_id' => $free_package->id
         ];
 
         $user = User::query()->withoutTrashed()
             ->where(['phone' => $phone, 'email' => $createOrderRequest->email])
             ->orWhere('phone', $phone)
             ->orWhere('email', $createOrderRequest->email)
-            ->firstOr(function () use ($createOrderRequest, $phone, $data) {
+            ->firstOr(function () use ($createOrderRequest, $phone, $data, $free_package) {
                 $user = User::create([
                     'phone' => $phone,
                     'email' => $createOrderRequest->email,
@@ -110,6 +114,9 @@ class OrderController extends Controller
         } elseif (preg_match("~^5\d+$~", $createSaasOrderRequest->phone)) {
             $phone = '966' . $createSaasOrderRequest->phone;
         }
+
+        $free_package = Package::where('is_free', 1)->first();
+
         $user = User::create([
             'phone' => $phone,
             'email' => $createSaasOrderRequest->email,
@@ -126,6 +133,7 @@ class OrderController extends Controller
             'expired_at' => Carbon::now()->addDays(7),
             'is_paid' => 0,
             'tenant_pass' => encrypt(request()->password),
+            'package_id' => $free_package->id
         ]);
 
 
@@ -138,6 +146,7 @@ class OrderController extends Controller
             'domain' => $createSaasOrderRequest->domain ?? null,
             'password' => $createSaasOrderRequest->password,
             'plain_pass' => request()->password,
+            'package_id' => $free_package->id
         ];
         Http::post('https://api.cayan.llc/api/site/create-tenant', $data);
 
